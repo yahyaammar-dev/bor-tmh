@@ -1,0 +1,484 @@
+{
+    "availableDays": [
+        {
+            "id": 25398,
+            "date": "2023-08-22",
+            "repeatable": true,
+            "day": "2",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25438,
+            "date": "2023-09-08",
+            "repeatable": true,
+            "day": "5",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25392,
+            "date": "2023-08-21",
+            "repeatable": true,
+            "day": "1",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25410,
+            "date": "2023-08-24",
+            "repeatable": true,
+            "day": "4",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25444,
+            "date": "2023-09-10",
+            "repeatable": true,
+            "day": "0",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25432,
+            "date": "2023-09-06",
+            "repeatable": true,
+            "day": "3",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25375,
+            "date": "2023-08-19",
+            "repeatable": true,
+            "day": "6",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25414,
+            "date": "2023-07-27",
+            "repeatable": false,
+            "day": "4",
+            "parent": "25410",
+            "deleted": true
+        },
+        {
+            "id": 25399,
+            "date": "2023-08-15",
+            "repeatable": false,
+            "day": "2",
+            "parent": "25398",
+            "deleted": true
+        },
+        {
+            "id": 25400,
+            "date": "2023-08-08",
+            "repeatable": false,
+            "day": "2",
+            "parent": "25398",
+            "deleted": true
+        },
+        {
+            "id": 25401,
+            "date": "2023-08-01",
+            "repeatable": false,
+            "day": "2",
+            "parent": "25398",
+            "deleted": true
+        },
+        {
+            "id": 25402,
+            "date": "2023-07-25",
+            "repeatable": false,
+            "day": "2",
+            "parent": "25398",
+            "deleted": true
+        },
+        {
+            "id": 25411,
+            "date": "2023-08-17",
+            "repeatable": false,
+            "day": "4",
+            "parent": "25410",
+            "deleted": true
+        },
+        {
+            "id": 25412,
+            "date": "2023-08-10",
+            "repeatable": false,
+            "day": "4",
+            "parent": "25410",
+            "deleted": true
+        },
+        {
+            "id": 25413,
+            "date": "2023-08-03",
+            "repeatable": false,
+            "day": "4",
+            "parent": "25410",
+            "deleted": true
+        },
+        {
+            "id": 25395,
+            "date": "2023-07-31",
+            "repeatable": false,
+            "day": "1",
+            "parent": "25392",
+            "deleted": true
+        },
+        {
+            "id": 25415,
+            "date": "2023-07-20",
+            "repeatable": false,
+            "day": "4",
+            "parent": "25410",
+            "deleted": true
+        },
+        {
+            "id": 25433,
+            "date": "2023-08-16",
+            "repeatable": false,
+            "day": "3",
+            "parent": "25432",
+            "deleted": true
+        },
+        {
+            "id": 25434,
+            "date": "2023-08-09",
+            "repeatable": false,
+            "day": "3",
+            "parent": "25432",
+            "deleted": true
+        },
+        {
+            "id": 25435,
+            "date": "2023-08-02",
+            "repeatable": false,
+            "day": "3",
+            "parent": "25432",
+            "deleted": true
+        },
+        {
+            "id": 25436,
+            "date": "2023-07-26",
+            "repeatable": false,
+            "day": "3",
+            "parent": "25432",
+            "deleted": true
+        },
+        {
+            "id": 25439,
+            "date": "2023-08-18",
+            "repeatable": false,
+            "day": "5",
+            "parent": "25438",
+            "deleted": true
+        },
+        {
+            "id": 25440,
+            "date": "2023-08-11",
+            "repeatable": false,
+            "day": "5",
+            "parent": "25438",
+            "deleted": true
+        },
+        {
+            "id": 25441,
+            "date": "2023-08-04",
+            "repeatable": false,
+            "day": "5",
+            "parent": "25438",
+            "deleted": true
+        },
+        {
+            "id": 25442,
+            "date": "2023-07-28",
+            "repeatable": false,
+            "day": "5",
+            "parent": "25438",
+            "deleted": true
+        },
+        {
+            "id": 25396,
+            "date": "2023-07-24",
+            "repeatable": false,
+            "day": "1",
+            "parent": "25392",
+            "deleted": true
+        },
+        {
+            "id": 25394,
+            "date": "2023-08-07",
+            "repeatable": false,
+            "day": "1",
+            "parent": "25392",
+            "deleted": true
+        },
+        {
+            "id": 25393,
+            "date": "2023-08-14",
+            "repeatable": false,
+            "day": "1",
+            "parent": "25392",
+            "deleted": true
+        },
+        {
+            "id": 25443,
+            "date": "2023-07-21",
+            "repeatable": false,
+            "day": "5",
+            "parent": "25438",
+            "deleted": true
+        },
+        {
+            "id": 25445,
+            "date": "2023-08-20",
+            "repeatable": false,
+            "day": "0",
+            "parent": "25444",
+            "deleted": true
+        },
+        {
+            "id": 25377,
+            "date": "2023-08-05",
+            "repeatable": false,
+            "day": "6",
+            "parent": "25375",
+            "deleted": true
+        },
+        {
+            "id": 25376,
+            "date": "2023-08-12",
+            "repeatable": false,
+            "day": "6",
+            "parent": "25375",
+            "deleted": true
+        },
+        {
+            "id": 25446,
+            "date": "2023-08-13",
+            "repeatable": false,
+            "day": "0",
+            "parent": "25444",
+            "deleted": true
+        },
+        {
+            "id": 25447,
+            "date": "2023-08-06",
+            "repeatable": false,
+            "day": "0",
+            "parent": "25444",
+            "deleted": true
+        },
+        {
+            "id": 25448,
+            "date": "2023-07-30",
+            "repeatable": false,
+            "day": "0",
+            "parent": "25444",
+            "deleted": true
+        },
+        {
+            "id": 24102,
+            "date": "2023-07-21",
+            "repeatable": false,
+            "day": "5",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25489,
+            "date": "2023-07-31",
+            "repeatable": false,
+            "day": "1",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25488,
+            "date": "2023-07-31",
+            "repeatable": false,
+            "day": "1",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25487,
+            "date": "2023-07-24",
+            "repeatable": false,
+            "day": "1",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25486,
+            "date": "2023-07-30",
+            "repeatable": false,
+            "day": "0",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25485,
+            "date": "2023-07-25",
+            "repeatable": false,
+            "day": "2",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25480,
+            "date": "2023-07-29",
+            "repeatable": false,
+            "day": "6",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25479,
+            "date": "2023-07-29",
+            "repeatable": false,
+            "day": "6",
+            "parent": "25375",
+            "deleted": false
+        },
+        {
+            "id": 25473,
+            "date": "2023-07-22",
+            "repeatable": false,
+            "day": "6",
+            "parent": "25375",
+            "deleted": false
+        },
+        {
+            "id": 25490,
+            "date": "2023-07-26",
+            "repeatable": false,
+            "day": "3",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25391,
+            "date": "2023-08-20",
+            "repeatable": false,
+            "day": "0",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25390,
+            "date": "2023-08-18",
+            "repeatable": false,
+            "day": "5",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25389,
+            "date": "2023-07-30",
+            "repeatable": false,
+            "day": "0",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25367,
+            "date": "2023-08-08",
+            "repeatable": false,
+            "day": "2",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25366,
+            "date": "2023-08-01",
+            "repeatable": false,
+            "day": "2",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25363,
+            "date": "2023-07-28",
+            "repeatable": false,
+            "day": "5",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25362,
+            "date": "2023-07-28",
+            "repeatable": false,
+            "day": "5",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25361,
+            "date": "2023-07-27",
+            "repeatable": false,
+            "day": "4",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25360,
+            "date": "2023-07-25",
+            "repeatable": false,
+            "day": "2",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 25345,
+            "date": "2023-08-03",
+            "repeatable": false,
+            "day": "4",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 24731,
+            "date": "2023-08-09",
+            "repeatable": false,
+            "day": "3",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 24730,
+            "date": "2023-08-02",
+            "repeatable": false,
+            "day": "3",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 24498,
+            "date": "2023-07-21",
+            "repeatable": false,
+            "day": "5",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 24444,
+            "date": "2023-08-10",
+            "repeatable": false,
+            "day": "4",
+            "parent": null,
+            "deleted": false
+        },
+        {
+            "id": 24329,
+            "date": "2023-07-24",
+            "repeatable": false,
+            "day": "1",
+            "parent": null,
+            "deleted": false
+        }
+    ]
+}
