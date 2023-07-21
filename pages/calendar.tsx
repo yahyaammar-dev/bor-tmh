@@ -11,16 +11,11 @@ const Calendar: React.FC = () => {
     const [currentDate] = useState(new Date());
     const [currentYear, setCurrentYear] = useState<number>(currentDate.getFullYear());
     const [currentMonth, setCurrentMonth] = useState<number>(currentDate.getMonth());
+    const [prevButtonDisabled, setPrevButtonDisabled] = useState(true);
     const currentmonth = currentMonth;
+    const currentyear = currentYear;
 
     useEffect(() => {
-        console.log(currentmonth, currentMonth);
-        if (currentmonth <= currentMonth) {
-            document.getElementById('prevBtn').style.opacity = 0.5;
-        }
-        else {
-            document.getElementById('prevBtn').style.opacity = 1; // Se
-        }
         fetch("http://localhost:3001/availableDays")
             .then((res) => res.json())
             .then((data) => {
@@ -107,29 +102,25 @@ const Calendar: React.FC = () => {
     });
 
     const nextMonth = () => {
-        if (currentmonth <= currentMonth) {
-            const nextMonth = currentMonth + 1;
+        const nextMonth = currentMonth + 1;
 
-            if (nextMonth > 11) {
-                setCurrentMonth(0);
-                setCurrentYear(currentYear + 1);
-            } else {
-                setCurrentMonth(nextMonth);
-            }
+        if (nextMonth > 11) {
+            setCurrentMonth(0);
+            setCurrentYear(currentYear + 1);
+        } else {
+            setCurrentMonth(nextMonth);
         }
     };
 
     const prevMonth = () => {
-        if (currentmonth > currentMonth) {
-            const prevMonth = currentMonth - 1;
+        const prevMonth = currentMonth - 1;
         if (prevMonth < 0) {
             setCurrentMonth(11);
             setCurrentYear(currentYear - 1);
         } else {
             setCurrentMonth(prevMonth);
         }
-        }
-        
+        setPrevButtonDisabled(currentyear < currentYear || (currentyear === currentYear && currentmonth <= currentMonth));
     };
 
     return (
@@ -138,12 +129,12 @@ const Calendar: React.FC = () => {
             <div className="flex flex-col justify-center my-0 border-t border-gray-500 px-6 py-6 mx-auto w-1/2 bg-gray-50">
                 <div className="flex justify-center items-center italic font-normal font-sans text-lg">schedule your appointment</div>
                 <div className="flex justify-between items-center">
-                    <button id="prevBtn" onClick={prevMonth}>
+                    <button id="prevBtn" onClick={prevMonth} disabled={prevButtonDisabled}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                         </svg>
                     </button>
-                    <p className="header font-bold text-lg m-16"></p>
+                        <p className="header font-bold text-lg m-16"></p>
                     <button id="nextBtn" onClick={nextMonth}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
