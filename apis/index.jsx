@@ -34,6 +34,7 @@ const getCities = async () => {
     );
     return res.data;
   } catch (err) {
+    console.log('errr', err)
     throw new Error("Unable to fetch Cities, something went wrong"); // Throw a custom error message
   }
 };
