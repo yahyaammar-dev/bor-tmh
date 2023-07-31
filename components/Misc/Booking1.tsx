@@ -5,14 +5,16 @@ import Professional from "@/components/Misc/Professional";
 import Fade from "../Transition/Fade";
 import selectStyles from "@/styles/selectStyles";
 import { useDataHandler } from "@/utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
+import CorporateBooking from "./CorporateBooking";
 
 const Booking1 = ({ loader, setLoader }) => {
-  const { localData, listUsers, listCities, handleLocalData, reduxData } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
+  const { localData, listUsers, listCities, cities, handleLocalData, reduxData, handleCorporatelData } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
   const postal = [
     { value: "123123", label: "123123" },
     { value: "123123", label: "12312" },
   ];
+  console.log(listCities);
 
   return (
     <div>
@@ -31,7 +33,7 @@ const Booking1 = ({ loader, setLoader }) => {
                   localData?.type === "Corporate" ? "active" : "outlined"
                 }
                 onClick={() => {
-                  handleLocalData({
+                  handleCorporatelData({
                     type: "type",
                     data: "Corporate",
                   });
@@ -52,8 +54,47 @@ const Booking1 = ({ loader, setLoader }) => {
             </div>
           </div>
         </div>
+          {localData?.type === "Corporate" ? 
+          <div className="corporate_container">
 
-        {reduxData?.appData?.users.length > 0 && (
+          {reduxData?.appData?.cities.length > 0 && (
+                    <Fade>
+                      <div className="city mb-10">
+                        <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                          Select a city
+                        </h1>
+                        <div className="flex justify-center gap-5">
+                          <div className="item">
+                            <Select
+                              options={cities}
+                              onChange={(item) => {
+                                  handleCorporatelData({
+                                  type: "city",
+                                  data: item,
+                                });
+                              }}
+                              placeholder="City"
+                              styles={selectStyles}
+                            />
+                          </div>
+                          <div className="item">
+                            <Select
+                              options={postal}
+                              // onChange={(item) => {
+                              //   setLocale(item.value);
+                              // }}
+                              placeholder="Postal Code"
+                              styles={selectStyles}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </Fade>
+                  )}
+          
+                    </div>
+           : <div className="normal_container">
+            {reduxData?.appData?.users.length > 0 && (
           <Fade>
             <div className="city mb-10">
               <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
@@ -223,6 +264,8 @@ const Booking1 = ({ loader, setLoader }) => {
             </div>
           </div>
         )}
+            </div>}
+        
       </div>
     </div>
   );

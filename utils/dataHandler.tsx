@@ -18,6 +18,7 @@ export function useDataHandler(setLoader) {
   const reduxData = useSelector((state) => state);
   const [listUsers, setListUsers] = useState([]);
   const [listCities, setListCitites] = useState([]);
+  const [cities, setCitites] = useState([]);
   const router = useRouter()
 
   const handleLocalData = async (newData) => {
@@ -88,5 +89,25 @@ export function useDataHandler(setLoader) {
     } 
   };
 
-  return { localData, listUsers, listCities, handleLocalData, reduxData };
+  //Corporate clients
+
+  const handleCorporatelData = async (newData) => {
+    if (newData.type === "type") {
+      setLocalData({ ...localData, type: newData.data });
+      dispatch({ type: "TYPE", payload: newData.data });
+      setLoader(true);
+      const allCities = await getCities();
+      dispatch({ type: "GETCITIES", payload: allCities });
+      setCitites(allCities);
+      const citiesAsOption = allCities.map((city) => ({
+        id: city.id,
+        value: city.name,
+        label: city.name,
+      }));
+      setCitites(citiesAsOption);
+      setLoader(false);
+    } 
+  };
+
+  return { localData, listUsers, listCities, cities, handleLocalData, reduxData, handleCorporatelData };
 }
