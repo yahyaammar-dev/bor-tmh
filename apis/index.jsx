@@ -116,12 +116,12 @@ const getAvailabilityData = async () => {
   }
 };
 
-const getCorporateClient = async (item) => {
+const getCorporateClient = async (city_name) => {
   try {
     const res = await axios.get(
-      `http://localtmh.com/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
+      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
     );
-    return res.data;
+    return res.data.corporate_clients;
   } catch (err) {
     throw new Error("Unable to fetch corporate clients, something went wrong"); // Throw a custom error message
   }
@@ -138,14 +138,25 @@ const getCorporateServices = async (item) => {
   }
 };
 
-const getCorporateCustomers = async (item) => {
+const getCorporateCustomers = async (corporateClientId) => {
   try {
     const res = await axios.get(
       `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateCustomers/${corporateClientId}`
     );
-    return res.data;
+    return res.data.corporate_clients;
   } catch (err) {
     throw new Error("Unable to fetch corporate customers, something went wrong"); // Throw a custom error message
+  }
+};
+
+const getCorporateProfessionals = async (item) => {
+  try {
+    const res = await axios.get(
+      `http://127.0.0.1:8000/it/front/booking/corporateprofessionals/${corporateServiceId}`
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -162,5 +173,7 @@ export {
   getAvailabilityData,
   getCorporateClient,
   getCorporateServices,
-  getCorporateCustomers
+  getCorporateCustomers,
+  getCorporateProfessionals
 };
+

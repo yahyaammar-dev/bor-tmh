@@ -12,10 +12,12 @@ const initialState = {
   professionals: [],
   availibility: [],
   availibilitydata: [],
+  corporates: [],
   currentCat: null,
   currentSub: null,
   currentGen: null,
-  currentProfessional: null
+  currentProfessional: null,
+  corporate: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -139,18 +141,28 @@ const appData = (state = initialState, action) => {
     case "CURRENTGENDER":
       return {
         ...state,
-        currentGen: action.payload
-      }
+        currentGen: action.payload,
+      };
     case "GETPROFESSIONALS":
       return {
-        ...state, 
-        professionals: action.payload
-      }
+        ...state,
+        professionals: action.payload,
+      };
     case "CURRENTPROFESSIONAL":
+      return {
+        ...state,
+        currentProfessional: action.payload,
+      };
+    case "CORPORATES":
+      return {
+        ...state,
+        corporates: action.payload,
+      };
+    case "CORPORATE":
         return {
-          ...state, 
-          currentProfessional: action.payload
-        }
+          ...state,
+          corporate: action.payload,
+        };
     case "REMOVEALLDATA":
       return {
         ...state,
@@ -160,8 +172,19 @@ const appData = (state = initialState, action) => {
         genders: null,
         availibility: null,
         availibilitydata: null,
+        type: null,
+        subCategories: [],
+        professionals: [],
+        currentCat: null,
+        currentSub: null,
+        currentGen: null,
+        currentProfessional: null,
       };
-
+    case "CORPORATEUSERS":
+        return {
+          ...state,
+          corporateUsers: action.payload
+        }
     default:
       return state;
   }
