@@ -23,6 +23,7 @@ export function useDataHandler(setLoader) {
   const [listCities, setListCitites] = useState([]);
   const [cities, setCitites] = useState([]);
   const [corporatesList, setCorporateList] = useState([])
+  const [corporateCustomerList, setCorporateCustomers] = useState([])
   const router = useRouter();
 
   const handleLocalData = async (newData) => {
@@ -107,12 +108,13 @@ export function useDataHandler(setLoader) {
       setLoader(false);
     } else if (newData.type == "gender") {
       if(localData.type == "Corporate") {
-
+        // console.log(localData);
         setLoader(true);
-        const res = await getProfessionalFromCorporateServices()
-        
-        setLocalData({ ...localData, professionals: res.users });
-        dispatch({ type: "GETPROFESSIONALS", payload: res.users });
+        const res = await getProfessionalFromCorporateServices(localData?.currentSubCat.id)
+        // console.log('results ::', res)
+        setLocalData({ ...localData, professionals: res });
+        dispatch({ type: "GETPROFESSIONALS", payload: res });
+        // console.log(localData)
         setLoader(false);
       }
       else{
@@ -150,6 +152,7 @@ export function useDataHandler(setLoader) {
         value: corporate[1],
         label: corporate[1],
       }));
+      setCorporateCustomers(corporateUsersList);
       setLoader(false);
     } else if (newData.type == "corporateCategories"){
       console.log('are you here?')
@@ -168,6 +171,7 @@ export function useDataHandler(setLoader) {
     cities,
     handleLocalData,
     reduxData,
-    corporatesList
+    corporatesList,
+    corporateCustomerList
   };
 }

@@ -16,6 +16,7 @@ const Booking1 = ({ loader, setLoader }) => {
     handleLocalData,
     reduxData,
     corporatesList,
+    corporateCustomerList,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
   const postal = [
@@ -140,7 +141,7 @@ const Booking1 = ({ loader, setLoader }) => {
                   <div className="flex justify-center gap-5">
                     <div className="item">
                       <Select
-                        options={corporatesList}
+                        options={corporateCustomerList}
                         onChange={(item) => {
                           handleLocalData({
                             type: "corporateCategories",
@@ -253,7 +254,7 @@ const Booking1 = ({ loader, setLoader }) => {
                   {reduxData?.appData?.professionals?.map((item) => {
                     return (
                       <Professional
-                        profile_image={item.profile_image?.full_url}
+                        profile_image={item.image}
                         fullName={item?.full_name}
                         position={item?.position}
                         onClick={() => {

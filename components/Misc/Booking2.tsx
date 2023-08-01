@@ -3,7 +3,7 @@ import CategoryCheckbox from "./CategoryCheckbox";
 import Image from "next/image";
 import Button from "./Button";
 import { useRouter } from "next/router";
-import { getProfessionalDetail, getSubCategories } from "@/apis";
+import { getProfessionalDetail, getSubCategories,getcorporateprofessionalServices } from "@/apis";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -20,10 +20,15 @@ const Booking2 = () => {
       subId: reduxData?.appData?.currentSub?.id,
       gender: reduxData?.appData?.currentGen?.id,
     };
-    const res = await getProfessionalDetail(data);
+    // const res = await getProfessionalDetail(data);
+    // console.log( 'professional service', reduxData)
+    const res = await getcorporateprofessionalServices(reduxData?.appData?.currentProfessional?.id)
+    
 
-    const proDetail = JSON.parse(res.pro);
-    const proService = JSON.parse(res.services);
+    const proDetail = JSON.parse(res.professional);
+    const proService = res.corporate_services;
+
+    // console.log( 'professional result', proDetail, proService)
 
     const professionalData = {
       proDetail,

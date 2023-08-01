@@ -161,10 +161,21 @@ const getCorporateProfessionals = async (item) => {
 };
 
 
-const getProfessionalFromCorporateServices = async () => {
+const getcorporateprofessionalServices = async (professionalId) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateBySubCat/1`
+      `http://127.0.0.1:8000/it/front/booking/corporateprofessionalServices/${professionalId}`
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error("Unable to fetch corporate professional services, something went wrong"); // Throw a custom error message
+  }
+};
+
+const getProfessionalFromCorporateServices = async (subCatId) => {
+  try {
+    const res = await axios.get(
+      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
     );
     console.log(res)
     return res.data;
@@ -190,6 +201,7 @@ export {
   getCorporateServices,
   getCorporateCustomers,
   getCorporateProfessionals,
-  getProfessionalFromCorporateServices
+  getProfessionalFromCorporateServices,
+  getcorporateprofessionalServices
 };
 
