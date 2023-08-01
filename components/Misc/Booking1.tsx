@@ -15,14 +15,14 @@ const Booking1 = ({ loader, setLoader }) => {
     cities,
     handleLocalData,
     reduxData,
-    corporatesList
+    corporatesList,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
   const postal = [
     { value: "123123", label: "123123" },
     { value: "123123", label: "12312" },
   ];
-  console.log(listCities);
+  console.log('hello hello jello bello',reduxData);
 
   return (
     <div>
@@ -106,7 +106,6 @@ const Booking1 = ({ loader, setLoader }) => {
               </Fade>
             )}
 
-
             {reduxData?.appData?.corporates?.length > 0 && (
               <Fade>
                 <div className="city mb-10">
@@ -127,12 +126,10 @@ const Booking1 = ({ loader, setLoader }) => {
                         styles={selectStyles}
                       />
                     </div>
-                  
                   </div>
                 </div>
               </Fade>
             )}
-  
 
             {reduxData?.appData?.corporateUsers?.length > 0 && (
               <Fade>
@@ -154,12 +151,10 @@ const Booking1 = ({ loader, setLoader }) => {
                         styles={selectStyles}
                       />
                     </div>
-                  
                   </div>
                 </div>
               </Fade>
             )}
-
 
             {reduxData?.appData?.categories?.length > 0 && (
               <div className="categories my-16">
@@ -189,11 +184,7 @@ const Booking1 = ({ loader, setLoader }) => {
               </div>
             )}
 
-
-
-
-
-{reduxData?.appData?.subCategories?.length > 0 && (
+            {reduxData?.appData?.subCategories?.length > 0 && (
               <Fade>
                 <div className="categories my-16">
                   <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
@@ -251,6 +242,32 @@ const Booking1 = ({ loader, setLoader }) => {
               </div>
             )}
 
+
+
+            {reduxData?.appData?.professionals?.length > 0 && (
+              <div className="categories my-16">
+                <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                  Select Professional
+                </h1>
+                <div className="flex justify-center gap-5 flex-wrap">
+                  {reduxData?.appData?.professionals?.map((item) => {
+                    return (
+                      <Professional
+                        profile_image={item.profile_image?.full_url}
+                        fullName={item?.full_name}
+                        position={item?.position}
+                        onClick={() => {
+                          handleLocalData({
+                            type: "professional",
+                            data: item,
+                          });
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            )}      
 
 
 

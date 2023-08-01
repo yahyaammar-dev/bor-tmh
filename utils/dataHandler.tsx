@@ -11,7 +11,8 @@ import {
   getSubCategories,
   getUsers,
   getCorporateClient,
-  getCorporateCustomers
+  getCorporateCustomers,
+  getProfessionalFromCorporateServices
 } from "@/apis"; // Import your API functions here
 
 export function useDataHandler(setLoader) {
@@ -105,18 +106,31 @@ export function useDataHandler(setLoader) {
       dispatch({ type: "GETGENDERS", payload: subCategories });
       setLoader(false);
     } else if (newData.type == "gender") {
-      setLoader(true);
-      const customDataQuery = {
-        ...newData,
-        localData,
-      };
-      const Professionals = await getProfessionals(customDataQuery);
-      setLocalData({ ...localData, professionals: Professionals });
-      setLocalData({ ...localData, currentGender: newData.data });
-      dispatch({ type: "CURRENTGENDER", payload: newData.data });
-      dispatch({ type: "GETPROFESSIONALS", payload: Professionals });
-      setLoader(false);
+      if(localData.type == "Corporate") {
+
+        setLoader(true);
+        const res = await getProfessionalFromCorporateServices()
+        
+        setLocalData({ ...localData, professionals: res.users });
+        dispatch({ type: "GETPROFESSIONALS", payload: res.users });
+        setLoader(false);
+      }
+      else{
+        setLoader(true);
+        const customDataQuery = {
+          ...newData,
+          localData,
+        };
+        const Professionals = await getProfessionals(customDataQuery);
+        setLocalData({ ...localData, professionals: Professionals });
+        setLocalData({ ...localData, currentGender: newData.data });
+        dispatch({ type: "CURRENTGENDER", payload: newData.data });
+        dispatch({ type: "GETPROFESSIONALS", payload: Professionals });
+        setLoader(false);
+      }
+      
     } else if (newData.type == "professional") {
+      console.log('mysterious data', newData.data);
       setLocalData({ ...localData, currentProfessional: newData.data });
       let proData = newData.data;
       dispatch({ type: "CURRENTPROFESSIONAL", payload: proData });
@@ -130,7 +144,6 @@ export function useDataHandler(setLoader) {
       setLocalData({...localData, corporate: newData.data})
       dispatch({ type: "CORPORATE", corporate: newData.data })
       const corporateUsers = await getCorporateCustomers(newData.data.id)
-      console.log('these mfs',corporateUsers)
       dispatch({ type: "CORPORATEUSERS", payload: corporateUsers });
       const corporateUsersList = corporateUsers.map((corporate, index) => ({
         id: corporate[0],

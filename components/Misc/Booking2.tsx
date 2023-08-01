@@ -22,7 +22,6 @@ const Booking2 = () => {
     };
     const res = await getProfessionalDetail(data);
 
-
     const proDetail = JSON.parse(res.pro);
     const proService = JSON.parse(res.services);
 
