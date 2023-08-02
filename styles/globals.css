@@ -65,6 +65,7 @@ body {
 /* Apply green color to Fridays */
 .day.green-day {
   text-decoration: none;
+  cursor: pointer;
 }
 .dot{
   width: 1px;

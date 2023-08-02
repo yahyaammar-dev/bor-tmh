@@ -110,6 +110,7 @@ const Calendar: React.FC = () => {
         } else {
             setCurrentMonth(nextMonth);
         }
+        setPrevButtonDisabled(currentyear < currentYear || (currentyear === currentYear && currentmonth <= currentMonth));
     };
 
     const prevMonth = () => {

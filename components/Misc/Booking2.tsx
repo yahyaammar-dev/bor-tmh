@@ -3,19 +3,22 @@ import CategoryCheckbox from "./CategoryCheckbox";
 import Image from "next/image";
 import Button from "./Button";
 import { useRouter } from "next/router";
-import { getProfessionalDetail, getSubCategories,getcorporateprofessionalServices } from "@/apis";
+import {
+  getProfessionalDetail,
+  getSubCategories,
+  getcorporateprofessionalServices,
+} from "@/apis";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useDataHandler } from "@/utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
 
-const Booking2 = (props) => {
+const Booking2 = ({ loader, setLoader }) => {
   const router = useRouter();
   const reduxData = useSelector((state) => state);
   const [professionalDetail, setProfessionalDetail] = useState();
-  const [cart, setCart] = useState([])
-  const dispatch = useDispatch()
-
-
-  console.log('redux data is', reduxData)
+  const [cart, setCart] = useState([]);
+  const dispatch = useDispatch();
+  const { handleLocalData } = useDataHandler(setLoader);
 
   const getProfessionalDeatils = async () => {
     const data = {
@@ -25,8 +28,9 @@ const Booking2 = (props) => {
     };
     // const res = await getProfessionalDetail(data);
     // console.log( 'professional service', reduxData)
-    const res = await getcorporateprofessionalServices(reduxData?.appData?.currentProfessional?.id)
-    
+    const res = await getcorporateprofessionalServices(
+      reduxData?.appData?.currentProfessional?.id
+    );
 
     const proDetail = JSON.parse(res.professional);
     const proService = res.corporate_services;
@@ -46,13 +50,12 @@ const Booking2 = (props) => {
     setCart((cart) => [...cart, item]);
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     dispatch({
       type: "ADDCART",
-      payload: cart
-    })
-  },[cart])
+      payload: cart,
+    });
+  }, [cart]);
 
   useEffect(() => {
     getProfessionalDeatils();
@@ -123,21 +126,30 @@ const Booking2 = (props) => {
                 </div>
 
                 <button>
-                  <img src="/imgs/addcircle.svg" className="w-8" onClick={()=>handleProfessionalCart(item)} />
+                  <img
+                    src="/imgs/addcircle.svg"
+                    className="w-8"
+                    onClick={() => handleProfessionalCart(item)}
+                  />
                 </button>
               </div>
             ))}
-          </div>  
-          <div>
           </div>
+          <div></div>
         </div>
         <div className="flex gap-10 justify-end">
-            <Button text='Back' onClick={()=>{
-              router.push('/booking/booking1')
-            }} />
-            <Button text='Next' onClick={()=>{
-              router.push('/booking/booking3')
-            }}  />
+          <Button
+            text="Back"
+            onClick={() => {
+              router.push("/booking/booking1");
+            }}
+          />
+          <Button
+            text="Next"
+            onClick={() => {
+              router.push("/booking/booking3");
+            }}
+          />
         </div>
       </div>
 

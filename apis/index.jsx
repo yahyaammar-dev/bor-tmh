@@ -94,10 +94,10 @@ const getProfessionalDetail = async (data) => {
   }
 };
 
-const getAvailability = async () => {
+const getAvailability = async (data) => {
   try {
     const res = await axios.get(
-      "http://127.0.0.1:8000/it/front/booking/schedulejson?pro=22&sub=8&gender=f&services=%2C41%2C62/"
+      `http://127.0.0.1:8000/it/front/booking/schedulejson?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}&services=%2C41%2C62/`
     );
     return res.data;
   } catch (err) {
@@ -105,10 +105,11 @@ const getAvailability = async () => {
   }
 };
 
-const getAvailabilityData = async () => {
+const getAvailabilityData = async (data) => {
+  // console.log('date is', data)
   try {
     const res = await axios.get(
-      "http://127.0.0.1:8000/it/it/front/booking/get/times?duration=120&date=26-09-2023&pro=22"
+      "http://127.0.0.1:8000/it/front/booking/get/times?duration=120&date=26-09-2023&pro=22"
     );
     return res.data;
   } catch (err) {

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CategoryCheckbox from "./CategoryCheckbox";
 import Image from "next/image";
 import Button from "./Button";
 import Select from "react-select";
 import { useRouter } from "next/router";
+import { useDataHandler } from "@/utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
 
-const Booking4 = () => {
+
+const Booking4 = ({ loader, setLoader }) => {
+  const {
+    reduxData
+  } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
+
+  useEffect(() => {
+    console.log(reduxData)
+  },[])
   const cities = [
     { value: "Milano", label: "Milano" },
     { value: "Roma", label: "Roma" },
