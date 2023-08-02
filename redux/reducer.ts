@@ -17,7 +17,8 @@ const initialState = {
   currentSub: null,
   currentGen: null,
   currentProfessional: null,
-  corporate: []
+  corporate: [],
+  cart: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -159,10 +160,10 @@ const appData = (state = initialState, action) => {
         corporates: action.payload,
       };
     case "CORPORATE":
-        return {
-          ...state,
-          corporate: action.payload,
-        };
+      return {
+        ...state,
+        corporate: action.payload,
+      };
     case "REMOVEALLDATA":
       return {
         ...state,
@@ -181,10 +182,15 @@ const appData = (state = initialState, action) => {
         currentProfessional: null,
       };
     case "CORPORATEUSERS":
-        return {
-          ...state,
-          corporateUsers: action.payload
-        }
+      return {
+        ...state,
+        corporateUsers: action.payload,
+      };
+    case "CART":
+      return {
+        ...state,
+        cart: action.payload,
+      };
     default:
       return state;
   }

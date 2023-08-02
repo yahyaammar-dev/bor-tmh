@@ -161,11 +161,15 @@ export function useDataHandler(setLoader) {
       setCorporateCustomers(corporateUsersList);
       setLoader(false);
     } else if (newData.type == "corporateCategories"){
-      console.log('are you here?')
       setLoader(true);
       const categories = await getCategories(localData.city);
       setLocalData({ ...localData, categories: categories });
       dispatch({ type: "GETCATEGORIES", payload: categories });
+      setLoader(false);
+    } else if (newData.type === "updateCart"){
+      setLoader(true);
+      setLocalData({ ...localData, cart: newData.data });
+      dispatch({ type: "CART", payload: newData.data });
       setLoader(false);
     }
   };
