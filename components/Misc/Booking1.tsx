@@ -254,8 +254,8 @@ const Booking1 = ({ loader, setLoader }) => {
                   {reduxData?.appData?.professionals?.map((item) => {
                     return (
                       <Professional
-                        profile_image={item.image}
-                        fullName={item?.full_name}
+                        profile_image={`https://takemihome.it/${item.image}`}
+                        fullName={item?.full_name ? item?.full_name : item?.name ? item?.name : ''}
                         position={item?.position}
                         onClick={() => {
                           handleLocalData({

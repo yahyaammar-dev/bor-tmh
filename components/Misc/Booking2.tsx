@@ -7,12 +7,15 @@ import { getProfessionalDetail, getSubCategories,getcorporateprofessionalService
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-const Booking2 = () => {
+const Booking2 = (props) => {
   const router = useRouter();
   const reduxData = useSelector((state) => state);
   const [professionalDetail, setProfessionalDetail] = useState();
   const [cart, setCart] = useState([])
   const dispatch = useDispatch()
+
+
+  console.log('redux data is', reduxData)
 
   const getProfessionalDeatils = async () => {
     const data = {

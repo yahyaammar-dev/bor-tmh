@@ -137,7 +137,13 @@ export function useDataHandler(setLoader) {
       let proData = newData.data;
       dispatch({ type: "CURRENTPROFESSIONAL", payload: proData });
       setLoader(false);
-      router.push("/booking/booking2");
+      router.push({
+        pathname: '/booking/booking2',
+        query: { professional: newData.data }
+    })
+
+
+
     } else if (newData.type == "resetData") {
       setLocalData({});
       dispatch({ type: "REMOVEALLDATA" });
