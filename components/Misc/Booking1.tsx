@@ -24,6 +24,7 @@ const Booking1 = ({ loader, setLoader }) => {
     { value: "123123", label: "12312" },
   ];
   console.log('hello hello jello bello',reduxData);
+  console.log("cities",cities);
 
   return (
     <div>
@@ -79,7 +80,7 @@ const Booking1 = ({ loader, setLoader }) => {
                     Select a city
                   </h1>
                   <div className="flex justify-center gap-5">
-                    <div className="item w-1/6">
+                    <div className="item" style={{width:"160px",}}>
                       <Select
                         options={listCities}
                         onChange={(item) => {
@@ -92,7 +93,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         styles={selectStyles}
                       />
                     </div>
-                    <div className="item w-1/6">
+                    <div className="item" style={{width:"160px",}}>
                       <Select
                         options={postal}
                         // onChange={(item) => {
@@ -431,7 +432,7 @@ const Booking1 = ({ loader, setLoader }) => {
                   {reduxData?.appData?.professionals?.map((item) => {
                     return (
                       <Professional
-                        profile_image={item.profile_image.full_url}
+                        profile_image={item?.profile_image?.full_url}
                         fullName={item?.full_name}
                         position={item?.position}
                         onClick={() => {

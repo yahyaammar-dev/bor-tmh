@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   users: [],
   cities: [],
+  currentCity: null,
   categories: [],
   subCategories: [],
   genders: [],
@@ -78,6 +79,11 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         cities: null,
+      };
+      case "CURRENTCITY":
+      return {
+        ...state,
+        currentCity: action.payload,
       };
     case "GETCATEGORIES":
       return {
@@ -169,6 +175,7 @@ const appData = (state = initialState, action) => {
         ...state,
         users: null,
         cities: null,
+        currentCity: null,
         categories: null,
         genders: null,
         availibility: null,

@@ -1,6 +1,6 @@
 // dataHandler.js
 
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
@@ -15,6 +15,7 @@ import {
   getProfessionalFromCorporateServices
 } from "@/apis"; // Import your API functions here
 
+
 export function useDataHandler(setLoader) {
   const dispatch = useDispatch();
   const [localData, setLocalData] = useState({});
@@ -25,6 +26,9 @@ export function useDataHandler(setLoader) {
   const [corporatesList, setCorporateList] = useState([])
   const [corporateCustomerList, setCorporateCustomers] = useState([])
   const router = useRouter();
+
+  console.log(reduxData,"redux dtata")
+  
 
   const handleLocalData = async (newData) => {
     if (newData.type === "type") {
@@ -70,10 +74,10 @@ export function useDataHandler(setLoader) {
       setListCitites(citiesAsOption);
       setLoader(false);
     } else if (newData.type == "city") {
-
       if(localData.type == 'Corporate'){
         setLoader(true);
         setLocalData({...localData, city: newData.data})
+        dispatch({type: "CURRENTCITY", payload: newData.data})
         const corporates = await getCorporateClient(newData.data.value)
         dispatch({type: "CORPORATES", payload: corporates})
         console.log('Corporate Client::', corporates)
