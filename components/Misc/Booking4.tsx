@@ -105,9 +105,9 @@ const Booking4 = ({ loader, setLoader }) => {
               <div>
                 <div className="iconBox flex">
                   <img src="/imgs/add.png" />
-                  <p>{user[2] == null && user[3] == null ? (
+                  <p className="w-full">{user[2] == null && user[3] == null ? (
                     <div className="flex w-full">
-                      <label className="w">Enter the Address</label>
+                      <label className="w-1/2">Enter the Address</label>
                       <input className="border w-full" type="text" />
                     </div>
                     ) : user[2]  }</p>

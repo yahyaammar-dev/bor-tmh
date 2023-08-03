@@ -79,7 +79,7 @@ const Booking1 = ({ loader, setLoader }) => {
                     Select a city
                   </h1>
                   <div className="flex justify-center gap-5">
-                    <div className="item">
+                    <div className="item w-1/6">
                       <Select
                         options={listCities}
                         onChange={(item) => {
@@ -92,7 +92,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         styles={selectStyles}
                       />
                     </div>
-                    <div className="item">
+                    <div className="item w-1/6">
                       <Select
                         options={postal}
                         // onChange={(item) => {

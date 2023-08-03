@@ -332,7 +332,8 @@ const Booking2 = ({ loader, setLoader }) => {
           </div>
           <div className="flex justify-end">
         <input
-          className="bg-gray-500 py-4 px-6 border-none mx-2 my-2 text-center text-white cursor-pointer"
+          style={{backgroundColor:"#DAA520"}}
+          className="py-4 px-6 border-none mx-2 my-2 text-center text-white cursor-pointer"
           type="button"
           value="Next"
           onClick={handleNextPage}
