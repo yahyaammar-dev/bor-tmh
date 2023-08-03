@@ -73,36 +73,49 @@ const Booking4 = ({ loader, setLoader }) => {
 
       <div className="flex custom__conatiner mx-auto gap-4">
         <div className="w-6/12 border p-5">
-          <h3 className="font-bold">My Services</h3>
+          <h3 className="font-bold">Cart</h3>
           <p>Loreum ipsumips umipsu mipsumi psum ipsumipsu mipsumipsum ipsum</p>
           <ul>
-            <li>My Service</li>
-            <li>Beauty and wellness / Wazing/ woman</li>
-            <div className="category__checkbox flex gap-10 border py-3 justify-between px-3">
-              <p>Brows Lashes</p>
-              <div className="flex items-center">
-                <img src="/imgs/add.png" />
-                <p>15min</p>
-                <p className="mx-10">|</p>
-                <img src="/imgs/add.png" />
-                <p>15min</p>
-              </div>
+          <p>My Services</p>
+            {reduxData.appData.cart.map((item) => {
+              return(
+                <div>
+                <div className="category__checkbox flex gap-10 border py-3 justify-between px-3">
+                  <p>{item.name}</p>
+                  <div className="flex items-center">
+                    <img src="/imgs/add.png" />
+                    <p>{item.price}</p>
+                    <p className="mx-10">|</p>
+                    <img src="/imgs/add.png" />
+                    <p>{item.duration}</p>
+                  </div>
+                </div>
             </div>
+            )
+          })}
           </ul>
+          {/* <div className="iconBox flex">
+                  <img src="/imgs/add.png" />
+                  <p>{user[3] != null ? user[2] : "No Address"}</p>
+                </div> */}
         </div>
         <div className="w-6/12 border p-5">
-          <div className="iconBox flex">
-            <img src="/imgs/add.png" />
-            <p>Account test</p>
-          </div>
-          <div className="iconBox flex">
-            <img src="/imgs/add.png" />
-            <p>Account test</p>
-          </div>
-          <div className="iconBox flex">
-            <img src="/imgs/add.png" />
-            <p>Account test</p>
-          </div>
+          {reduxData.appData.corporateUsers && reduxData.appData.corporateUsers.map((user) => {
+            return(
+              <div>
+                <div className="iconBox flex">
+                  <img src="/imgs/add.png" />
+                  <p>{user[2] == null && user[3] == null ? (
+                    <div className="flex w-full">
+                      <label className="w">Enter the Address</label>
+                      <input className="border w-full" type="text" />
+                    </div>
+                    ) : user[2]  }</p>
+                </div>
+            </div>
+            )
+          })
+          }
           <div className="iconBox flex">
             <img src="/imgs/add.png" />
             <Select
@@ -135,8 +148,8 @@ const Booking4 = ({ loader, setLoader }) => {
         </div>
       </div>
       <div className="custom__conatiner mx-auto">
-        <div className="flex mt-2">
-          <div className="w-6/12">
+        <div className="flex justify-end">
+          {/* <div className="w-6/12">
             <div>
               <input placeholder="Add Gift Card" className="py-1 px-5 rounded mr-2" />
               Apply
@@ -152,7 +165,7 @@ const Booking4 = ({ loader, setLoader }) => {
                 <p>Total: 450</p>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="w-6/12">
             <Button text="Pay and Book" filled wfull />
           </div>

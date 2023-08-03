@@ -10,15 +10,26 @@ import {
 } from "@/apis";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useDataHandler } from "@/utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
+import { useDataHandler } from "@/utils/dataHandler";
 
-const Booking2 = ({ loader, setLoader }) => {
+const Booking2 = () => {
   const router = useRouter();
-  const reduxData = useSelector((state) => state);
   const [professionalDetail, setProfessionalDetail] = useState();
-  const [cart, setCart] = useState([]);
-  const dispatch = useDispatch();
-  const { handleLocalData } = useDataHandler(setLoader);
+  const [cart, setCart] = useState([])
+  const dispatch = useDispatch()
+  const [loader, setLoader] = useState(false)
+
+  const {
+    localData,
+    listUsers,
+    listCities,
+    cities,
+    handleLocalData,
+    reduxData,
+    corporatesList,
+    corporateCustomerList,
+  } = useDataHandler(setLoader); 
+
 
   const getProfessionalDeatils = async () => {
     const data = {
@@ -26,14 +37,21 @@ const Booking2 = ({ loader, setLoader }) => {
       subId: reduxData?.appData?.currentSub?.id,
       gender: reduxData?.appData?.currentGen?.id,
     };
-    // const res = await getProfessionalDetail(data);
-    // console.log( 'professional service', reduxData)
-    const res = await getcorporateprofessionalServices(
-      reduxData?.appData?.currentProfessional?.id
-    );
 
-    const proDetail = JSON.parse(res.professional);
-    const proService = res.corporate_services;
+    let res = null
+    let proDetail = null
+    let proService = null
+    if(reduxData.appData.type == 'Normal'){
+      res = await getProfessionalDetail(data);
+      proDetail = JSON.parse(res.pro);
+      proService = JSON.parse(res.services);
+    }else {
+      res = await getcorporateprofessionalServices(reduxData?.appData?.currentProfessional?.id)
+       proDetail = JSON.parse(res.professional);
+       proService = res.corporate_services;
+    }
+
+  
 
     // console.log( 'professional result', proDetail, proService)
 
@@ -48,14 +66,13 @@ const Booking2 = ({ loader, setLoader }) => {
 
   const handleProfessionalCart = (item) => {
     setCart((cart) => [...cart, item]);
+    let myCart = [...cart, item]
+    handleLocalData({
+      type: "updateCart",
+      data: myCart,
+    });
   };
 
-  useEffect(() => {
-    dispatch({
-      type: "ADDCART",
-      payload: cart,
-    });
-  }, [cart]);
 
   useEffect(() => {
     getProfessionalDeatils();
