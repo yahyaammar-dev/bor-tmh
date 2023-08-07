@@ -17,15 +17,14 @@ import axios from "axios";
 
 const Booking2 = ({ loader, setLoader }) => {
   const [times, setTimes] = useState<string[]>([]);
+  const [message, setMessage] = useState<string>("");
   const [data, setData] = useState<string[]>([]);
   const [availableDays, setAvailableDays] = useState<string[]>([]);
-  const [repeatableDatesNext6Months, setRepeatableDatesNext6Months] = useState<
-    string[]
-  >([]);
-  const [repeatableDays, setRepeatableDays] = useState<{
-    [key: number]: boolean;
-  }>({});
+  const [repeatableDatesNext6Months, setRepeatableDatesNext6Months] = useState<string[]>([]);
+  const [repeatableDays, setRepeatableDays] = useState<{[key: number]: boolean;}>({});
   const [currentDate] = useState(new Date());
+  const [checkTime , setCheckTime] = useState(false);
+  const [checkSaveDate , setCheckSaveDate] = useState(false);
   const [currentYear, setCurrentYear] = useState<number>(
     currentDate.getFullYear()
   );
@@ -40,7 +39,7 @@ const Booking2 = ({ loader, setLoader }) => {
   const navigate_to_booking3 = () => {
     router.push("/booking3");
   };
-  const { reduxData } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
+  const { reduxData , handleLocalData } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
   const getProfessionalAvailibility = async () => {
     try {
@@ -197,20 +196,64 @@ const Booking2 = ({ loader, setLoader }) => {
     //   console.error('Error:', error.message);
     // }
   };
+  const [selectedTime, setSelectedTime] = useState(null);
+
+  const handleTimeClick = (e) => {
+    const clickedTime = e.target.value;
+    setCheckTime(true);
+    if (selectedTime === clickedTime) {
+      setSelectedTime(null);
+    } else {
+      setSelectedTime(clickedTime);
+    }
+    handleLocalData({
+      type: "currenttime",
+      data: e.target.value
+    })
+  }
+
+    
+
+    // If the clicked button is already selected, unselect it
 
   const handleDateClick = (event) => {
     const clickedElement = event.target;
-    console.log("ssssdate", event.target.value);
-    getAvailabilityData().then((res) => {
-      console.log(res);
-      setTimes(res.times);
-    });
-    // if(clickedElement.classList.contains('green-day')){
-    //   getDayTime()
-    // }
+    const totalDuration = reduxData?.appData?.cart.reduce((total, item) => total + item.duration, 0);
+    const currentDate = `${clickedElement.innerText <= 9 ? 0 : ""}`+clickedElement.innerText+"-"+`${currentMonth <= 9 ? 0 : ""}`+currentMonth+"-"+currentYear;
+    console.log("ssssdate",currentDate);
+    handleLocalData({
+      type: "currentDate",
+      data: currentDate
+    })
+    const data = {
+      proId: reduxData?.appData?.currentProfessional?.id,
+      date: currentDate,
+      duration: totalDuration
+    }
+    
+    if(clickedElement.classList.contains('green-day')){
+      clickedElement.classList.add("bg_brown");
+      getAvailabilityData(data).then((res) => {
+        console.log(res);
+        setTimes(res.times);
+        setCheckTime(false);
+        setCheckSaveDate(false);
+        setMessage(res.message);
+      });
+      
+    }
   };
   const handleNextPage = () => {
-    router.push('/booking/booking4')
+    console.log(checkSaveDate);
+    if(checkSaveDate){
+      router.push('/booking/booking4')
+    }
+  }
+
+  const handleSaveDate = () => {
+    if(checkTime){
+      setCheckSaveDate(true)
+    }
   }
 
   return (
@@ -308,31 +351,43 @@ const Booking2 = ({ loader, setLoader }) => {
           <div className="border-b mt-12 border-gray-500"></div>
           <div>
             <div className="flex flex-wrap my-4">
-              {times &&
+              {times.length > 0 ?
                 times.map((time) => (
                   <div
                     key={time}
                     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 px-2"
                   >
                     <input
-                      className="bg-gray-500 py-4 px-6 border-none mx-2 my-2 text-center text-white cursor-pointer w-full"
+                      key={time}
+                      className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full ${
+                        selectedTime === time ? 'bg-yellow-500 text-black' : 'bg-gray-500 text-white'
+                      }`}
                       type="button"
                       value={time}
+                      onClick={handleTimeClick}
                     />
                   </div>
-                ))}
+                )) : <input
+                className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full bg-yellow-500 text-black`}
+                type="button"
+                value={reduxData?.appData?.currentTime}
+                onClick={handleTimeClick}
+              />}
+                {message && 
+                <p>{message}</p>
+                }
             </div>
 
             {/* <p className="w-3/4 my-0 my-6 text-justify bg-pink-100 p-4 mx-auto">
                             The required time for your service is: 110 min. There is no time slot available on this date, please select another date or contact the Concierge +39 333 8131426
                         </p> */}
           </div>
-          <div className="flex justify-center items-center bg-gray-500 w-1/2 mx-auto p-3 font-serif text-white">
-            <button>SAVE THE DATA AND TIME</button>
+          <div className="flex justify-center items-center bg-gray-500 w-1/2 mx-auto p-3 font-serif text-white" style={checkTime === true ? {backgroundColor:"#DAA520"} : {}}>
+            <button onClick={handleSaveDate}>SAVE THE DATA AND TIME</button>
           </div>
           <div className="flex justify-end">
         <input
-          style={{backgroundColor:"#DAA520"}}
+          style={checkSaveDate ?  {backgroundColor:"#DAA520"} : {backgroundColor:"#6B7280"} }
           className="py-4 px-6 border-none mx-2 my-2 text-center text-white cursor-pointer"
           type="button"
           value="Next"

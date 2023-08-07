@@ -107,7 +107,7 @@ const Booking4 = ({ loader, setLoader }) => {
                   <img src="/imgs/add.png" />
                   <p className="w-full">{user[2] == null && user[3] == null ? (
                     <div className="flex w-full">
-                      <label className="w-1/2">Enter the Address</label>
+                      <label className="w-2/3">Enter the Address</label>
                       <input className="border w-full" type="text" />
                     </div>
                     ) : user[2]  }</p>
@@ -116,8 +116,11 @@ const Booking4 = ({ loader, setLoader }) => {
             )
           })
           }
-          <div className="iconBox flex">
-            <img src="/imgs/add.png" />
+          <div className="iconBox flex h">
+            <div style={{height:"20px"}}>
+            <img src="/imgs/add.png" height="30px" width="27px" alt="Add Icon" />
+            </div>
+            <div className="w-full">
             <Select
               options={cities}
               // onChange={(item) => {
@@ -126,6 +129,7 @@ const Booking4 = ({ loader, setLoader }) => {
               placeholder="City"
               styles={selectStyles}
             />
+            </div>
           </div>
           <div>
             <p className="mt-5">

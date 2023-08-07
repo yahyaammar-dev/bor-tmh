@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Button from "@/components/Misc/Button";
 import Professional from "@/components/Misc/Professional";
@@ -8,6 +8,7 @@ import { useDataHandler } from "@/utils/dataHandler"; // Import the useDataHandl
 import CorporateBooking from "./CorporateBooking";
 
 const Booking1 = ({ loader, setLoader }) => {
+  const [dowloaded , setDowloaded] = useState(false);
   const {
     localData,
     listUsers,
@@ -25,9 +26,18 @@ const Booking1 = ({ loader, setLoader }) => {
   ];
   console.log('hello hello jello bello',reduxData);
   console.log("cities",cities);
+  useEffect(() => {
+    setDowloaded(true);
+  },[])
+
+
+  const handleMenuOpen = () => {
+    // e.target.options = listCities;
+  }
 
   return (
     <div>
+      {dowloaded && (<>
       {/* Booking 1 */}
       <div className="booking1 custom__conatiner mx-auto">
         {/* City */}
@@ -40,7 +50,7 @@ const Booking1 = ({ loader, setLoader }) => {
               <Button
                 text="Corporate Booking"
                 variant={
-                  localData?.type === "Corporate" ? "active" : "outlined"
+                  reduxData?.appData?.type === "Corporate" ? "active" : "outlined"
                 }
                 onClick={() => {
                   handleLocalData({
@@ -56,7 +66,7 @@ const Booking1 = ({ loader, setLoader }) => {
             <div className="item">
               <Button
                 text="Normal Booking"
-                variant={localData?.type === "Normal" ? "active" : "outlined"}
+                variant={reduxData?.appData?.type === "Normal" ? "active" : "outlined"}
                 onClick={() => {
                   handleLocalData({
                     type: "resetData",
@@ -71,7 +81,7 @@ const Booking1 = ({ loader, setLoader }) => {
           </div>
         </div>
 
-        {localData?.type === "Corporate" ? (
+        {reduxData?.appData?.type === "Corporate" ? (
           <div className="corporate_container">
             {reduxData?.appData?.cities?.length > 0 && (
               <Fade>
@@ -81,14 +91,23 @@ const Booking1 = ({ loader, setLoader }) => {
                   </h1>
                   <div className="flex justify-center gap-5">
                     <div className="item" style={{width:"160px",}}>
+                      {/* {console.log("dsdsdsdsd",reduxData?.appData?.currentCity?.value.toString())} */}
                       <Select
-                        options={listCities}
+                        value={reduxData?.appData?.currentCity}
+                        options={
+                          reduxData?.appData?.cities?.length > 0
+                            ? reduxData?.appData?.cities
+                            : reduxData?.appData?.currentCity ? 
+                            reduxData?.appData?.currentCity : []
+                        }
                         onChange={(item) => {
+                          console.log("current",item)
                           handleLocalData({
                             type: "city",
                             data: item,
                           });
                         }}
+                        onMenuOpen={handleMenuOpen}
                         placeholder="City"
                         styles={selectStyles}
                       />
@@ -116,8 +135,13 @@ const Booking1 = ({ loader, setLoader }) => {
                   </h1>
                   <div className="flex justify-center gap-5">
                     <div className="item">
+                      {/* {console.log("aasas",localData.corporate)} */}
                       <Select
-                        options={corporatesList}
+                        value={reduxData?.appData?.currCorporate != null ? reduxData?.appData?.currCorporate : "no data"}
+                        options={reduxData?.appData?.corporates?.length > 0
+                          ? reduxData?.appData?.corporates
+                          : reduxData?.appData?.currCorporate ? 
+                          reduxData?.appData?.currCorporate : []}
                         onChange={(item) => {
                           handleLocalData({
                             type: "corporate",
@@ -142,7 +166,11 @@ const Booking1 = ({ loader, setLoader }) => {
                   <div className="flex justify-center gap-5">
                     <div className="item">
                       <Select
-                        options={corporateCustomerList}
+                        value={reduxData?.appData?.currentCorporateUser != null ? reduxData?.appData?.currentCorporateUser : "no data"}
+                        options={reduxData?.appData?.corporateUsers?.length > 0
+                          ? reduxData?.appData?.corporateUsers
+                          : reduxData?.appData?.currentCorporateUser ? 
+                          reduxData?.appData?.currentCorporateUser : []}
                         onChange={(item) => {
                           handleLocalData({
                             type: "corporateCategories",
@@ -169,7 +197,7 @@ const Booking1 = ({ loader, setLoader }) => {
                       <Button
                         text={item?.name}
                         variant={
-                          localData?.category?.name == item?.name
+                          reduxData?.appData?.currentCat?.name == item?.name
                             ? "active"
                             : "outlined"
                         }
@@ -198,7 +226,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         <Button
                           text={item?.name}
                           variant={
-                            localData?.currentSubCat?.name == item?.name
+                            reduxData?.appData?.currentSub?.name == item?.name
                               ? "active"
                               : "outlined"
                           }
@@ -227,7 +255,7 @@ const Booking1 = ({ loader, setLoader }) => {
                       <Button
                         text={item?.name}
                         variant={
-                          localData?.currentGender?.name == item?.name
+                          reduxData?.appData?.currentGen?.name == item?.name
                             ? "active"
                             : "outlined"
                         }
@@ -450,6 +478,7 @@ const Booking1 = ({ loader, setLoader }) => {
           </div>
         )}
       </div>
+      </>)}
     </div>
   );
 };

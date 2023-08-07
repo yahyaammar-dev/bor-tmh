@@ -14,6 +14,7 @@ import {
   getCorporateCustomers,
   getProfessionalFromCorporateServices
 } from "@/apis"; // Import your API functions here
+import { type } from "os";
 
 
 export function useDataHandler(setLoader) {
@@ -37,13 +38,13 @@ export function useDataHandler(setLoader) {
         dispatch({ type: "TYPE", payload: newData.data });
         setLoader(true);
         const allCities = await getCities();
-        dispatch({ type: "GETCITIES", payload: allCities });
         setListCitites(allCities);
         const citiesAsOption = allCities.map((city) => ({
           id: city.id,
           value: city.name,
           label: city.name,
         }));
+        dispatch({ type: "GETCITIES", payload: citiesAsOption });
         setListCitites(citiesAsOption);
         setLoader(false);  
       } else {
@@ -64,28 +65,28 @@ export function useDataHandler(setLoader) {
       dispatch({ type: "USER", payload: newData.data });
       setLoader(true);
       const allCities = await getCities();
-      dispatch({ type: "GETCITIES", payload: allCities });
       setListCitites(allCities);
       const citiesAsOption = allCities.map((city) => ({
         id: city.id,
         value: city.name,
         label: city.name,
       }));
+      dispatch({ type: "GETCITIES", payload: citiesAsOption });
       setListCitites(citiesAsOption);
       setLoader(false);
     } else if (newData.type == "city") {
+      dispatch({type: "CURRENTCITY", payload: newData.data})
       if(localData.type == 'Corporate'){
         setLoader(true);
         setLocalData({...localData, city: newData.data})
-        dispatch({type: "CURRENTCITY", payload: newData.data})
         const corporates = await getCorporateClient(newData.data.value)
-        dispatch({type: "CORPORATES", payload: corporates})
         console.log('Corporate Client::', corporates)
         const corporatesAsOption = corporates.map((corporate, index) => ({
           id: corporate[0],
           value: corporate[1],
           label: corporate[1],
         }));
+        dispatch({type: "CORPORATES", payload: corporatesAsOption})
         setCorporateList(corporatesAsOption)
         setLoader(false)
       }else {
@@ -115,6 +116,8 @@ export function useDataHandler(setLoader) {
         // console.log(localData);
         setLoader(true);
         const res = await getProfessionalFromCorporateServices(localData?.currentSubCat.id)
+        setLocalData({ ...localData, currentGender: newData.data });
+        dispatch({ type: "CURRENTGENDER", payload: newData.data });
         // console.log('results ::', res)
         setLocalData({ ...localData, professionals: res });
         dispatch({ type: "GETPROFESSIONALS", payload: res });
@@ -153,19 +156,22 @@ export function useDataHandler(setLoader) {
       dispatch({ type: "REMOVEALLDATA" });
     } else if (newData.type == "corporate") {
       setLoader(true)
+      dispatch({ type: "CURRCORPORATE", payload: newData.data })
       setLocalData({...localData, corporate: newData.data})
-      dispatch({ type: "CORPORATE", corporate: newData.data })
+      dispatch({ type: "CORPORATE", payload: newData.data })
       const corporateUsers = await getCorporateCustomers(newData.data.id)
-      dispatch({ type: "CORPORATEUSERS", payload: corporateUsers });
       const corporateUsersList = corporateUsers.map((corporate, index) => ({
         id: corporate[0],
         value: corporate[1],
         label: corporate[1],
       }));
+      dispatch({ type: "CORPORATEUSERS", payload: corporateUsersList });
       setCorporateCustomers(corporateUsersList);
       setLoader(false);
     } else if (newData.type == "corporateCategories"){
       setLoader(true);
+      console.log('-------------------------')
+      dispatch({ type: "CURRENTCORPORATEUSER", payload: newData.data });
       const categories = await getCategories(localData.city);
       setLocalData({ ...localData, categories: categories });
       dispatch({ type: "GETCATEGORIES", payload: categories });
@@ -175,6 +181,11 @@ export function useDataHandler(setLoader) {
       setLocalData({ ...localData, cart: newData.data });
       dispatch({ type: "CART", payload: newData.data });
       setLoader(false);
+    }else if(newData.type === "currenttime"){
+      dispatch({ type: "CURRENTTIME", payload: newData.data })
+    }
+    else if(newData.type === "currentDate"){
+      dispatch({ type: "CURRENTDATE", payload: newData.data })
     }
   };
 

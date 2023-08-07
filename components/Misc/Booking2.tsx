@@ -65,13 +65,23 @@ const Booking2 = () => {
   };
 
   const handleProfessionalCart = (item) => {
-    setCart((cart) => [...cart, item]);
-    let myCart = [...cart, item]
-    handleLocalData({
-      type: "updateCart",
-      data: myCart,
-    });
+    // Check if the item already exists in the cart
+    const itemExists = cart.filter((cartItem) => cartItem.id === item.id);
+  
+    // If the item does not exist, add it to the cart and update local data
+    if (!itemExists) {
+      const myCart = [...cart, item];
+      setCart(myCart);
+  
+      // Update local data with the updated cart
+      handleLocalData({
+        type: "updateCart",
+        data: myCart,
+        duration: item.duration
+      });
+    }
   };
+  
 
 
   useEffect(() => {
@@ -131,7 +141,7 @@ const Booking2 = () => {
             </p>
             {professionalDetail?.proService?.map((item) => (
               <div className="flex gap-10 mt-3 mx-auto justify-center">
-                <div className="category__checkbox flex gap-10 border py-3 justify-between px-3 w-lg">
+                <div className="flex gap-10 border py-3 justify-between px-3 w-lg border border-black w-2/3">
                   <p>{item?.name}</p>
                   <div className="flex items-center">
                     <img src="/imgs/hand.svg" className="w-8" />
@@ -142,7 +152,7 @@ const Booking2 = () => {
                   </div>
                 </div>
 
-                <button>
+                <button style={reduxData?.appData?.cart.map((itm)=> itm?.name == item?.name )  ? {backgroundColor:"#6B7280",borderRadius:"20%"} : {}}>
                   <img
                     src="/imgs/addcircle.svg"
                     className="w-8"
@@ -158,7 +168,7 @@ const Booking2 = () => {
           <Button
             text="Back"
             onClick={() => {
-              router.push("/booking/booking1");
+              router.push("/booking");
             }}
           />
           <Button

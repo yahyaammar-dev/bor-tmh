@@ -106,10 +106,10 @@ const getAvailability = async (data) => {
 };
 
 const getAvailabilityData = async (data) => {
-  // console.log('date is', data)
+  console.log('date is', data)
   try {
     const res = await axios.get(
-      "http://127.0.0.1:8000/it/front/booking/get/times?duration=120&date=26-09-2023&pro=22"
+      `http://127.0.0.1:8000/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
     );
     return res.data;
   } catch (err) {

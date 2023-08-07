@@ -2,6 +2,10 @@ import { combineReducers } from "redux";
 
 // counterReducer.js
 const initialState = {
+  currentDate:null,
+  currentTime:null,
+  currentCorporateUser: null,
+  corporateUsers: [],
   type: null,
   user: null,
   users: [],
@@ -19,7 +23,8 @@ const initialState = {
   currentGen: null,
   currentProfessional: null,
   corporate: [],
-  cart: []
+  cart: [],
+  currCorporate: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -165,28 +170,57 @@ const appData = (state = initialState, action) => {
         ...state,
         corporates: action.payload,
       };
+    case "CURRENTCORPORATEUSER":
+        return {
+          ...state,
+          currentCorporateUser: action.payload,
+        };
     case "CORPORATE":
       return {
         ...state,
         corporate: action.payload,
       };
+    case "CURRCORPORATE":
+      return {
+        ...state,
+        currCorporate: action.payload,
+      };
+    case "CURRENTTIME":
+        return {
+          ...state,
+          currentTime: action.payload,
+        };
     case "REMOVEALLDATA":
       return {
         ...state,
-        users: null,
-        cities: null,
-        currentCity: null,
-        categories: null,
-        genders: null,
-        availibility: null,
-        availibilitydata: null,
+        currentTime:null,
+        currentCorporateUser: null,
         type: null,
+        user: null,
+        users: [],
+        cities: [],
+        currentCity: null,
+        categories: [],
         subCategories: [],
+        genders: [],
         professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        corporates: [],
         currentCat: null,
         currentSub: null,
         currentGen: null,
         currentProfessional: null,
+        corporate: [],
+        cart: [],
+        corporateUsers: [],
+        currentDate:null,
+        currCorporate: null
+      };
+    case "CURRENTDATE":
+      return {
+        ...state,
+        currentDate: action.payload,
       };
     case "CORPORATEUSERS":
       return {
