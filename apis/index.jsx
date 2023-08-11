@@ -12,7 +12,7 @@ const loginUser = async (values) => {
 
     return res.data;
   } catch (err) {
-    throw new Error("Login failed"); // Throw a custom error message
+    alert("Login failed"); // Throw a custom error message
   }
 };
 
@@ -23,7 +23,7 @@ const getUsers = async () => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch Users, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch Users, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -35,7 +35,7 @@ const getCities = async () => {
     return res.data;
   } catch (err) {
     console.log('errr', err)
-    throw new Error("Unable to fetch Cities, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch Cities, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -46,7 +46,7 @@ const getCategories = async (item) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch categories, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch categories, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -57,7 +57,7 @@ const getSubCategories = async (item) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch subcategories, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch subcategories, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -68,7 +68,7 @@ const getGenders = async (item) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch genders, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch genders, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -79,7 +79,7 @@ const getProfessionals = async (item) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch professionals, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch professionals, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -90,7 +90,7 @@ const getProfessionalDetail = async (data) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch professional detail, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch professional detail, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -101,7 +101,7 @@ const getAvailability = async (data) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch availibility of a professional, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch availibility of a professional, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -113,7 +113,7 @@ const getAvailabilityData = async (data) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch availibility time of professional, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch availibility time of professional, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -124,7 +124,7 @@ const getCorporateClient = async (city_name) => {
     );
     return res.data.corporate_clients;
   } catch (err) {
-    throw new Error("Unable to fetch corporate clients, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch corporate clients, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -135,7 +135,7 @@ const getCorporateServices = async (item) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch corporate services, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch corporate services, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -146,7 +146,7 @@ const getCorporateCustomers = async (corporateClientId) => {
     );
     return res.data.corporate_clients;
   } catch (err) {
-    throw new Error("Unable to fetch corporate customers, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch corporate customers, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -157,7 +157,7 @@ const getCorporateProfessionals = async (item) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -169,7 +169,7 @@ const getcorporateprofessionalServices = async (professionalId) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch corporate professional services, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch corporate professional services, something went wrong"); // Throw a custom error message
   }
 };
 
@@ -181,7 +181,7 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
     console.log(res)
     return res.data;
   } catch (err) {
-    throw new Error("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
   }
 };
 

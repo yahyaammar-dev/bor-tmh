@@ -65,8 +65,9 @@ const Booking2 = () => {
   };
 
   const handleProfessionalCart = (item) => {
+  
     // Check if the item already exists in the cart
-    const itemExists = cart.filter((cartItem) => cartItem.id === item.id);
+    const itemExists = cart.some((cartItem) => cartItem.id === item.id);
   
     // If the item does not exist, add it to the cart and update local data
     if (!itemExists) {
@@ -75,12 +76,30 @@ const Booking2 = () => {
   
       // Update local data with the updated cart
       handleLocalData({
+        type1:"remove",
+        type:"resetDataAfterCart"
+      })
+      handleLocalData({
         type: "updateCart",
         data: myCart,
-        duration: item.duration
+        duration: item.duration,
+      });
+    }
+    else{
+      const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id);
+      setCart(updatedCart)
+      handleLocalData({
+        type1:"remove",
+        type:"resetDataAfterCart"
+      })
+      handleLocalData({
+        type: "updateCart",
+        data: updatedCart,
+        duration: item.duration,
       });
     }
   };
+  
   
 
 
@@ -152,7 +171,7 @@ const Booking2 = () => {
                   </div>
                 </div>
 
-                <button style={reduxData?.appData?.cart.map((itm)=> itm?.name == item?.name )  ? {backgroundColor:"#6B7280",borderRadius:"20%"} : {}}>
+                <button style={reduxData?.appData?.cart?.some((itm)=> itm?.name == item?.name )  ? {backgroundColor:"#DAA520",borderRadius:"20%"} : {}}>
                   <img
                     src="/imgs/addcircle.svg"
                     className="w-8"

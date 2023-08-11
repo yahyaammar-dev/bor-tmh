@@ -31,9 +31,49 @@ const Booking1 = ({ loader, setLoader }) => {
   },[])
 
 
-  const handleMenuOpen = () => {
-    // e.target.options = listCities;
+  const handleAfterCity = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterCity",
+    });
   }
+  const handleAfterCategory = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterCategory",
+    });
+  }
+  const handleAfterSubCategory = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterSubCategory",
+    });
+  }
+  const handleAfterCorporate = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterCorporate",
+    });
+  }
+  const handleAfterCorporateUser = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterCorporateUser",
+    });
+  }
+  const handleAfterGender = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterGender",
+    });
+  }
+  const handleAfterProfessional = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterProfessional",
+    });
+  }
+  
 
   return (
     <div>
@@ -101,13 +141,12 @@ const Booking1 = ({ loader, setLoader }) => {
                             reduxData?.appData?.currentCity : []
                         }
                         onChange={(item) => {
-                          console.log("current",item)
+                          handleAfterCity()
                           handleLocalData({
                             type: "city",
                             data: item,
                           });
                         }}
-                        onMenuOpen={handleMenuOpen}
                         placeholder="City"
                         styles={selectStyles}
                       />
@@ -143,6 +182,7 @@ const Booking1 = ({ loader, setLoader }) => {
                           : reduxData?.appData?.currCorporate ? 
                           reduxData?.appData?.currCorporate : []}
                         onChange={(item) => {
+                          handleAfterCorporate(),
                           handleLocalData({
                             type: "corporate",
                             data: item,
@@ -172,6 +212,7 @@ const Booking1 = ({ loader, setLoader }) => {
                           : reduxData?.appData?.currentCorporateUser ? 
                           reduxData?.appData?.currentCorporateUser : []}
                         onChange={(item) => {
+                          handleAfterCorporateUser(),
                           handleLocalData({
                             type: "corporateCategories",
                             data: item,
@@ -202,6 +243,7 @@ const Booking1 = ({ loader, setLoader }) => {
                             : "outlined"
                         }
                         onClick={() => {
+                          handleAfterCategory(),
                           handleLocalData({
                             type: "category",
                             data: item,
@@ -231,6 +273,7 @@ const Booking1 = ({ loader, setLoader }) => {
                               : "outlined"
                           }
                           onClick={() => {
+                            handleAfterSubCategory(),
                             handleLocalData({
                               type: "subcategory",
                               data: item,
@@ -260,6 +303,7 @@ const Booking1 = ({ loader, setLoader }) => {
                             : "outlined"
                         }
                         onClick={() => {
+                          handleAfterGender(),
                           handleLocalData({
                             type: "gender",
                             data: item,
@@ -287,6 +331,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         fullName={item?.full_name ? item?.full_name : item?.name ? item?.name : ''}
                         position={item?.position}
                         onClick={() => {
+                          handleAfterProfessional(),
                           handleLocalData({
                             type: "professional",
                             data: item,

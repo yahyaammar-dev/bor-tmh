@@ -2,8 +2,8 @@ import { combineReducers } from "redux";
 
 // counterReducer.js
 const initialState = {
-  currentDate:null,
-  currentTime:null,
+  currentDate: null,
+  currentTime: null,
   currentCorporateUser: null,
   corporateUsers: [],
   type: null,
@@ -85,7 +85,7 @@ const appData = (state = initialState, action) => {
         ...state,
         cities: null,
       };
-      case "CURRENTCITY":
+    case "CURRENTCITY":
       return {
         ...state,
         currentCity: action.payload,
@@ -171,10 +171,10 @@ const appData = (state = initialState, action) => {
         corporates: action.payload,
       };
     case "CURRENTCORPORATEUSER":
-        return {
-          ...state,
-          currentCorporateUser: action.payload,
-        };
+      return {
+        ...state,
+        currentCorporateUser: action.payload,
+      };
     case "CORPORATE":
       return {
         ...state,
@@ -186,14 +186,14 @@ const appData = (state = initialState, action) => {
         currCorporate: action.payload,
       };
     case "CURRENTTIME":
-        return {
-          ...state,
-          currentTime: action.payload,
-        };
+      return {
+        ...state,
+        currentTime: action.payload,
+      };
     case "REMOVEALLDATA":
       return {
         ...state,
-        currentTime:null,
+        currentTime: null,
         currentCorporateUser: null,
         type: null,
         user: null,
@@ -214,8 +214,145 @@ const appData = (state = initialState, action) => {
         corporate: [],
         cart: [],
         corporateUsers: [],
-        currentDate:null,
+        currentDate: null,
         currCorporate: null
+      };
+    case "REMOVEAFTERCITY":
+      return {
+        ...state,
+        currentTime: null,
+        currentCorporateUser: null,
+        user: null,
+        categories: [],
+        subCategories: [],
+        genders: [],
+        professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        corporates: [],
+        currentCat: null,
+        currentSub: null,
+        currentGen: null,
+        currentProfessional: null,
+        corporate: [],
+        cart: [],
+        corporateUsers: [],
+        currentDate: null,
+        currCorporate: null
+      };
+    case "REMOVEAFTERCORPORATE":
+      return {
+        ...state,
+        currentTime: null,
+        currentCorporateUser: null,
+        user: null,
+        categories: [],
+        subCategories: [],
+        genders: [],
+        professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        currentCat: null,
+        currentSub: null,
+        currentGen: null,
+        currentProfessional: null,
+        cart: [],
+        corporateUsers: [],
+        currentDate: null,
+      };
+    case "REMOVEAFTERCORPORATEUSER":
+      return {
+        ...state,
+        currentTime: null,
+        user: null,
+        categories: [],
+        subCategories: [],
+        genders: [],
+        professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        currentCat: null,
+        currentSub: null,
+        currentGen: null,
+        currentProfessional: null,
+        cart: [],
+        currentDate: null,
+      };
+    case "REMOVEAFTERCATEGORY":
+      return {
+        ...state,
+        currentTime: null,
+        user: null,
+        subCategories: [],
+        genders: [],
+        professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        currentSub: null,
+        currentGen: null,
+        currentProfessional: null,
+        cart: [],
+        currentDate: null,
+      };
+    case "REMOVEAFTERSUBCATEGORY":
+      return {
+        ...state,
+        currentTime: null,
+        user: null,
+        genders: [],
+        professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        currentGen: null,
+        currentProfessional: null,
+        cart: [],
+        currentDate: null,
+      };
+    case "REMOVEAFTERGENDER":
+      return {
+        ...state,
+        currentTime: null,
+        user: null,
+        professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        currentProfessional: null,
+        cart: [],
+        currentDate: null,
+      };
+    case "REMOVEAFTERPROFESSIONAL":
+      return {
+        ...state,
+        currentTime: null,
+        user: null,
+        availibility: [],
+        availibilitydata: [],
+        cart: [],
+        currentDate: null,
+      };
+    case "REMOVEAFTERCART":
+      return {
+        ...state,
+        currentTime: null,
+        user: null,
+        availibility: [],
+        availibilitydata: [],
+        currentDate: null,
+      };
+    case "REMOVEAFTERDATE":
+      return {
+        ...state,
+        currentTime: null,
+        user: null,
+        availibility: [],
+        availibilitydata: [],
+      };
+    case "REMOVEAFTERTIME":
+      return {
+        ...state,
+        user: null,
+        availibility: [],
+        availibilitydata: [],
       };
     case "CURRENTDATE":
       return {

@@ -39,7 +39,7 @@ export function useDataHandler(setLoader) {
         setLoader(true);
         const allCities = await getCities();
         setListCitites(allCities);
-        const citiesAsOption = allCities.map((city) => ({
+        const citiesAsOption = allCities?.map((city) => ({
           id: city.id,
           value: city.name,
           label: city.name,
@@ -54,7 +54,7 @@ export function useDataHandler(setLoader) {
         const allUsers = await getUsers();
         dispatch({ type: "USERS", payload: allUsers });
         setLoader(false);
-        const usersAsOptions = allUsers.map((user) => ({
+        const usersAsOptions = allUsers?.map((user) => ({
           value: user,
           label: user,
         }));
@@ -66,7 +66,7 @@ export function useDataHandler(setLoader) {
       setLoader(true);
       const allCities = await getCities();
       setListCitites(allCities);
-      const citiesAsOption = allCities.map((city) => ({
+      const citiesAsOption = allCities?.map((city) => ({
         id: city.id,
         value: city.name,
         label: city.name,
@@ -81,7 +81,7 @@ export function useDataHandler(setLoader) {
         setLocalData({...localData, city: newData.data})
         const corporates = await getCorporateClient(newData.data.value)
         console.log('Corporate Client::', corporates)
-        const corporatesAsOption = corporates.map((corporate, index) => ({
+        const corporatesAsOption = corporates?.map((corporate, index) => ({
           id: corporate[0],
           value: corporate[1],
           label: corporate[1],
@@ -160,7 +160,7 @@ export function useDataHandler(setLoader) {
       setLocalData({...localData, corporate: newData.data})
       dispatch({ type: "CORPORATE", payload: newData.data })
       const corporateUsers = await getCorporateCustomers(newData.data.id)
-      const corporateUsersList = corporateUsers.map((corporate, index) => ({
+      const corporateUsersList = corporateUsers?.map((corporate, index) => ({
         id: corporate[0],
         value: corporate[1],
         label: corporate[1],
@@ -186,6 +186,38 @@ export function useDataHandler(setLoader) {
     }
     else if(newData.type === "currentDate"){
       dispatch({ type: "CURRENTDATE", payload: newData.data })
+    }
+    else if(newData.type1 === "remove"){
+      if(newData.type === "resetDataAfterCity"){
+        dispatch({ type: "REMOVEAFTERCITY" });
+      }
+      if(newData.type === "resetDataAfterCategory"){
+        dispatch({ type: "REMOVEAFTERCATEGORY" });
+      }
+      if(newData.type === "resetDataAfterSubCategory"){
+        dispatch({ type: "REMOVEAFTERSUBCATEGORY" });
+      }
+      if(newData.type === "resetDataAfterCorporate"){
+        dispatch({ type: "REMOVEAFTERCORPORATE" });
+      }
+      if(newData.type === "resetDataAfterCorporateUser"){
+        dispatch({ type: "REMOVEAFTERCORPORATEUSER" });
+      }
+      if(newData.type === "resetDataAfterGender"){
+        dispatch({ type: "REMOVEAFTERGENDER" });
+      }
+      if(newData.type === "resetDataAfterProfessional"){
+        dispatch({ type: "REMOVEAFTERPROFESSIONAL" });
+      }
+      if(newData.type === "resetDataAfterCart"){
+        dispatch({ type: "REMOVEAFTERCART" });
+      }
+      if(newData.type === "resetDataAfterDate"){
+        dispatch({ type: "REMOVEAFTERDATE" });
+      }
+      if(newData.type === "resetDataAfterTime"){
+        dispatch({ type: "REMOVEAFTERTIME" });
+      }
     }
   };
 

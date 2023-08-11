@@ -210,6 +210,8 @@ const Booking2 = ({ loader, setLoader }) => {
       type: "currenttime",
       data: e.target.value
     })
+    setCheckSaveDate(false)
+    handleAfterTime()
   }
 
     
@@ -240,15 +242,28 @@ const Booking2 = ({ loader, setLoader }) => {
         setCheckSaveDate(false);
         setMessage(res.message);
       });
-      
+      handleAfterDate()
     }
   };
+  const handleAfterDate = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterDate",
+    });
+  }
+  const handleAfterTime = () => {
+    handleLocalData({
+      type1:"remove",
+      type: "resetDataAfterTime",
+    });
+  }
   const handleNextPage = () => {
     console.log(checkSaveDate);
     if(checkSaveDate){
       router.push('/booking/booking4')
     }
   }
+
 
   const handleSaveDate = () => {
     if(checkTime){
@@ -367,12 +382,13 @@ const Booking2 = ({ loader, setLoader }) => {
                       onClick={handleTimeClick}
                     />
                   </div>
-                )) : <input
+                )) : reduxData?.appData?.currentTime ?
+                <input
                 className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full bg-yellow-500 text-black`}
                 type="button"
                 value={reduxData?.appData?.currentTime}
                 onClick={handleTimeClick}
-              />}
+              /> : ""}
                 {message && 
                 <p>{message}</p>
                 }
