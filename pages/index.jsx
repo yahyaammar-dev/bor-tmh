@@ -6,7 +6,7 @@ import Italian from "../intl/it.json";
 export default function App() {
   const [locale, setLocale] = useState("en");
   const messages = { English, Italian };
-  const handleChange = (event: any) => {
+  const handleChange = (event) => {
     setLocale(event.target.value);
   };
 

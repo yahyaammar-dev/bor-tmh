@@ -1,5 +1,5 @@
   // Define custom styles for React Select
-  export const selectStyles = {
+  const selectStyles = {
     container: (provided) => ({
       ...provided,
       width: "200px", // Adjust the width of the select container as needed
@@ -26,3 +26,5 @@
       color: "black", // Change the color of the selected value text
     }),
   };
+
+  export default selectStyles

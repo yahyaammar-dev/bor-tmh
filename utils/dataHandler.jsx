@@ -13,7 +13,7 @@ import {
   getCorporateClient,
   getCorporateCustomers,
   getProfessionalFromCorporateServices
-} from "@/apis"; // Import your API functions here
+} from "../apis"; // Import your API functions here
 import { type } from "os";
 
 

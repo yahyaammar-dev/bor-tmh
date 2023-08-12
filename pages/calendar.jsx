@@ -1,16 +1,16 @@
-import Footer from "@/components/Misc/Footer";
-import Navbar from "@/components/Misc/Navbar";
+import Footer from "../components/Misc/Footer";
+import Navbar from "../components/Misc/Navbar";
 import { useEffect, useState } from "react";
 
 
-const Calendar: React.FC = () => {
-    const [data, setData] = useState<string[]>([]);
-    const [availableDays, setAvailableDays] = useState<string[]>([]);
-    const [repeatableDatesNext6Months, setRepeatableDatesNext6Months] = useState<string[]>([]);
-    const [repeatableDays, setRepeatableDays] = useState<{ [key: number]: boolean }>({});
+const Calendar = () => {
+    const [data, setData] = useState([]);
+    const [availableDays, setAvailableDays] = useStat([]);
+    const [repeatableDatesNext6Months, setRepeatableDatesNext6Months] = useState([]);
+    const [repeatableDays, setRepeatableDays] = useState({});
     const [currentDate] = useState(new Date());
-    const [currentYear, setCurrentYear] = useState<number>(currentDate.getFullYear());
-    const [currentMonth, setCurrentMonth] = useState<number>(currentDate.getMonth());
+    const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
+    const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
     const [prevButtonDisabled, setPrevButtonDisabled] = useState(true);
     const currentmonth = currentMonth;
     const currentyear = currentYear;
@@ -25,7 +25,7 @@ const Calendar: React.FC = () => {
             .catch((err) => console.log(err.message));
     }, []);
 
-    function getLastDayOfMonth(year: number, month: number): number {
+    function getLastDayOfMonth(year, month ) {
         return new Date(year, month + 1, 0).getDate();
     }
 
@@ -36,7 +36,7 @@ const Calendar: React.FC = () => {
         sixMonthsLater.setMonth(currentDate.getMonth() + 6);
 
         const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
-        const repeatableDates: string[] = [];
+        const repeatableDates = [];
 
         for (let currentDay = currentDate; currentDay <= sixMonthsLater; currentDay.setTime(currentDay.getTime() + oneDay)) {
             const currentDayOfWeek = currentDay.getDay();
@@ -53,7 +53,7 @@ const Calendar: React.FC = () => {
     useEffect(() => {
         // Step 4: Iterate through 'availableDays' and store repeatable days
         if (availableDays && availableDays.length > 0) {
-            const repeatableDaysObj: { [key: number]: boolean } = {};
+            const repeatableDaysObj = {};
             availableDays.forEach((day) => {
                 if (day.repeatable && !day.deleted) {
                     repeatableDaysObj[day.day] = true; // Mark the day as repeatable
@@ -63,7 +63,7 @@ const Calendar: React.FC = () => {
         }
     }, [availableDays]);
 
-    const createCalendar = (year: number, month: number) => {
+    const createCalendar = (year, month) => {
         const daysContainer = document.querySelector(".days-container");
         if (!daysContainer) return;
 
