@@ -126,9 +126,14 @@ const getAvailabilityData = async (data) => {
 const getCorporateClient = async (city_name) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
+      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
     );
-    return res.data.corporate_clients;
+    if(res.data.error){
+      return res.data;
+    }else{
+      return res.data.corporate_clients;
+    }
+    
   } catch (err) {
     alert("Unable to fetch corporate clients, something went wrong"); // Throw a custom error message
   }
@@ -156,10 +161,10 @@ const getCorporateCustomers = async (corporateClientId) => {
   }
 };
 
-const getCorporateProfessionals = async (item) => {
+const getCorporateProfessionals = async (corporateServiceId,gender) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/corporateprofessionals/${corporateServiceId}`
+      `http://127.0.0.1:8000/it/front/booking/corporateprofessionals/${corporateServiceId}/${gender}`
     );
     return res.data;
   } catch (err) {

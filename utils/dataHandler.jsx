@@ -12,6 +12,7 @@ import {
   getUsers,
   getCorporateClient,
   getCorporateCustomers,
+  getCorporateProfessionals,
   getProfessionalFromCorporateServices
 } from "../pages/api/hello"; // Import your API functions here
 import { type } from "os";
@@ -80,14 +81,19 @@ export function useDataHandler(setLoader) {
         setLoader(true);
         setLocalData({...localData, city: newData.data})
         const corporates = await getCorporateClient(newData.data.value)
+        if(corporates.error){
+          alert(corporates.error);
+          // console.log(corporates)
+        }else{
+          const corporatesAsOption = corporates?.map((corporate, index) => ({
+            id: corporate[0],
+            value: corporate[1],
+            label: corporate[1],
+          }));
+          dispatch({type: "CORPORATES", payload: corporatesAsOption})
+          setCorporateList(corporatesAsOption)
+        }
         console.log('Corporate Client::', corporates)
-        const corporatesAsOption = corporates?.map((corporate, index) => ({
-          id: corporate[0],
-          value: corporate[1],
-          label: corporate[1],
-        }));
-        dispatch({type: "CORPORATES", payload: corporatesAsOption})
-        setCorporateList(corporatesAsOption)
         setLoader(false)
       }else {
         setLoader(true);
@@ -118,7 +124,11 @@ export function useDataHandler(setLoader) {
         dispatch({ type: "CURRENTGENDER", payload: newData.data });
         console.log('-----------------------------------------------------',localData);
         const res = await getCorporateProfessionals(localData?.currentSubCat.id,newData.data.id)
-        // console.log('results ::', res)
+        if(res.error){
+          alert(res.error);
+          // console.log(corporates)
+        }
+        // console.log('results ::', res.error)
         setLocalData({ ...localData, professionals: res });
         dispatch({ type: "GETPROFESSIONALS", payload: res });
         // console.log(localData)
