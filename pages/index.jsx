@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IntlProvider, FormattedMessage } from "react-intl";
 import English from "../intl/en.json";
 import Italian from "../intl/it.json";
+import { useRouter } from "next/router";
 
 export default function App() {
   const [locale, setLocale] = useState("en");
@@ -9,6 +10,12 @@ export default function App() {
   const handleChange = (event) => {
     setLocale(event.target.value);
   };
+
+  const router = useRouter()
+
+  useEffect(()=>{
+    router.push('/booking')
+  },[])
 
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
