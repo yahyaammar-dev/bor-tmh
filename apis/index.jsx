@@ -3,7 +3,7 @@ import axios from "axios";
 const loginUser = async (values) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/it/api/public_api/subcategories/loginAdmin",
+      "http://20.236.136.145/it/api/public_api/subcategories/loginAdmin",
       {
         email: values.email,
         password: values.password,
@@ -19,7 +19,7 @@ const loginUser = async (values) => {
 const getUsers = async () => {
   try {
     const res = await axios.get(
-      "http://127.0.0.1:8000/it/api/public_api/subcategories/getAllUser"
+      "http://20.236.136.145/it/api/public_api/subcategories/getAllUser"
     );
     return res.data;
   } catch (err) {
@@ -30,7 +30,7 @@ const getUsers = async () => {
 const getCities = async () => {
   try {
     const res = await axios.get(
-      "http://127.0.0.1:8000/it/front/booking/cities"
+      "http://20.236.136.145/it/front/booking/cities"
     );
     return res.data;
   } catch (err) {
@@ -42,7 +42,7 @@ const getCities = async () => {
 const getCategories = async (item) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/categories/${item.id}`,
+      `http://20.236.136.145/it/front/booking/categories/${item.id}`,
     );
     return res.data;
   } catch (err) {
@@ -53,7 +53,7 @@ const getCategories = async (item) => {
 const getSubCategories = async (item) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/sub/${item.id}`
+      `http://20.236.136.145/it/front/booking/sub/${item.id}`
     );
     return res.data;
   } catch (err) {
@@ -64,7 +64,7 @@ const getSubCategories = async (item) => {
 const getGenders = async (item) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/gender/${item}`
+      `http://20.236.136.145/it/front/booking/gender/${item}`
     );
     return res.data;
   } catch (err) {
@@ -75,7 +75,7 @@ const getGenders = async (item) => {
 const getProfessionals = async (item) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/professionals/${item.localData.currentSubCat.id}/${item.data.id}`
+      `http://20.236.136.145/it/front/booking/professionals/${item.localData.currentSubCat.id}/${item.data.id}`
     );
     return res.data;
   } catch (err) {
@@ -86,7 +86,7 @@ const getProfessionals = async (item) => {
 const getProfessionalDetail = async (data) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/services/json?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}`
+      `http://20.236.136.145/it/front/booking/services/json?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}`
     );
     return res.data;
   } catch (err) {
@@ -97,7 +97,7 @@ const getProfessionalDetail = async (data) => {
 const getAvailability = async (data) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/schedulejson?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}&services=%2C41%2C62/`
+      `http://20.236.136.145/it/front/booking/schedulejson?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}&services=%2C41%2C62/`
     );
     return res.data;
   } catch (err) {
@@ -109,7 +109,7 @@ const getAvailabilityData = async (data) => {
   console.log('date is', data)
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
+      `http://20.236.136.145/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
     );
     return res.data;
   } catch (err) {
@@ -120,7 +120,7 @@ const getAvailabilityData = async (data) => {
 const getCorporateClient = async (city_name) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
+      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
     );
     return res.data.corporate_clients;
   } catch (err) {
@@ -131,7 +131,7 @@ const getCorporateClient = async (city_name) => {
 const getCorporateServices = async (item) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateServiceByCity/${city_name}`
+      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateServiceByCity/${city_name}`
     );
     return res.data;
   } catch (err) {
@@ -142,7 +142,7 @@ const getCorporateServices = async (item) => {
 const getCorporateCustomers = async (corporateClientId) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateCustomers/${corporateClientId}`
+      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateCustomers/${corporateClientId}`
     );
     return res.data.corporate_clients;
   } catch (err) {
@@ -153,7 +153,7 @@ const getCorporateCustomers = async (corporateClientId) => {
 const getCorporateProfessionals = async (item) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/corporateprofessionals/${corporateServiceId}`
+      `http://20.236.136.145/it/front/booking/corporateprofessionals/${corporateServiceId}`
     );
     return res.data;
   } catch (err) {
@@ -165,7 +165,7 @@ const getCorporateProfessionals = async (item) => {
 const getcorporateprofessionalServices = async (professionalId) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/corporateprofessionalServices/${professionalId}`
+      `http://20.236.136.145/it/front/booking/corporateprofessionalServices/${professionalId}`
     );
     return res.data;
   } catch (err) {
@@ -176,7 +176,7 @@ const getcorporateprofessionalServices = async (professionalId) => {
 const getProfessionalFromCorporateServices = async (subCatId) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
+      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
     );
     console.log(res)
     return res.data;
