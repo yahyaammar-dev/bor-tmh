@@ -3,6 +3,7 @@ import { IntlProvider, FormattedMessage } from "react-intl";
 import English from "../intl/en.json";
 import Italian from "../intl/it.json";
 import { useRouter } from "next/router";
+import Booking from './booking'
 
 export default function App() {
   const [locale, setLocale] = useState("en");
@@ -13,10 +14,6 @@ export default function App() {
 
   const router = useRouter()
 
-  useEffect(()=>{
-    router.push('/booking')
-  },[])
-
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
       {/* <select onChange={handleChange}>
@@ -24,7 +21,7 @@ export default function App() {
         <option value="it">it</option>
       </select> */}
         <div className="App">
-          <FormattedMessage id="welcome" />
+          <Booking /> 
         </div>
     </IntlProvider>
   );
