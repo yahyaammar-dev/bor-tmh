@@ -9,7 +9,7 @@ import {
   getcorporateprofessionalServices,
   getAvailability,
   getAvailabilityData,
-} from "../../apis";
+} from "../../pages/api/hello";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file

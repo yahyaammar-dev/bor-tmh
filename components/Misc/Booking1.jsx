@@ -131,7 +131,7 @@ const Booking1 = ({ loader, setLoader }) => {
                     Select a city
                   </h1>
                   <div className="flex justify-center gap-5">
-                    <div className="item" style={{width:"160px",}}>
+                    <div className="item" >
                       {/* {console.log("dsdsdsdsd",reduxData?.appData?.currentCity?.value.toString())} */}
                       <Select
                         value={reduxData?.appData?.currentCity}
@@ -152,7 +152,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         styles={selectStyles}
                       />
                     </div>
-                    <div className="item" style={{width:"160px",}}>
+                    <div className="item">
                       <Select
                         options={postal}
                         // onChange={(item) => {
