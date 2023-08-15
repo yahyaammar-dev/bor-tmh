@@ -113,12 +113,11 @@ export function useDataHandler(setLoader) {
       setLoader(false);
     } else if (newData.type == "gender") {
       if(localData.type == "Corporate") {
-        // console.log(localData);
         setLoader(true);
-        // getCorporateProfessionals
-        const res = await getCorporateProfessionals(localData?.currentSubCat.id)
         setLocalData({ ...localData, currentGender: newData.data });
         dispatch({ type: "CURRENTGENDER", payload: newData.data });
+        console.log('-----------------------------------------------------',localData);
+        const res = await getCorporateProfessionals(localData?.currentSubCat.id,newData.data.id)
         // console.log('results ::', res)
         setLocalData({ ...localData, professionals: res });
         dispatch({ type: "GETPROFESSIONALS", payload: res });
