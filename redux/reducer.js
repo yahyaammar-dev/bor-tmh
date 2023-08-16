@@ -24,7 +24,10 @@ const initialState = {
   currentProfessional: null,
   corporate: [],
   cart: [],
-  currCorporate: null
+  currCorporate: null,
+  newAddress: null,
+  currCorporate: null,
+  newCity: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -369,9 +372,20 @@ const appData = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
+    case "NEWADDRESS":
+      return{
+        ...state,
+        newAddress: action.payload,
+      }
+    case "NEWCITY":
+      return{
+        ...state,
+        newCity: action.payload,
+      }
     default:
       return state;
-  }
+  };
+  
 };
 
 // reducers/index.js

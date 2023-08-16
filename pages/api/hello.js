@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
+>>>>>>> 40423954ea77ce5a0121b9cb1eda40134b4c66dc
 import axios from "axios";
 
 const loginUser = async (values) => {
@@ -188,6 +191,30 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
   } catch (err) {
     alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
   }
+  
+};
+
+const SetNewPrimaryAddress = async (address, city, userId) => {
+  try {
+    const requestBody = 
+      {
+      "userId": userId,
+      "address": address,
+      "address2": "street name 2",
+      "postalCode": "56165",
+      "city": city
+    }
+
+    const res = await axios.post(
+      "http://127.0.0.1:8000/it/front/booking/new_primary",
+      requestBody
+    );
+
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    throw new Error("Unable to fetch corporate professionals, something went wrong");
+  }
 };
 
 
@@ -220,5 +247,6 @@ export {
   getCorporateProfessionals,
   getProfessionalFromCorporateServices,
   getcorporateprofessionalServices,
+  SetNewPrimaryAddress,
   intiateBooking
 };
