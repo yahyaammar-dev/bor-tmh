@@ -121,7 +121,7 @@ const getAvailabilityData = async (data) => {
 const getCorporateClient = async (city_name) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
+      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
     );
     if(res.data.error){
       return res.data;
