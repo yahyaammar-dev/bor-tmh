@@ -9,12 +9,15 @@ import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataH
 
 const Booking4 = ({ loader, setLoader }) => {
   const {
-    reduxData
+    reduxData,
+    handleLocalData,
+    confirmation,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
+  
 
   useEffect(() => {
     console.log(reduxData)
-  }, [])
+  },[])
   const cities = [
     { value: "Milano", label: "Milano" },
     { value: "Roma", label: "Roma" },
@@ -98,30 +101,61 @@ const Booking4 = ({ loader, setLoader }) => {
                   <p>{user[3] != null ? user[2] : "No Address"}</p>
                 </div> */}
         </div>
-        <div className="w-6/12 border p-5">
-          {reduxData.appData.corporateUsers && reduxData.appData.corporateUsers.map((user) => {
-            return (
+        <div className="w-6/12 border p-5 checkout_address">
+        <div>
+                <div className="iconBox flex">
+                  <p className="w-full">
+                    <div className="flex w-full">
+                      <label className="w-2/3">Address</label>
+                      <p>Via Giovanni da Procida, 23 20145 Milano</p>
+                    </div>
+                    </p>
+                </div>
+            </div>
               <div>
                 <div className="iconBox flex">
                   <img src="/imgs/add.png" />
-                  <p className="w-full">{user[2] == null && user[3] == null ? (
+                  <p className="w-full">
                     <div className="flex w-full">
-                      <label className="w-2/3">Enter the Address</label>
-                      <input className="border w-full" type="text" />
+                      <label className="w-2/3">Enter new Address</label>
+                      <input className="border w-full"
+                      onChange={(item)=> handleLocalData({
+                        type: "address",
+                        data: item,
+                      })}
+                       type="text" />
                     </div>
-                  ) : user[2]}</p>
+                    </p>
                 </div>
-              </div>
-            )
-          })
-          }
+            </div>
           <div className="iconBox flex h">
-            <div style={{ height: "20px" }}>
-              <img src="/imgs/add.png" height="30px" width="27px" alt="Add Icon" />
+            <div style={{height:"20px"}}>
+            <img src="/imgs/add.png" height="30px" width="27px" alt="Add Icon" />
             </div>
             <div className="w-full">
+            {/* <Select
+              options={cities}
+              onChange={(item)=> handleLocalData({
+                type: "newcity",
+                data: item,
+              })}
+              // onChange={(item) => {
+              //   setLocale(item.value);
+              // }}
+              placeholder="City"
+              styles={selectStyles}
+            /> */}
               <Select
-                options={cities}
+                options={
+                  reduxData?.appData?.cities?.length > 0
+                    ? reduxData?.appData?.cities
+                    : reduxData?.appData?.currentCity ? 
+                    reduxData?.appData?.currentCity : []
+                }
+                onChange={(item)=> handleLocalData({
+                  type: "newcity",
+                  data: item,
+                })}
                 // onChange={(item) => {
                 //   setLocale(item.value);
                 // }}
@@ -129,6 +163,17 @@ const Booking4 = ({ loader, setLoader }) => {
                 styles={selectStyles}
               />
             </div>
+          </div>
+          <div className="iconBox flex h">
+            <div style={{height:"20px"}}>
+            <Button text="Add address" filled wfull
+            onClick={() => {
+              handleLocalData({
+                type: "addAdress",
+              })}}
+             />
+            </div>
+            {confirmation.address ? <p style={{color:"green"}}>Address Added</p>: null}
           </div>
           <div>
             <p className="mt-5">

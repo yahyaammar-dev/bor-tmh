@@ -27,6 +27,11 @@ export function useDataHandler(setLoader) {
   const [cities, setCitites] = useState([]);
   const [corporatesList, setCorporateList] = useState([])
   const [corporateCustomerList, setCorporateCustomers] = useState([])
+  const [city, setCity] = useState([])
+  const [address, setAddress] = useState([])
+  const [confirmation, setConfirmation] = useState({
+    address :""
+})
   const router = useRouter();
 
   console.log(reduxData,"redux dtata")
@@ -197,6 +202,32 @@ export function useDataHandler(setLoader) {
     else if(newData.type === "currentDate"){
       dispatch({ type: "CURRENTDATE", payload: newData.data })
     }
+    else if(newData.type === "newcity"){
+      setCity(newData.data)
+      // console.log('-------- ',newData.data.id)
+    }
+    else if(newData.type === "address"){
+      setAddress(newData.data.target.value)
+      // console.log('-------- ',newData.data.target.value)
+    }
+    else if(newData.type === "addAdress"){
+      setLocalData({ ...localData, newAdress: address, newCity: city});
+      dispatch({ type: "NEWADDRESS", payload: address});
+      dispatch({ type: "NEWCITY", payload:city });
+      if (address.length > 0 && city.value.length > 0) {
+        setConfirmation(prevConfirmation => ({
+          ...prevConfirmation,
+          address: "success"
+        }));
+      } else {
+        setConfirmation(prevConfirmation => ({
+          ...prevConfirmation,
+          address: ""
+        }));
+      }
+      // const setAddress = await SetNewPrimaryAddress(address, city.id, reduxData.appData.currentCorporateUser.id)
+      // console.log(setAddress);
+    }
     else if(newData.type1 === "remove"){
       if(newData.type === "resetDataAfterCity"){
         dispatch({ type: "REMOVEAFTERCITY" });
@@ -239,6 +270,7 @@ export function useDataHandler(setLoader) {
     handleLocalData,
     reduxData,
     corporatesList,
-    corporateCustomerList
+    corporateCustomerList,
+    confirmation,
   };
 }
