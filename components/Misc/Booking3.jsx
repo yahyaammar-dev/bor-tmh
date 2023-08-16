@@ -52,12 +52,10 @@ const Booking2 = ({ loader, setLoader }) => {
       // fetch("http://localhost:3001/availableDays")
       // .then(res => res.json())
       // .then((data) => {
-      //   console.log("daddd",data)
       //   setData(data);
       //   setAvailableDays(data)})
       // Handle the successful response
       const data = response[0].availableDays;
-      console.log("aaa", data);
       setData(data);
       setAvailableDays(data);
     } catch (error) {
@@ -186,13 +184,11 @@ const Booking2 = ({ loader, setLoader }) => {
   };
   const getDayTime = async () => {
     // try{
-    console.log("sss");
     // const data1 = {
     //   proId: reduxData?.appData?.currentProfessional?.id,
     //   date: date
     // }
     // const response = await getAvailabilityData(data1);
-    // console.log(response)
     // }
     // catch (error) {
     //   // Handle errors (e.g., network error, server error)
@@ -225,7 +221,6 @@ const Booking2 = ({ loader, setLoader }) => {
     const clickedElement = event.target;
     const totalDuration = reduxData?.appData?.cart.reduce((total, item) => total + item.duration, 0);
     const currentDate = `${clickedElement.innerText <= 9 ? 0 : ""}` + clickedElement.innerText + "-" + `${currentMonth <= 9 ? 0 : ""}` + currentMonth + "-" + currentYear;
-    console.log("ssssdate", currentDate);
     handleLocalData({
       type: "currentDate",
       data: currentDate
@@ -239,7 +234,6 @@ const Booking2 = ({ loader, setLoader }) => {
     if (clickedElement.classList.contains('green-day')) {
       clickedElement.classList.add("bg_brown");
       getAvailabilityData(data).then((res) => {
-        console.log(res);
         setTimes(res.times);
         setCheckTime(false);
         setCheckSaveDate(false);
@@ -261,7 +255,6 @@ const Booking2 = ({ loader, setLoader }) => {
     });
   }
   const handleNextPage = () => {
-    console.log(checkSaveDate);
     if (checkSaveDate) {
       router.push('/booking/booking4')
     }

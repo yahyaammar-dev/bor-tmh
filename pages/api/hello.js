@@ -1,9 +1,14 @@
+<<<<<<< HEAD
+=======
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+>>>>>>> 40423954ea77ce5a0121b9cb1eda40134b4c66dc
 import axios from "axios";
 
 const loginUser = async (values) => {
   try {
     const res = await axios.post(
-      "http://20.236.136.145/it/api/public_api/subcategories/loginAdmin",
+      "http://20.236.136.145/it/api/public_api/subcategories/loginAdminfpa",
       {
         email: values.email,
         password: values.password,
@@ -106,7 +111,6 @@ const getAvailability = async (data) => {
 };
 
 const getAvailabilityData = async (data) => {
-  console.log('date is', data)
   try {
     const res = await axios.get(
       `http://20.236.136.145/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
@@ -120,7 +124,7 @@ const getAvailabilityData = async (data) => {
 const getCorporateClient = async (city_name) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
+      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
     );
     if(res.data.error){
       return res.data;
@@ -183,7 +187,6 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
     const res = await axios.get(
       `http://20.236.136.145/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
     );
-    console.log(res)
     return res.data;
   } catch (err) {
     alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
@@ -215,6 +218,17 @@ const SetNewPrimaryAddress = async (address, city, userId) => {
 };
 
 
+const intiateBooking = async (day, time, duration, city, service, pro, customer) => {
+  try {
+    const res = await axios.get(
+      `http://20.236.136.145/it/front/booking/set_new_appointment?day=04-08-2023&time=09:30&duration=120&city=1&service=[1200,17]&pro=16&customer=26`
+    );
+    return res.data;
+  } catch (err) {
+    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+  }
+};
+
 
 export {
   loginUser,
@@ -233,5 +247,6 @@ export {
   getCorporateProfessionals,
   getProfessionalFromCorporateServices,
   getcorporateprofessionalServices,
-  SetNewPrimaryAddress
+  SetNewPrimaryAddress,
+  intiateBooking
 };
