@@ -1,15 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-
-
-
-
 import axios from "axios";
 
 const loginUser = async (values) => {
   try {
     const res = await axios.post(
-      "http://20.236.136.145/it/api/public_api/subcategories/loginAdmin",
+      "http://20.236.136.145/it/api/public_api/subcategories/loginAdminfpa",
       {
         email: values.email,
         password: values.password,
@@ -112,7 +108,6 @@ const getAvailability = async (data) => {
 };
 
 const getAvailabilityData = async (data) => {
-  console.log('date is', data)
   try {
     const res = await axios.get(
       `http://20.236.136.145/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
@@ -189,13 +184,23 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
     const res = await axios.get(
       `http://20.236.136.145/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
     );
-    console.log(res)
     return res.data;
   } catch (err) {
     alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
   }
 };
 
+
+const intiateBooking = async (day, time, duration, city, service, pro, customer) => {
+  try {
+    const res = await axios.get(
+      `http://20.236.136.145/it/front/booking/set_new_appointment?day=04-08-2023&time=09:30&duration=120&city=1&service=[1200,17]&pro=16&customer=26`
+    );
+    return res.data;
+  } catch (err) {
+    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+  }
+};
 
 
 export {
@@ -214,6 +219,6 @@ export {
   getCorporateCustomers,
   getCorporateProfessionals,
   getProfessionalFromCorporateServices,
-  getcorporateprofessionalServices
+  getcorporateprofessionalServices,
+  intiateBooking
 };
-

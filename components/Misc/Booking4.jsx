@@ -5,6 +5,7 @@ import Button from "./Button";
 import Select from "react-select";
 import { useRouter } from "next/router";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
+import { intiateBooking } from "../../pages/api/hello";
 
 
 const Booking4 = ({ loader, setLoader }) => {
@@ -12,9 +13,8 @@ const Booking4 = ({ loader, setLoader }) => {
     reduxData
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
-  useEffect(() => {
-    console.log(reduxData)
-  }, [])
+  const [open, setOpen] = useState(false)
+
   const cities = [
     { value: "Milano", label: "Milano" },
     { value: "Roma", label: "Roma" },
@@ -24,6 +24,22 @@ const Booking4 = ({ loader, setLoader }) => {
     { value: "123123", label: "123123" },
     { value: "123123", label: "12312" },
   ];
+
+
+  const handleBooking = () => {
+    const res = intiateBooking()
+    setOpen(true)
+    console.log('Booking Created::  ', reduxData)
+    console.log({
+      'day': null,
+      'time': null,
+      'duration': null,
+      'city': null,
+      'service': null,
+      'pro': null,
+      'customer': null
+    })
+  }
 
   // Define custom styles for React Select
   const selectStyles = {
@@ -170,10 +186,30 @@ const Booking4 = ({ loader, setLoader }) => {
             </div>
           </div> */}
           <div className="w-6/12">
-            <Button text="Pay and Book" filled wfull />
+            <Button text="Pay and Book" filled wfull onClick={handleBooking} />
           </div>
         </div>
       </div>
+
+      {
+        open && (
+          <div className="custom__container__success">
+            <div class="w-full md:w-1/3 mx-auto">
+              <div class="flex p-5 rounded-lg shadow bg-white">
+                <div class="ml-3 text-center flex flex-col justify-center gap-3">
+                  <h2 class="font-semibold text-gray-800">Successfully Created Booking</h2>
+                  <p class="mt-2 text-sm text-gray-600 leading-relaxed">Booking has been created Successfully. Emails are sent to user and nexi is integrated in pay by link.</p>
+                  <button type="button" onClick={()=>{setOpen(false)}} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    Booking Completed!
+                    <svg class="w-6 h-6 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z" /></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
     </div>
   );
 };

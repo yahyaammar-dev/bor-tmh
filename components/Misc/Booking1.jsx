@@ -24,8 +24,6 @@ const Booking1 = ({ loader, setLoader }) => {
     { value: "123123", label: "123123" },
     { value: "123123", label: "12312" },
   ];
-  console.log('hello hello jello bello',reduxData);
-  console.log("cities",cities);
   useEffect(() => {
     setDowloaded(true);
   },[])
@@ -132,7 +130,6 @@ const Booking1 = ({ loader, setLoader }) => {
                   </h1>
                   <div className="flex justify-center gap-5">
                     <div className="item" >
-                      {/* {console.log("dsdsdsdsd",reduxData?.appData?.currentCity?.value.toString())} */}
                       <Select
                         value={reduxData?.appData?.currentCity}
                         options={
@@ -175,7 +172,6 @@ const Booking1 = ({ loader, setLoader }) => {
                   </h1>
                   <div className="flex justify-center gap-5">
                     <div className="item">
-                      {/* {console.log("aasas",localData.corporate)} */}
                       <Select
                         value={reduxData?.appData?.currCorporate != null ? reduxData?.appData?.currCorporate : "no data"}
                         options={reduxData?.appData?.corporates?.length > 0

@@ -53,7 +53,6 @@ const Booking2 = ({ loader, setLoader }) => {
     setLoader(false)
 
 
-    // console.log( 'professional result', proDetail, proService)
 
     const professionalData = {
       proDetail,
@@ -61,7 +60,6 @@ const Booking2 = ({ loader, setLoader }) => {
     };
 
     setProfessionalDetail(professionalData);
-    console.log(professionalData);
   };
 
   const handleProfessionalCart = (item) => {

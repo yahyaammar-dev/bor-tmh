@@ -29,7 +29,6 @@ export function useDataHandler(setLoader) {
   const [corporateCustomerList, setCorporateCustomers] = useState([])
   const router = useRouter();
 
-  console.log(reduxData,"redux dtata")
   
 
   const handleLocalData = async (newData) => {
@@ -83,7 +82,6 @@ export function useDataHandler(setLoader) {
         const corporates = await getCorporateClient(newData.data.id)
         if(corporates.error){
           alert(corporates.error);
-          // console.log(corporates)
         }else{
           const corporatesAsOption = corporates?.map((corporate, index) => ({
             id: corporate[0],
@@ -93,7 +91,6 @@ export function useDataHandler(setLoader) {
           dispatch({type: "CORPORATES", payload: corporatesAsOption})
           setCorporateList(corporatesAsOption)
         }
-        console.log('Corporate Client::', corporates)
         setLoader(false)
       }else {
         setLoader(true);
@@ -122,7 +119,6 @@ export function useDataHandler(setLoader) {
         setLoader(true);
         setLocalData({ ...localData, currentGender: newData.data });
         dispatch({ type: "CURRENTGENDER", payload: newData.data });
-        console.log('-----------------------------------------------------',localData);
         const res = await getCorporateProfessionals(localData?.currentSubCat.id,newData.data.id)
         if(res.error){
           alert(res.error);
@@ -149,7 +145,6 @@ export function useDataHandler(setLoader) {
       }
       
     } else if (newData.type == "professional") {
-      console.log('mysterious data', newData.data);
       setLocalData({ ...localData, currentProfessional: newData.data });
       let proData = newData.data;
       dispatch({ type: "CURRENTPROFESSIONAL", payload: proData });
@@ -180,7 +175,6 @@ export function useDataHandler(setLoader) {
       setLoader(false);
     } else if (newData.type == "corporateCategories"){
       setLoader(true);
-      console.log('-------------------------')
       dispatch({ type: "CURRENTCORPORATEUSER", payload: newData.data });
       const categories = await getCategories(localData.city);
       setLocalData({ ...localData, categories: categories });
@@ -190,6 +184,7 @@ export function useDataHandler(setLoader) {
       setLoader(true);
       setLocalData({ ...localData, cart: newData.data });
       dispatch({ type: "CART", payload: newData.data });
+      console.log('newcart data is:: ',newData)
       setLoader(false);
     }else if(newData.type === "currenttime"){
       dispatch({ type: "CURRENTTIME", payload: newData.data })

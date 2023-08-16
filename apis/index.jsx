@@ -106,7 +106,6 @@ const getAvailability = async (data) => {
 };
 
 const getAvailabilityData = async (data) => {
-  console.log('date is', data)
   try {
     const res = await axios.get(
       `http://20.236.136.145/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
@@ -178,7 +177,6 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
     const res = await axios.get(
       `http://20.236.136.145/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
     );
-    console.log(res)
     return res.data;
   } catch (err) {
     alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
