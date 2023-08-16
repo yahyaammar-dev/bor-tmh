@@ -14,7 +14,7 @@ const Booking4 = ({ loader, setLoader }) => {
 
   useEffect(() => {
     console.log(reduxData)
-  },[])
+  }, [])
   const cities = [
     { value: "Milano", label: "Milano" },
     { value: "Roma", label: "Roma" },
@@ -74,25 +74,24 @@ const Booking4 = ({ loader, setLoader }) => {
       <div className="flex custom__conatiner mx-auto gap-4">
         <div className="w-6/12 border p-5">
           <h3 className="font-bold">Cart</h3>
-          <p>Loreum ipsumips umipsu mipsumi psum ipsumipsu mipsumipsum ipsum</p>
           <ul>
-          <p>My Services</p>
+            <p className="my-3">Services Added to Cart</p>
             {reduxData.appData.cart.map((item) => {
-              return(
+              return (
                 <div>
-                <div className="category__checkbox flex gap-10 border py-3 justify-between px-3">
-                  <p>{item.name}</p>
-                  <div className="flex items-center">
-                    <img src="/imgs/add.png" />
-                    <p>{item.price}</p>
-                    <p className="mx-10">|</p>
-                    <img src="/imgs/add.png" />
-                    <p>{item.duration}</p>
+                  <div className="category__checkbox flex gap-10 border py-3 justify-between px-3">
+                    <p>{item.name}</p>
+                    <div>
+                      <div className="flex items-center">
+                        <p>{item.duration} min</p>
+                        <p className="mx-10">|</p>
+                        <p>{item.price} $</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-            </div>
-            )
-          })}
+              )
+            })}
           </ul>
           {/* <div className="iconBox flex">
                   <img src="/imgs/add.png" />
@@ -101,7 +100,7 @@ const Booking4 = ({ loader, setLoader }) => {
         </div>
         <div className="w-6/12 border p-5">
           {reduxData.appData.corporateUsers && reduxData.appData.corporateUsers.map((user) => {
-            return(
+            return (
               <div>
                 <div className="iconBox flex">
                   <img src="/imgs/add.png" />
@@ -110,25 +109,25 @@ const Booking4 = ({ loader, setLoader }) => {
                       <label className="w-2/3">Enter the Address</label>
                       <input className="border w-full" type="text" />
                     </div>
-                    ) : user[2]  }</p>
+                  ) : user[2]}</p>
                 </div>
-            </div>
+              </div>
             )
           })
           }
           <div className="iconBox flex h">
-            <div style={{height:"20px"}}>
-            <img src="/imgs/add.png" height="30px" width="27px" alt="Add Icon" />
+            <div style={{ height: "20px" }}>
+              <img src="/imgs/add.png" height="30px" width="27px" alt="Add Icon" />
             </div>
             <div className="w-full">
-            <Select
-              options={cities}
-              // onChange={(item) => {
-              //   setLocale(item.value);
-              // }}
-              placeholder="City"
-              styles={selectStyles}
-            />
+              <Select
+                options={cities}
+                // onChange={(item) => {
+                //   setLocale(item.value);
+                // }}
+                placeholder="City"
+                styles={selectStyles}
+              />
             </div>
           </div>
           <div>

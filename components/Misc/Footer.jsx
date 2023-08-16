@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
     return (
         <div className='fixed bottom-0 w-full'>
-            <footer className="bg-gray-300 p-3 dark:bg-black px-10 mb-0">
+            <footer className="bg-gray-100 p-3 dark:bg-black px-10 mb-0">
                 <div className="w-full max-w-screen-xl mx-auto mb-0">
                     {/* <div className="sm:flex sm:items-center sm:justify-between">
                         <a href="/" className="flex items-center mb-4 sm:mb-0">
@@ -21,7 +21,7 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div> */}
-                    <span className="block text-sm text-black sm:text-center dark:text-white">© 2023 <a href="/" className="hover:underline">TMH</a>. All Rights Reserved.</span>
+                    <span className="block text-sm sm:text-center">© 2023 <a href="/" className="hover:underline">TMH</a>. All Rights Reserved.</span>
                 </div>
             </footer>
         </div>

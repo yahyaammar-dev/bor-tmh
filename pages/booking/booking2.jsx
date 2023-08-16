@@ -9,8 +9,8 @@ const index = () => {
   return (
     <>
       <Navbar />
-      <Booking2 />
-      <div className="flex justify-center">
+      <Booking2 loader={loader} setLoader={setLoader} />
+      <div className="flex justify-center mycontainer">
         <Loader loader={loader} setLoader={setLoader} />
       </div>
       <Footer />

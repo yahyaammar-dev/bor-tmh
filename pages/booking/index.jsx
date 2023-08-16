@@ -11,7 +11,7 @@ const index = () => {
     <>
       <Navbar />
       <Booking1  loader ={loader} setLoader={setLoader} />
-      <div className="flex justify-center">
+      <div className="flex justify-center mycontainer">
         <Loader loader={loader} />
       </div>
       <Footer />

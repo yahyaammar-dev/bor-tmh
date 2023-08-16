@@ -164,7 +164,7 @@ const getCorporateCustomers = async (corporateClientId) => {
 const getCorporateProfessionals = async (corporateServiceId,gender) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/corporateprofessionals/${corporateServiceId}/${gender}`
+      `http://20.236.136.145/it/front/booking/corporateprofessionals/${corporateServiceId}/${gender}`
     );
     return res.data;
   } catch (err) {

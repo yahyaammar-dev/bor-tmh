@@ -9,7 +9,8 @@ const booking4 = () => {
     <>
       <Navbar />
       <Booking4 />
-      <div className="flex justify-center">
+      <div className="flex justify-center mycontainer">
+
         <Loader />
       </div>
       <Footer />

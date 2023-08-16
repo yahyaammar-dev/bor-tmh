@@ -80,7 +80,7 @@ export function useDataHandler(setLoader) {
       if(localData.type == 'Corporate'){
         setLoader(true);
         setLocalData({...localData, city: newData.data})
-        const corporates = await getCorporateClient(newData.data.value)
+        const corporates = await getCorporateClient(newData.data.id)
         if(corporates.error){
           alert(corporates.error);
           // console.log(corporates)

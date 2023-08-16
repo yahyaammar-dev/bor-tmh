@@ -127,7 +127,7 @@ const Calendar = () => {
     return (
         <>
             <Navbar />
-            <div className="flex flex-col justify-center my-0 border-t border-gray-500 px-6 py-6 mx-auto w-1/2 bg-gray-50">
+            <div className="flex flex-col justify-center my-0 border-t border-gray-500 px-6 py-6 mx-auto bg-gray-50 ">
                 <div className="flex justify-center items-center italic font-normal font-sans text-lg">schedule your appointment</div>
                 <div className="flex justify-between items-center">
                     <button id="prevBtn" onClick={prevMonth} disabled={prevButtonDisabled}>

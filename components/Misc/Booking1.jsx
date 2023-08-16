@@ -79,7 +79,7 @@ const Booking1 = ({ loader, setLoader }) => {
     <div>
       {dowloaded && (<>
       {/* Booking 1 */}
-      <div className="booking1 custom__conatiner mx-auto">
+      <div className="booking1 custom__conatiner mx-auto custom__margin__top">
         {/* City */}
         <div className="city mb-10">
           <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">

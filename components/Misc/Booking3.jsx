@@ -23,8 +23,8 @@ const Booking2 = ({ loader, setLoader }) => {
   const [repeatableDatesNext6Months, setRepeatableDatesNext6Months] = useState([]);
   const [repeatableDays, setRepeatableDays] = useState({});
   const [currentDate] = useState(new Date());
-  const [checkTime , setCheckTime] = useState(false);
-  const [checkSaveDate , setCheckSaveDate] = useState(false);
+  const [checkTime, setCheckTime] = useState(false);
+  const [checkSaveDate, setCheckSaveDate] = useState(false);
   const [currentYear, setCurrentYear] = useState(
     currentDate.getFullYear()
   );
@@ -39,7 +39,7 @@ const Booking2 = ({ loader, setLoader }) => {
   const navigate_to_booking3 = () => {
     router.push("/booking3");
   };
-  const { reduxData , handleLocalData } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
+  const { reduxData, handleLocalData } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
   const getProfessionalAvailibility = async () => {
     try {
@@ -81,7 +81,7 @@ const Booking2 = ({ loader, setLoader }) => {
     sixMonthsLater.setMonth(currentDate.getMonth() + 6);
 
     const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
-    const repeatableDates= [];
+    const repeatableDates = [];
 
     for (
       let currentDay = currentDate;
@@ -135,7 +135,10 @@ const Booking2 = ({ loader, setLoader }) => {
       const currentDateStr = currentDate.toISOString().split("T")[0];
       if (repeatableDatesNext6Months.includes(currentDateStr)) {
         dayElement.classList.add("green-day");
-        dayElement.classList.add("dot");
+        const dotElement = document.createElement("div");
+        dotElement.classList.add("dot");
+
+        dayElement.appendChild(dotElement);
       }
       daysContainer.appendChild(dayElement);
     }
@@ -164,7 +167,7 @@ const Booking2 = ({ loader, setLoader }) => {
     }
     setPrevButtonDisabled(
       currentyear < currentYear ||
-        (currentyear === currentYear && currentmonth <= currentMonth)
+      (currentyear === currentYear && currentmonth <= currentMonth)
     );
   };
 
@@ -178,7 +181,7 @@ const Booking2 = ({ loader, setLoader }) => {
     }
     setPrevButtonDisabled(
       currentyear < currentYear ||
-        (currentyear === currentYear && currentmonth <= currentMonth)
+      (currentyear === currentYear && currentmonth <= currentMonth)
     );
   };
   const getDayTime = async () => {
@@ -214,15 +217,15 @@ const Booking2 = ({ loader, setLoader }) => {
     handleAfterTime()
   }
 
-    
 
-    // If the clicked button is already selected, unselect it
+
+  // If the clicked button is already selected, unselect it
 
   const handleDateClick = (event) => {
     const clickedElement = event.target;
     const totalDuration = reduxData?.appData?.cart.reduce((total, item) => total + item.duration, 0);
-    const currentDate = `${clickedElement.innerText <= 9 ? 0 : ""}`+clickedElement.innerText+"-"+`${currentMonth <= 9 ? 0 : ""}`+currentMonth+"-"+currentYear;
-    console.log("ssssdate",currentDate);
+    const currentDate = `${clickedElement.innerText <= 9 ? 0 : ""}` + clickedElement.innerText + "-" + `${currentMonth <= 9 ? 0 : ""}` + currentMonth + "-" + currentYear;
+    console.log("ssssdate", currentDate);
     handleLocalData({
       type: "currentDate",
       data: currentDate
@@ -232,8 +235,8 @@ const Booking2 = ({ loader, setLoader }) => {
       date: currentDate,
       duration: totalDuration
     }
-    
-    if(clickedElement.classList.contains('green-day')){
+
+    if (clickedElement.classList.contains('green-day')) {
       clickedElement.classList.add("bg_brown");
       getAvailabilityData(data).then((res) => {
         console.log(res);
@@ -247,26 +250,26 @@ const Booking2 = ({ loader, setLoader }) => {
   };
   const handleAfterDate = () => {
     handleLocalData({
-      type1:"remove",
+      type1: "remove",
       type: "resetDataAfterDate",
     });
   }
   const handleAfterTime = () => {
     handleLocalData({
-      type1:"remove",
+      type1: "remove",
       type: "resetDataAfterTime",
     });
   }
   const handleNextPage = () => {
     console.log(checkSaveDate);
-    if(checkSaveDate){
+    if (checkSaveDate) {
       router.push('/booking/booking4')
     }
   }
 
 
   const handleSaveDate = () => {
-    if(checkTime){
+    if (checkTime) {
       setCheckSaveDate(true)
     }
   }
@@ -302,9 +305,11 @@ const Booking2 = ({ loader, setLoader }) => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center my-0 border-t border-gray-500 px-6 py-6 mx-auto w-1/2 bg-gray-50">
+      <div className="flex flex-col justify-center my-0 border-t border-gray-500 px-6 py-6 mx-auto mycustomwidth bg-gray-50">
         <div className="flex justify-center items-center italic font-normal font-sans text-lg">
-          schedule your appointment
+          <h1>
+            Schedule Your Appointment
+          </h1>
         </div>
         <div className="flex justify-between items-center">
           <button id="prevBtn" onClick={prevMonth}>
@@ -374,46 +379,46 @@ const Booking2 = ({ loader, setLoader }) => {
                   >
                     <input
                       key={time}
-                      className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full ${
-                        selectedTime === time ? 'bg-yellow-500 text-black' : 'bg-gray-500 text-white'
-                      }`}
+                      className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full ${selectedTime === time ? 'bg-yellow-500 text-black' : 'bg-gray-500 text-white'
+                        }`}
                       type="button"
                       value={time}
                       onClick={handleTimeClick}
                     />
                   </div>
                 )) : reduxData?.appData?.currentTime ?
-                <input
-                className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full bg-yellow-500 text-black`}
-                type="button"
-                value={reduxData?.appData?.currentTime}
-                onClick={handleTimeClick}
-              /> : ""}
-                {message && 
+                  <input
+                    className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full bg-yellow-500 text-black`}
+                    type="button"
+                    value={reduxData?.appData?.currentTime}
+                    onClick={handleTimeClick}
+                  /> : ""}
+              {message &&
                 <p>{message}</p>
-                }
+              }
             </div>
 
             {/* <p className="w-3/4 my-0 my-6 text-justify bg-pink-100 p-4 mx-auto">
                             The required time for your service is: 110 min. There is no time slot available on this date, please select another date or contact the Concierge +39 333 8131426
                         </p> */}
           </div>
-          <div className="flex justify-center items-center bg-gray-500 w-1/2 mx-auto p-3 font-serif text-white" style={checkTime === true ? {backgroundColor:"#DAA520"} : {}}>
+          <div className="flex justify-center items-center bg-gray-500 w-1/2 mx-auto p-3 font-serif text-white" style={checkTime === true ? { backgroundColor: "#DAA520" } : {}}>
             <button onClick={handleSaveDate}>SAVE THE DATA AND TIME</button>
           </div>
           <div className="flex justify-end">
-        <input
-          style={checkSaveDate ?  {backgroundColor:"#DAA520"} : {backgroundColor:"#6B7280"} }
-          className="py-4 px-6 border-none mx-2 my-2 text-center text-white cursor-pointer"
-          type="button"
-          value="Next"
-          onClick={handleNextPage}
-        />
-      </div>
+            <input
+              style={checkSaveDate ? { backgroundColor: "#DAA520" } : { backgroundColor: "#6B7280" }}
+              className="py-4 px-6 border-none mx-2 my-2 text-center text-white cursor-pointer"
+              type="button"
+              value="Next"
+              onClick={handleNextPage}
+            />
+          </div>
         </div>
       </div>
-      
 
+
+      
       {/* Select Service */}
       {/* <div className="mt-20 booking2 custom__conatiner mx-auto text-center">
         <div className="mb-20 mt-10">
