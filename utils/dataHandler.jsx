@@ -13,7 +13,8 @@ import {
   getCorporateClient,
   getCorporateCustomers,
   getCorporateProfessionals,
-  getProfessionalFromCorporateServices
+  getProfessionalFromCorporateServices,
+  SetNewPrimaryAddress
 } from "../pages/api/hello"; // Import your API functions here
 import { type } from "os";
 
@@ -175,6 +176,7 @@ export function useDataHandler(setLoader) {
         value: corporate[1],
         label: corporate[1],
       }));
+      // console.log(corporateUsers)
       dispatch({ type: "CORPORATEUSERS", payload: corporateUsersList });
       setCorporateCustomers(corporateUsersList);
       setLoader(false);
@@ -185,6 +187,8 @@ export function useDataHandler(setLoader) {
       setLocalData({ ...localData, categories: categories });
       dispatch({ type: "GETCATEGORIES", payload: categories });
       setLoader(false);
+      
+      // console.log('::::::::::::::::::::::::::::::',localData,';;;;;;;;;;;;;;;;;;;;;', reduxData)
     } else if (newData.type === "updateCart"){
       setLoader(true);
       setLocalData({ ...localData, cart: newData.data });
@@ -209,7 +213,10 @@ export function useDataHandler(setLoader) {
       setLocalData({ ...localData, newAdress: address, newCity: city});
       dispatch({ type: "NEWADDRESS", payload: address});
       dispatch({ type: "NEWCITY", payload:city });
-      if (address.length > 0 && city.value.length > 0) {
+      
+      const setAddress = await SetNewPrimaryAddress(address, city.id, reduxData.appData.currentCorporateUser.id)
+   
+      if (address.length > 0 && city.value.length > 0 && setAddress.status === 200) {
         setConfirmation(prevConfirmation => ({
           ...prevConfirmation,
           address: "success"
@@ -220,7 +227,6 @@ export function useDataHandler(setLoader) {
           address: ""
         }));
       }
-      // const setAddress = await SetNewPrimaryAddress(address, city.id, reduxData.appData.currentCorporateUser.id)
       // console.log(setAddress);
     }
     else if(newData.type1 === "remove"){
