@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
->>>>>>> 40423954ea77ce5a0121b9cb1eda40134b4c66dc
 import axios from "axios";
 
 const loginUser = async (values) => {
@@ -210,10 +207,10 @@ const SetNewPrimaryAddress = async (address, city, userId) => {
       requestBody
     );
 
-    console.log(res.data);
-    return res.data;
+    // console.log(res);
+    return res;
   } catch (err) {
-    throw new Error("Unable to fetch corporate professionals, something went wrong");
+    throw new Error("Unable to add new address");
   }
 };
 

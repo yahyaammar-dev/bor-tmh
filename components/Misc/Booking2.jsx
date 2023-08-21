@@ -7,7 +7,7 @@ import {
   getProfessionalDetail,
   getSubCategories,
   getcorporateprofessionalServices,
-} from "../../apis";
+} from "../../pages/api/hello";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useDataHandler } from "../../utils/dataHandler";
