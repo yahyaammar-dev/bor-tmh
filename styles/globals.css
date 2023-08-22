@@ -119,3 +119,15 @@ body {
     padding-top: 18rem;
     background: rgba(0,0,0,0.5);
 }
+
+.customBordered{
+  border-radius: 0.25rem;
+}
+
+.customContainer{
+  margin: 0.4rem 0;
+}
+
+.address{
+  padding: 0.3rem 0;
+}

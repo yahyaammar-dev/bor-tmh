@@ -1,6 +1,8 @@
 import React from "react";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
+import Button from "./Button";
+
 
 const Navbar = ({ setLocale }) => {
   const dispatch = useDispatch();
@@ -56,13 +58,11 @@ const Navbar = ({ setLocale }) => {
                 Book Now
               </a>
 
-              <Select
-                options={options}
-                // onChange={(item) => {
-                //   setLocale(item.value);
-                // }}
-                styles={selectStyles}
-              />
+              <Button text='Reset Data' onClick={()=>{
+                  console.log('hello')
+                  dispatch({ type: "RESETALLDATA" });
+              }}>Reset Now</Button>            
+
             </div>
           </div>
         </nav>

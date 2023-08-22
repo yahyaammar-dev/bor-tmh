@@ -382,6 +382,36 @@ const appData = (state = initialState, action) => {
         ...state,
         newCity: action.payload,
       }
+    case "RESETALLDATA":
+      return {
+        ...state,
+        currentDate: null,
+        currentTime: null,
+        currentCorporateUser: null,
+        corporateUsers: [],
+        type: null,
+        user: null,
+        users: [],
+        cities: [],
+        currentCity: null,
+        categories: [],
+        subCategories: [],
+        genders: [],
+        professionals: [],
+        availibility: [],
+        availibilitydata: [],
+        corporates: [],
+        currentCat: null,
+        currentSub: null,
+        currentGen: null,
+        currentProfessional: null,
+        corporate: [],
+        cart: [],
+        currCorporate: null,
+        newAddress: null,
+        currCorporate: null,
+        newCity: null,
+      }
     default:
       return state;
   };

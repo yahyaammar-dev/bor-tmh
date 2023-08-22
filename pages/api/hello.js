@@ -263,23 +263,35 @@ const nexiPayByLink = async () => {
         exemptions: "NO_PREFERENCE",
         language: "ita",
         paymentService: "String",
-        resultUrl: "https://helloworld/9000",
-        cancelUrl: "https://helloworld",
-        notificationUrl: "https://helloworld.com/",
+        resultUrl: "http://20.236.136.145/it/front/booking/pay/success/2",
+        cancelUrl: "http://20.236.136.145/it//it/front/booking/pay/success/2",
+        notificationUrl: "http://20.236.136.145/it/front/booking/pay/success/2",
       },
       expirationDate: "2023-09-01",
     };
-  
 
     const response = await axios.post(apiUrl, requestBody, { headers });
-    return response.data; // Return the response data on success
+    
+    // post email and link to below api 
+    try{
+      axios.post('send-payment-link', {
+        email: 'yahyaammar4807@gmail.com',
+        link: 'https://xpay.nexigroup.com/monetaweb/directlink/payment?token=c5Cg_iCJ3RV3HxYhjcjXzy3a&languageId=ITA'
+      })
+      return {
+        status: "success",
+        message: "Payment link is sent"
+      }
+    }catch(error){
+      console.error("Payment Falied! Try again later.")
+    }
+  
+    return response.data.paymentLink.link 
   } catch (error) {
     console.error("API error:", error);
     throw error; // Re-throw the error to properly handle it in the caller
   }
 };
-
-
 
 export {
   loginUser,

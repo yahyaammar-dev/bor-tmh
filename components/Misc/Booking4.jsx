@@ -14,11 +14,11 @@ const Booking4 = ({ loader, setLoader }) => {
     handleLocalData,
     confirmation,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
-  
+
 
   useEffect(() => {
     console.log(reduxData)
-  },[])
+  }, [])
   const [open, setOpen] = useState(false)
 
   const cities = [
@@ -123,78 +123,75 @@ const Booking4 = ({ loader, setLoader }) => {
                 </div> */}
         </div>
         <div className="w-6/12 border p-5 checkout_address">
-        <div>
-                <div className="iconBox flex">
-                  <p className="w-full">
-                    <div className="flex w-full">
-                      <label className="w-2/3">Address</label>
-                      <p>Via Giovanni da Procida, 23 20145 Milano</p>
-                    </div>
-                    </p>
+          <div>
+            <div className="iconBox flex">
+              <p className="w-full">
+                <div className="flex w-full">
+                  <label className="w-1/2">Address</label>
+                  <p>Via Giovanni da Procida, 23 20145 Milano</p>
                 </div>
-            </div>
-              <div>
-                <div className="iconBox flex">
-                  <img src="/imgs/add.png" />
-                  <p className="w-full">
-                    <div className="flex w-full">
-                      <label className="w-2/3">Enter new Address</label>
-                      <input className="border w-full"
-                      onChange={(item)=> handleLocalData({
-                        type: "address",
-                        data: item,
-                      })}
-                       type="text" />
-                    </div>
-                    </p>
-                </div>
-            </div>
-          <div className="iconBox flex h">
-            <div style={{height:"20px"}}>
-            <img src="/imgs/add.png" height="30px" width="27px" alt="Add Icon" />
-            </div>
-            <div className="w-full">
-            {/* <Select
-              options={cities}
-              onChange={(item)=> handleLocalData({
-                type: "newcity",
-                data: item,
-              })}
-              // onChange={(item) => {
-              //   setLocale(item.value);
-              // }}
-              placeholder="City"
-              styles={selectStyles}
-            /> */}
-              <Select
-                options={
-                  reduxData?.appData?.cities?.length > 0
-                    ? reduxData?.appData?.cities
-                    : reduxData?.appData?.currentCity ? 
-                    reduxData?.appData?.currentCity : []
-                }
-                onChange={(item)=> handleLocalData({
-                  type: "newcity",
-                  data: item,
-                })}
-                // onChange={(item) => {
-                //   setLocale(item.value);
-                // }}
-                placeholder="City"
-                styles={selectStyles}
-              />
+              </p>
             </div>
           </div>
-          <div className="iconBox flex h">
-            <div style={{height:"20px"}}>
-            <Button text="Add address" filled wfull
-            onClick={() => {
-              handleLocalData({
-                type: "addAdress",
-              })}}
-             />
+          <div>
+            <div className="iconBox flex">
+              <p className="w-full">
+                <div className="flex w-full">
+                  <label className="w-2/3 flex items-center">Enter new Address</label>
+                  <input className="border w-full address"
+                    onChange={(item) => handleLocalData({
+                      type: "address",
+                      data: item,
+                    })}
+                    type="text" />
+                </div>
+              </p>
             </div>
-            {confirmation.address ? <p style={{color:"green"}}>Address Added</p>: null}
+          </div>
+
+
+
+          <div>
+            <div className="iconBox flex">
+              <p className="w-full customContainer">
+                <div className="flex w-full customBordered">
+                  <label className="w-2/3 flex items-center">Select a city</label>
+
+                  <div className="w-full">
+                    <Select
+                      options={
+                        reduxData?.appData?.cities?.length > 0
+                          ? reduxData?.appData?.cities
+                          : reduxData?.appData?.currentCity ?
+                            reduxData?.appData?.currentCity : []
+                      }
+                      onChange={(item) => handleLocalData({
+                        type: "newcity",
+                        data: item,
+                      })}
+                      // onChange={(item) => {
+                      //   setLocale(item.value);
+                      // }}
+                      placeholder="City"
+                      styles={selectStyles}
+                    />
+                  </div>
+
+                </div>
+              </p>
+            </div>
+          </div>
+
+          <div className="iconBox flex h justify-end">
+            <div className="mt-2" >
+              <Button text={confirmation.address ? 'Address Added': 'Add Address'} filled wfull
+                onClick={() => {
+                  handleLocalData({
+                    type: "addAdress",
+                  })
+                }}
+              />
+            </div>
           </div>
           <div>
             <p className="mt-5">
@@ -202,17 +199,17 @@ const Booking4 = ({ loader, setLoader }) => {
               is not needed for the service you are booking
             </p>
             <div className="radio">
-              <input type="radio" />
+              <input type="radio" name='address' className="mr-2" />
               <label>Yes</label>
             </div>
             <div className="radio">
-              <input type="radio" />
+              <input type="radio" name='address' className="mr-2" />
               <label>No</label>
             </div>
-            <p>MOre Information</p>
-            <div>
-              <textarea name="mytext" id="" cols="30" rows="10"></textarea>
+            <div className="mt-4">
+              <Button text="Pay and Book" filled wfull onClick={handleBooking} />
             </div>
+              
           </div>
         </div>
       </div>
@@ -236,7 +233,6 @@ const Booking4 = ({ loader, setLoader }) => {
             </div>
           </div> */}
           <div className="w-6/12">
-            <Button text="Pay and Book" filled wfull onClick={handleBooking} />
           </div>
         </div>
       </div>
@@ -249,7 +245,7 @@ const Booking4 = ({ loader, setLoader }) => {
                 <div class="ml-3 text-center flex flex-col justify-center gap-3">
                   <h2 class="font-semibold text-gray-800">Successfully Created Booking</h2>
                   <p class="mt-2 text-sm text-gray-600 leading-relaxed">Booking has been created Successfully. Emails are sent to user and nexi is integrated in pay by link.</p>
-                  <button type="button" onClick={()=>{setOpen(false)}} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                  <button type="button" onClick={() => { setOpen(false) }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     Booking Completed!
                     <svg class="w-6 h-6 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z" /></svg>
                   </button>
