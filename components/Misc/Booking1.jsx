@@ -104,7 +104,7 @@ const Booking1 = ({ loader, setLoader }) => {
             </div>
             <div className="item">
               <Button
-                text="Normal Booking"
+                text="Concierge Booking"
                 variant={reduxData?.appData?.type === "Normal" ? "active" : "outlined"}
                 onClick={() => {
                   handleLocalData({
