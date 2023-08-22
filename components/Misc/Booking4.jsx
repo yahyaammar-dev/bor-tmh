@@ -5,7 +5,7 @@ import Button from "./Button";
 import Select from "react-select";
 import { useRouter } from "next/router";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
-import { intiateBooking } from "../../pages/api/hello";
+import { intiateBooking, nexiPayByLink } from "../../pages/api/hello";
 
 
 const Booking4 = ({ loader, setLoader }) => {
@@ -34,6 +34,8 @@ const Booking4 = ({ loader, setLoader }) => {
 
   const handleBooking = () => {
     const res = intiateBooking()
+    const paybylink = nexiPayByLink()
+    console.log('paybylink::', paybylink)
     setOpen(true)
     console.log('Booking Created::  ', reduxData)
     console.log({

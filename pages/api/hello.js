@@ -123,12 +123,12 @@ const getCorporateClient = async (city_name) => {
     const res = await axios.get(
       `http://127.0.0.1:8000/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
     );
-    if(res.data.error){
+    if (res.data.error) {
       return res.data;
-    }else{
+    } else {
       return res.data.corporate_clients;
     }
-    
+
   } catch (err) {
     alert("Unable to fetch corporate clients, something went wrong"); // Throw a custom error message
   }
@@ -156,7 +156,7 @@ const getCorporateCustomers = async (corporateClientId) => {
   }
 };
 
-const getCorporateProfessionals = async (corporateServiceId,gender) => {
+const getCorporateProfessionals = async (corporateServiceId, gender) => {
   try {
     const res = await axios.get(
       `http://127.0.0.1:8000/it/front/booking/corporateprofessionals/${corporateServiceId}/${gender}`
@@ -188,13 +188,13 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
   } catch (err) {
     alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
   }
-  
+
 };
 
 const SetNewPrimaryAddress = async (address, city, userId) => {
   try {
-    const requestBody = 
-      {
+    const requestBody =
+    {
       "userId": userId,
       "address": address,
       "address2": "street name 2",
@@ -227,6 +227,60 @@ const intiateBooking = async (day, time, duration, city, service, pro, customer)
 };
 
 
+
+const nexiPayByLink = async () => {
+  try {
+    const apiUrl = "https://xpay.nexigroup.com/api/phoenix-0.0/psp/api/v1/orders/paybylink";
+    const headers = {
+      "X-Api-Key": "28576b8a-b6c0-4677-9179-767bd06bdd05",
+      "Correlation-Id": "28576b8a-b6c0-4677-9179-767bd06bdd05",
+      "Content-Type": "application/json",
+    };
+
+    const requestBody = {
+      order: {
+        orderId: "btid2384983",
+        amount: "2100",
+        currency: "EUR",
+        customerId: "mcid97295873",
+        description: "TV 3423",
+        customerInfo: {
+          cardHolderName: "Mauro Morandi",
+          cardHolderEmail: "morandi@nexi.it",
+        },
+      },
+      paymentSession: {
+        actionType: "PAY",
+        amount: "2100",
+        recurrence: {
+          action: "NO_RECURRING",
+          contractId: "C2834987",
+          contractType: "MIT_UNSCHEDULED",
+          contractExpiryDate: "2023-09-10",
+          contractFrequency: "120",
+        },
+        captureType: "IMPLICIT",
+        exemptions: "NO_PREFERENCE",
+        language: "ita",
+        paymentService: "String",
+        resultUrl: "https://helloworld/9000",
+        cancelUrl: "https://helloworld",
+        notificationUrl: "https://helloworld.com/",
+      },
+      expirationDate: "2023-09-01",
+    };
+  
+
+    const response = await axios.post(apiUrl, requestBody, { headers });
+    return response.data; // Return the response data on success
+  } catch (error) {
+    console.error("API error:", error);
+    throw error; // Re-throw the error to properly handle it in the caller
+  }
+};
+
+
+
 export {
   loginUser,
   getUsers,
@@ -245,5 +299,6 @@ export {
   getProfessionalFromCorporateServices,
   getcorporateprofessionalServices,
   SetNewPrimaryAddress,
-  intiateBooking
+  intiateBooking,
+  nexiPayByLink
 };
