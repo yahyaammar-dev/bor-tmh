@@ -22,7 +22,7 @@ export default function App() {
         <option value="it">it</option>
       </select> */}
         <div className="App">
-          <button onClick={()=>{nexiPayByLink()}}></button>
+          <button onClick={()=>{nexiPayByLink()}}>Test me</button>
           <Booking /> 
         </div>
     </IntlProvider>
