@@ -4,7 +4,6 @@ import English from "../intl/en.json";
 import Italian from "../intl/it.json";
 import { useRouter } from "next/router";
 import Booking from './booking'
-import { nexiPayByLink } from "./api/hello";
 
 export default function App() {
   const [locale, setLocale] = useState("en");

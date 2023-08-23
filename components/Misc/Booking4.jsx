@@ -33,8 +33,11 @@ const Booking4 = ({ loader, setLoader }) => {
 
 
   const handleBooking = () => {
+    const data = {
+      "email":"yahyaammar4807@gmail.com"
+    }
     const res = intiateBooking()
-    const paybylink = nexiPayByLink()
+    const paybylink = nexiPayByLink(data)
     console.log('paybylink::', paybylink)
     setOpen(true)
     console.log('Booking Created::  ', reduxData)

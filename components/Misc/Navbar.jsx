@@ -2,10 +2,11 @@ import React from "react";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
-
+import { useRouter } from "next/router";
 
 const Navbar = ({ setLocale }) => {
   const dispatch = useDispatch();
+  const router = useRouter()
   const options = [
     { value: "English", label: "English" },
     { value: "Italian", label: "Italian" },
@@ -58,9 +59,9 @@ const Navbar = ({ setLocale }) => {
                 Book Now
               </a>
 
-              <Button text='Reset Data' onClick={()=>{
-                  console.log('hello')
+              <Button text='Reset Data' onClick={()=>{ 
                   dispatch({ type: "RESETALLDATA" });
+                  router.push('/')
               }}>Reset Now</Button>            
 
             </div>

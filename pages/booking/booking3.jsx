@@ -10,7 +10,6 @@ const index = () => {
       <Navbar />
       <Booking3 />
       <div className="flex justify-center mycontainer">
-
         <Loader />
       </div>
       <Footer />
