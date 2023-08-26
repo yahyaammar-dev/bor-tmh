@@ -1,5 +1,3 @@
-// dataHandler.js
-
 import { useState , useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -14,7 +12,8 @@ import {
   getCorporateCustomers,
   getCorporateProfessionals,
   getProfessionalFromCorporateServices,
-  SetNewPrimaryAddress
+  SetNewPrimaryAddress,
+  getAddress
 } from "../pages/api/hello"; // Import your API functions here
 import { type } from "os";
 
@@ -93,6 +92,7 @@ export function useDataHandler(setLoader) {
             id: corporate[0],
             value: corporate[1],
             label: corporate[1],
+            email: corporate[5]
           }));
           dispatch({type: "CORPORATES", payload: corporatesAsOption})
           setCorporateList(corporatesAsOption)
@@ -128,13 +128,18 @@ export function useDataHandler(setLoader) {
         const res = await getCorporateProfessionals(localData?.currentSubCat.id,newData.data.id)
         if(res.error){
           alert(res.error);
-          // console.log(corporates)
         }
-        // console.log('results ::', res.error)
         setLocalData({ ...localData, professionals: res });
         dispatch({ type: "GETPROFESSIONALS", payload: res });
-        // console.log(localData)
         setLoader(false);
+        console.log('Corporate User is ', reduxData?.appData?.currentCorporateUser)
+
+        getAddress(reduxData?.appData?.currentCorporateUser?.id)
+        .then((res)=>{
+          setLocalData({...localData, address: res})
+          dispatch({ type: "SETADDRESS", payload: res });
+        })
+
       }
       else{
         setLoader(true);
@@ -159,9 +164,6 @@ export function useDataHandler(setLoader) {
         pathname: '/booking/booking2',
         query: { professional: newData.data }
     })
-
-
-
     } else if (newData.type == "resetData") {
       setLocalData({});
       dispatch({ type: "REMOVEALLDATA" });
@@ -175,8 +177,8 @@ export function useDataHandler(setLoader) {
         id: corporate[0],
         value: corporate[1],
         label: corporate[1],
+        email: corporate[5],
       }));
-      // console.log(corporateUsers)
       dispatch({ type: "CORPORATEUSERS", payload: corporateUsersList });
       setCorporateCustomers(corporateUsersList);
       setLoader(false);
@@ -184,16 +186,15 @@ export function useDataHandler(setLoader) {
       setLoader(true);
       dispatch({ type: "CURRENTCORPORATEUSER", payload: newData.data });
       const categories = await getCategories(localData.city);
+
       setLocalData({ ...localData, categories: categories });
       dispatch({ type: "GETCATEGORIES", payload: categories });
       setLoader(false);
-      
-      // console.log('::::::::::::::::::::::::::::::',localData,';;;;;;;;;;;;;;;;;;;;;', reduxData)
+
     } else if (newData.type === "updateCart"){
       setLoader(true);
       setLocalData({ ...localData, cart: newData.data });
       dispatch({ type: "CART", payload: newData.data });
-      console.log('newcart data is:: ',newData)
       setLoader(false);
     }else if(newData.type === "currenttime"){
       dispatch({ type: "CURRENTTIME", payload: newData.data })
@@ -203,19 +204,15 @@ export function useDataHandler(setLoader) {
     }
     else if(newData.type === "newcity"){
       setCity(newData.data)
-      // console.log('-------- ',newData.data.id)
     }
     else if(newData.type === "address"){
       setAddress(newData.data.target.value)
-      // console.log('-------- ',newData.data.target.value)
     }
     else if(newData.type === "addAdress"){
       setLocalData({ ...localData, newAdress: address, newCity: city});
       dispatch({ type: "NEWADDRESS", payload: address});
       dispatch({ type: "NEWCITY", payload:city });
-      
       const setAddress = await SetNewPrimaryAddress(address, city.id, reduxData.appData.currentCorporateUser.id)
-   
       if (address.length > 0 && city.value.length > 0 && setAddress.status === 200) {
         setConfirmation(prevConfirmation => ({
           ...prevConfirmation,
@@ -227,7 +224,6 @@ export function useDataHandler(setLoader) {
           address: ""
         }));
       }
-      // console.log(setAddress);
     }
     else if(newData.type1 === "remove"){
       if(newData.type === "resetDataAfterCity"){

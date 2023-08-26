@@ -16,6 +16,7 @@ import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataH
 import axios from "axios";
 
 const Booking2 = ({ loader, setLoader }) => {
+  const [clickedDate, setClickedDate] = useState()
   const [times, setTimes] = useState([]);
   const [message, setMessage] = useState("");
   const [data, setData] = useState([]);
@@ -135,8 +136,10 @@ const Booking2 = ({ loader, setLoader }) => {
         dayElement.classList.add("green-day");
         const dotElement = document.createElement("div");
         dotElement.classList.add("dot");
-
         dayElement.appendChild(dotElement);
+        if(clickedDate == dayElement.innerHTML.slice(0,2)){
+          dayElement.classList.add('yelloo_bg')
+        }
       }
       daysContainer.appendChild(dayElement);
     }
@@ -219,6 +222,7 @@ const Booking2 = ({ loader, setLoader }) => {
 
   const handleDateClick = (event) => {
     const clickedElement = event.target;
+    setClickedDate(clickedElement.innerHTML.slice(0,2))
     const totalDuration = reduxData?.appData?.cart.reduce((total, item) => total + item.duration, 0);
     const currentDate = `${clickedElement.innerText <= 9 ? 0 : ""}` + clickedElement.innerText + "-" + `${currentMonth <= 9 ? 0 : ""}` + currentMonth + "-" + currentYear;
     handleLocalData({
@@ -269,6 +273,7 @@ const Booking2 = ({ loader, setLoader }) => {
 
   return (
     <div>
+      {console.log('asfd',reduxData.appData)}
       {/* Booking 2 */}
       <div className="booking2 custom__conatiner mx-auto">
         {/* Porfessional Detail */}
@@ -839,3 +844,4 @@ const Booking2 = ({ loader, setLoader }) => {
 };
 
 export default Booking2;
+

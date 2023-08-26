@@ -51,27 +51,20 @@ const Booking2 = ({ loader, setLoader }) => {
       proService = res.corporate_services;
     }
     setLoader(false)
-
-
-
     const professionalData = {
       proDetail,
       proService,
     };
-
     setProfessionalDetail(professionalData);
   };
 
   const handleProfessionalCart = (item) => {
-
     // Check if the item already exists in the cart
     const itemExists = cart.some((cartItem) => cartItem.id === item.id);
-
     // If the item does not exist, add it to the cart and update local data
     if (!itemExists) {
       const myCart = [...cart, item];
       setCart(myCart);
-
       // Update local data with the updated cart
       handleLocalData({
         type1: "remove",
@@ -99,8 +92,6 @@ const Booking2 = ({ loader, setLoader }) => {
   };
 
 
-
-
   useEffect(() => {
     getProfessionalDeatils();
   }, []);
@@ -112,8 +103,8 @@ const Booking2 = ({ loader, setLoader }) => {
           {/* Porfessional Detail */}
           <div className="flex gap-10">
             <div className="item w-3/12">
-              <img src="https://takemihome.it/upload/media/default/0001/01/thumb_603_default_card.jpeg" />
-              {/* <img src={professionalDetail?.proDetail?.profile_image?.full_url} /> */}
+              {/* <img src="https://takemihome.it/upload/media/default/0001/01/thumb_603_default_card.jpeg" /> */}
+              <img src={`https://takemihome.it/${professionalDetail?.proDetail?.profile_image?.url}`} />
             </div>
             <div className="item w-7/12">
               <h2 className="mb-1 text-4xl font-extrabold dark:text-white">{ }</h2>

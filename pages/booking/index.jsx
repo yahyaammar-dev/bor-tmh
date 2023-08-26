@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Loader from "../../components/Misc/Loader";
 import Navbar from "../../components/Misc/Navbar";
 import Footer from "../../components/Misc/Footer";
@@ -7,6 +7,8 @@ import { useState } from "react";
 
 const index = () => {
   const [loader, setLoader] = useState(false)
+  
+  
   return (
     <>
       <Navbar />

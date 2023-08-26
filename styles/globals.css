@@ -131,3 +131,12 @@ body {
 .address{
   padding: 0.3rem 0;
 }
+
+.yelloo_bg {
+  background: #DAA520;
+  border-radius: 2px;
+}
+
+.green-button{
+  background-color: #96C291 !important;
+}

@@ -7,14 +7,12 @@ import { useRouter } from "next/router";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
 import { intiateBooking, nexiPayByLink } from "../../pages/api/hello";
 
-
 const Booking4 = ({ loader, setLoader }) => {
   const {
     reduxData,
     handleLocalData,
     confirmation,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
-
 
   useEffect(() => {
     console.log(reduxData)
@@ -31,25 +29,38 @@ const Booking4 = ({ loader, setLoader }) => {
     { value: "123123", label: "12312" },
   ];
 
-
   const handleBooking = () => {
-    const data = {
-      "email":"yahyaammar4807@gmail.com"
+    if (reduxData?.appData?.type == 'Corporate') {
+
+      let totalDuration = 0;
+      let services = []
+      for (const item of reduxData?.appData?.cart) {
+        totalDuration += item.duration;
+        services.push(item.id)
+      }
+      let email = reduxData?.appData?.currentCorporateUser?.email
+      const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, email)
+      // const data = {
+      //   "email": email
+      // }
+      const data = {
+        "email": 'yahyaammar4807@gmail.com'
+      }
+      const paybylink = nexiPayByLink(data)
+    } else {
+      const data = {
+        "email": reduxData?.appData?.currentCorporateUser?.email
+      }
+      let email = reduxData?.appData?.currentCorporateUser?.email
+      let totalDuration = 0;
+      let services = []
+      for (const item of reduxData?.appData?.cart) {
+        totalDuration += item.duration;
+        services.push(item.id)
+      }
+      const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, email)
+      const paybylink = nexiPayByLink(data)
     }
-    const res = intiateBooking()
-    const paybylink = nexiPayByLink(data)
-    console.log('paybylink::', paybylink)
-    setOpen(true)
-    console.log('Booking Created::  ', reduxData)
-    console.log({
-      'day': null,
-      'time': null,
-      'duration': null,
-      'city': null,
-      'service': null,
-      'pro': null,
-      'customer': null
-    })
   }
 
   // Define custom styles for React Select
@@ -131,7 +142,7 @@ const Booking4 = ({ loader, setLoader }) => {
               <p className="w-full">
                 <div className="flex w-full">
                   <label className="w-1/2">Address</label>
-                  <p>Via Giovanni da Procida, 23 20145 Milano</p>
+                  <p>{reduxData?.appData?.currentAddress ? reduxData?.appData?.currentAddress : 'No Address Found'}</p>
                 </div>
               </p>
             </div>
@@ -187,13 +198,22 @@ const Booking4 = ({ loader, setLoader }) => {
 
           <div className="iconBox flex h justify-end">
             <div className="mt-2" >
-              <Button text={confirmation.address ? 'Address Added': 'Add Address'} filled wfull
+              {
+                confirmation.address ? <Button text='Address Added' filled wfull color='green'
                 onClick={() => {
                   handleLocalData({
                     type: "addAdress",
                   })
                 }}
-              />
+              /> : 
+                <Button text='Add Address' filled wfull
+                  onClick={() => {
+                    handleLocalData({
+                      type: "addAdress",
+                    })
+                  }}
+                />
+              }
             </div>
           </div>
           <div>
@@ -210,9 +230,9 @@ const Booking4 = ({ loader, setLoader }) => {
               <label>No</label>
             </div>
             <div className="mt-4">
-              <Button text="Pay and Book" filled wfull onClick={handleBooking} />
+              <Button text="Complete Booking" filled wfull onClick={handleBooking} />
             </div>
-              
+
           </div>
         </div>
       </div>

@@ -28,6 +28,7 @@ const initialState = {
   newAddress: null,
   currCorporate: null,
   newCity: null,
+  currentAddress: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -193,6 +194,11 @@ const appData = (state = initialState, action) => {
         ...state,
         currentTime: action.payload,
       };
+    case "SETADDRESS":
+      return {
+        ...state,
+        currentAddress: action.payload
+      }
     case "REMOVEALLDATA":
       return {
         ...state,
