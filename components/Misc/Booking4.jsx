@@ -47,6 +47,7 @@ const Booking4 = ({ loader, setLoader }) => {
         "email": 'yahyaammar4807@gmail.com'
       }
       const paybylink = nexiPayByLink(data)
+      setOpen(true)
     } else {
       const data = {
         "email": reduxData?.appData?.currentCorporateUser?.email
@@ -60,6 +61,7 @@ const Booking4 = ({ loader, setLoader }) => {
       }
       const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, email)
       const paybylink = nexiPayByLink(data)
+      setOpen(true)
     }
   }
 
