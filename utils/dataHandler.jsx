@@ -60,8 +60,8 @@ export function useDataHandler(setLoader) {
         dispatch({ type: "USERS", payload: allUsers });
         setLoader(false);
         const usersAsOptions = allUsers?.map((user) => ({
-          value: user,
-          label: user,
+          value: user.name,
+          label: user.name,
         }));
         setListUsers(usersAsOptions);
       }
