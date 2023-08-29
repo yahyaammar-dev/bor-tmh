@@ -47,6 +47,7 @@ function CreateUser() {
         try {
             const res = await axios.post('http://20.236.136.145/en/user/register', formData);
             console.log(res)
+            alert('Successfully Created User')
         } catch (error) {
             console.error('Error registering user:', error);
         }
