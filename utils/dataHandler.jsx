@@ -62,6 +62,7 @@ export function useDataHandler(setLoader) {
         const usersAsOptions = allUsers?.map((user) => ({
           value: user.name,
           label: user.name,
+          email: user.email
         }));
         setListUsers(usersAsOptions);
       }
@@ -99,6 +100,7 @@ export function useDataHandler(setLoader) {
         }
         setLoader(false)
       }else {
+        console.log('I already have the user', reduxData)
         setLoader(true);
         const categories = await getCategories(newData.data);
         setLocalData({ ...localData, city: newData.data });

@@ -333,7 +333,7 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        user: null,
+        // user: null,
         availibility: [],
         availibilitydata: [],
         cart: [],
@@ -343,7 +343,7 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        user: null,
+        // user: null,
         availibility: [],
         availibilitydata: [],
         currentDate: null,
@@ -352,14 +352,14 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        user: null,
+        // user: null,
         availibility: [],
         availibilitydata: [],
       };
     case "REMOVEAFTERTIME":
       return {
         ...state,
-        user: null,
+        // user: null,
         availibility: [],
         availibilitydata: [],
       };

@@ -16,6 +16,10 @@ import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataH
 import axios from "axios";
 
 const Booking2 = ({ loader, setLoader }) => {
+
+
+
+
   const [clickedDate, setClickedDate] = useState()
   const [times, setTimes] = useState([]);
   const [message, setMessage] = useState("");
@@ -270,6 +274,10 @@ const Booking2 = ({ loader, setLoader }) => {
       setCheckSaveDate(true)
     }
   }
+
+
+  console.log('booking3', reduxData)
+
 
   return (
     <div>

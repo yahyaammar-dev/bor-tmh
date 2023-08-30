@@ -8,6 +8,9 @@ import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataH
 import { intiateBooking, nexiPayByLink } from "../../pages/api/hello";
 
 const Booking4 = ({ loader, setLoader }) => {
+
+
+
   const {
     reduxData,
     handleLocalData,
@@ -28,6 +31,9 @@ const Booking4 = ({ loader, setLoader }) => {
     { value: "123123", label: "123123" },
     { value: "123123", label: "12312" },
   ];
+
+  console.log('booking4', reduxData)
+
 
   const handleBooking = () => {
     if (reduxData?.appData?.type == 'Corporate') {
@@ -50,7 +56,7 @@ const Booking4 = ({ loader, setLoader }) => {
       setOpen(true)
     } else {
       const data = {
-        "email": reduxData?.appData?.currentCorporateUser?.email
+        "email": reduxData?.appData?.user?.email
       }
       let email = reduxData?.appData?.currentCorporateUser?.email
       let totalDuration = 0;

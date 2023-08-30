@@ -18,6 +18,9 @@ const Booking2 = ({ loader, setLoader }) => {
   const [cart, setCart] = useState([])
   const dispatch = useDispatch()
 
+
+
+
   const {
     localData,
     listUsers,
@@ -28,6 +31,8 @@ const Booking2 = ({ loader, setLoader }) => {
     corporatesList,
     corporateCustomerList,
   } = useDataHandler(setLoader);
+
+  console.log('booking2', reduxData)
 
 
   const getProfessionalDeatils = async () => {
@@ -66,10 +71,10 @@ const Booking2 = ({ loader, setLoader }) => {
       const myCart = [...cart, item];
       setCart(myCart);
       // Update local data with the updated cart
-      handleLocalData({
-        type1: "remove",
-        type: "resetDataAfterCart"
-      })
+      // handleLocalData({
+      //   type1: "remove",
+      //   type: "resetDataAfterCart"
+      // })
       handleLocalData({
         type: "updateCart",
         data: myCart,
@@ -79,10 +84,10 @@ const Booking2 = ({ loader, setLoader }) => {
     else {
       const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id);
       setCart(updatedCart)
-      handleLocalData({
-        type1: "remove",
-        type: "resetDataAfterCart"
-      })
+      // handleLocalData({
+      //   type1: "remove",
+      //   type: "resetDataAfterCart"
+      // })
       handleLocalData({
         type: "updateCart",
         data: updatedCart,

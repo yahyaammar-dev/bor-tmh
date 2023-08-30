@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import axios from "axios";
 
 const loginUser = async (values) => {
@@ -21,7 +19,7 @@ const loginUser = async (values) => {
 const getUsers = async () => {
   try {
     const res = await axios.get(
-      "http://20.236.136.145/it/api/public_api/subcategories/getAllUser"
+      "http://localhost:8000/it/api/public_api/subcategories/getAllUser"
     );
     return res.data;
   } catch (err) {
