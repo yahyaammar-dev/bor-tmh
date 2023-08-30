@@ -19,7 +19,7 @@ const loginUser = async (values) => {
 const getUsers = async () => {
   try {
     const res = await axios.get(
-      "http://localhost:8000/it/api/public_api/subcategories/getAllUser"
+      "http://20.236.136.145/it/api/public_api/subcategories/getAllUser"
     );
     return res.data;
   } catch (err) {
