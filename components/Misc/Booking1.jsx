@@ -20,7 +20,6 @@ const Booking1 = ({ loader, setLoader }) => {
     corporateCustomerList,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
-  console.log('booking1 ', reduxData)
 
   const postal = [
     { value: "123123", label: "123123" },

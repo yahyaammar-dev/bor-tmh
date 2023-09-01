@@ -17,9 +17,6 @@ import axios from "axios";
 
 const Booking2 = ({ loader, setLoader }) => {
 
-
-
-
   const [clickedDate, setClickedDate] = useState()
   const [times, setTimes] = useState([]);
   const [message, setMessage] = useState("");
@@ -287,25 +284,17 @@ const Booking2 = ({ loader, setLoader }) => {
         {/* Porfessional Detail */}
         <div className="flex gap-10">
           <div className="item w-3/12">
-            <img src="https://takemihome.it/upload/media/default/0001/01/thumb_603_default_card.jpeg" />
+            <img src={`https://takemihome.it/${reduxData?.appData?.currentProfessional?.profile_image?.url}`} />
           </div>
           <div className="item w-7/12">
             <h2 className="mb-1 text-4xl font-extrabold dark:text-white">
-              Sarah Shitty
+              {reduxData?.appData?.currentProfessional?.full_name}
             </h2>
             <h3 className="mb-6 text-xl font-bold dark:text-white">
               Makeup Artist
             </h3>
             <p className="text-lg font-normal text-gray-500 dark:text-gray-400">
-              Deliver great service experiences fast - without the complexity of
-              traditional ITSM solutions. Accelerate critical development work,
-              eliminate toil, and deploy changes with ease. Deliver great
-              service experiences fast - without the complexity of traditional
-              ITSM solutions. Accelerate critical development work, eliminate
-              toil, and deploy changes with ease. Deliver great service
-              experiences fast - without the complexity of traditional ITSM
-              solutions. Accelerate critical development work, eliminate toil,
-              and deploy changes with ease.
+              {reduxData?.appData?.currentProfessional?.biography}
             </p>
           </div>
         </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 const loginUser = async (values) => {
   try {
     const res = await axios.post(
-      "http://20.236.136.145/it/api/public_api/subcategories/loginAdminfpa",
+      "https://takemihome.it/it/api/public_api/subcategories/loginAdminfpa",
       {
         email: values.email,
         password: values.password,
@@ -19,7 +19,7 @@ const loginUser = async (values) => {
 const getUsers = async () => {
   try {
     const res = await axios.get(
-      "http://20.236.136.145/it/api/public_api/subcategories/getAllUser"
+      "https://takemihome.it/it/api/public_api/subcategories/getAllUser"
     );
     return res.data;
   } catch (err) {
@@ -30,7 +30,7 @@ const getUsers = async () => {
 const getCities = async () => {
   try {
     const res = await axios.get(
-      "http://20.236.136.145/it/front/booking/cities"
+      "https://takemihome.it/it/front/booking/cities"
     );
     return res.data;
   } catch (err) {
@@ -42,7 +42,7 @@ const getCities = async () => {
 const getCategories = async (item) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/categories/${item.id}`,
+      `https://takemihome.it/it/front/booking/categories/${item.id}`,
     );
     return res.data;
   } catch (err) {
@@ -53,7 +53,7 @@ const getCategories = async (item) => {
 const getSubCategories = async (item) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/sub/${item.id}`
+      `https://takemihome.it/it/front/booking/sub/${item.id}`
     );
     return res.data;
   } catch (err) {
@@ -64,7 +64,7 @@ const getSubCategories = async (item) => {
 const getGenders = async (item) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/gender/${item}`
+      `https://takemihome.it/it/front/booking/gender/${item}`
     );
     return res.data;
   } catch (err) {
@@ -75,7 +75,7 @@ const getGenders = async (item) => {
 const getProfessionals = async (item) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/professionals/${item.localData.currentSubCat.id}/${item.data.id}`
+      `https://takemihome.it/it/front/booking/professionals/${item.localData.currentSubCat.id}/${item.data.id}`
     );
     return res.data;
   } catch (err) {
@@ -86,7 +86,7 @@ const getProfessionals = async (item) => {
 const getProfessionalDetail = async (data) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/services/json?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}`
+      `https://takemihome.it/it/front/booking/services/json?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}`
     );
     return res.data;
   } catch (err) {
@@ -97,7 +97,7 @@ const getProfessionalDetail = async (data) => {
 const getAvailability = async (data) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/schedulejson?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}&services=%2C41%2C62/`
+      `https://takemihome.it/it/front/booking/schedulejson?pro=${data.proId}&sub=${data.subId}&gender=${data.gender}&services=%2C41%2C62/`
     );
     return res.data;
   } catch (err) {
@@ -108,7 +108,7 @@ const getAvailability = async (data) => {
 const getAvailabilityData = async (data) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
+      `https://takemihome.it/it/front/booking/get/times?duration=${data.duration}&date=${data.date}&pro=${data.proId}`
     );
     return res.data;
   } catch (err) {
@@ -119,7 +119,7 @@ const getAvailabilityData = async (data) => {
 const getCorporateClient = async (city_name) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
+      `https://takemihome.it/it/api/public_api/subcategories/getCorporateClientsByCity/${city_name}`
     );
     if (res.data.error) {
       return res.data;
@@ -135,7 +135,7 @@ const getCorporateClient = async (city_name) => {
 const getCorporateServices = async (item) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateServiceByCity/${city_name}`
+      `https://takemihome.it/it/api/public_api/subcategories/getCorporateServiceByCity/${city_name}`
     );
     return res.data;
   } catch (err) {
@@ -146,7 +146,7 @@ const getCorporateServices = async (item) => {
 const getCorporateCustomers = async (corporateClientId) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateCustomers/${corporateClientId}`
+      `https://takemihome.it/it/api/public_api/subcategories/getCorporateCustomers/${corporateClientId}`
     );
     console.log('api response is', res)
     return res.data.corporate_clients;
@@ -158,7 +158,7 @@ const getCorporateCustomers = async (corporateClientId) => {
 const getCorporateProfessionals = async (corporateServiceId, gender) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/corporateprofessionals/${corporateServiceId}/${gender}`
+      `https://takemihome.it/it/front/booking/corporateprofessionals/${corporateServiceId}/${gender}`
     );
     return res.data;
   } catch (err) {
@@ -170,7 +170,7 @@ const getCorporateProfessionals = async (corporateServiceId, gender) => {
 const getcorporateprofessionalServices = async (professionalId) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/corporateprofessionalServices/${professionalId}`
+      `https://takemihome.it/it/front/booking/corporateprofessionalServices/${professionalId}`
     );
     return res.data;
   } catch (err) {
@@ -181,7 +181,7 @@ const getcorporateprofessionalServices = async (professionalId) => {
 const getProfessionalFromCorporateServices = async (subCatId) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
+      `https://takemihome.it/it/api/public_api/subcategories/getCorporateBySubCat/${subCatId}`
     );
     return res.data;
   } catch (err) {
@@ -202,7 +202,7 @@ const SetNewPrimaryAddress = async (address, city, userId) => {
     }
 
     const res = await axios.post(
-      "http://20.236.136.145/it/front/booking/new_primary",
+      "https://takemihome.it/it/front/booking/new_primary",
       requestBody
     );
 
@@ -217,7 +217,7 @@ const SetNewPrimaryAddress = async (address, city, userId) => {
 const intiateBooking = async (day, time, duration, city, service, pro, customerEmail) => {
   try {
     const res = await axios.get(
-      `http://20.236.136.145/it/front/booking/set_new_appointment?day=${day}&time=${time}duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customerEmail}`
+      `https://takemihome.it/it/front/booking/set_new_appointment?day=${day}&time=${time}duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customerEmail}`
     );
     return res.data;
   } catch (err) {
@@ -228,7 +228,7 @@ const intiateBooking = async (day, time, duration, city, service, pro, customerE
 const nexiPayByLink = async (data) => {
   try {
     const res = await axios.post(
-      `http://20.236.136.145/it/front/booking/send-payment-link`,
+      `https://takemihome.it/it/front/booking/send-payment-link`,
       data
     );
     return res.data;
@@ -243,7 +243,7 @@ const getAddress = async (id) => {
       'user_id': id
     }
     const res = await axios.post(
-      `http://20.236.136.145/it/front/booking/get-user-address`,
+      `https://takemihome.it/it/front/booking/get-user-address`,
       data
     );
     return res.data;
