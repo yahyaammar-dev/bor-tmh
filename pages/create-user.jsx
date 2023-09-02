@@ -31,7 +31,7 @@ function CreateUser() {
     const checkEmail = async () => {
         try {
             const response = await axios.post(
-                'http://20.236.136.145/it/user/checkmail',
+                'http://takemihome.it/it/user/checkmail',
                 { email }
             );
             setStatus(response.data.available);
@@ -45,7 +45,7 @@ function CreateUser() {
 
     const registerUser = async () => {
         try {
-            const res = await axios.post('http://20.236.136.145/en/user/register', formData);
+            const res = await axios.post('http://takemihome.it/en/user/register', formData);
             console.log(res)
             alert('Successfully Created User')
         } catch (error) {
