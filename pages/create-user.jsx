@@ -31,7 +31,7 @@ function CreateUser() {
     const checkEmail = async () => {
         try {
             const response = await axios.post(
-                'http://takemihome.it/it/user/checkmail',
+                'https://takemihome.it/it/user/checkmail',
                 { email }
             );
             setStatus(response.data.available);
@@ -45,7 +45,7 @@ function CreateUser() {
 
     const registerUser = async () => {
         try {
-            const res = await axios.post('http://takemihome.it/en/user/register', formData);
+            const res = await axios.post('https://takemihome.it/en/user/register', formData);
             console.log(res)
             alert('Successfully Created User')
         } catch (error) {
