@@ -39,6 +39,7 @@ function CreateUser() {
                 alert('Email already exists')
             }
         } catch (error) {
+            alert('Something went wrong try again later')
             console.error('Error checking email:', error);
         }
     };
@@ -49,6 +50,7 @@ function CreateUser() {
             console.log(res)
             alert('Successfully Created User')
         } catch (error) {
+            alert('Somthing went wrong, please try again later')
             console.error('Error registering user:', error);
         }
     };
