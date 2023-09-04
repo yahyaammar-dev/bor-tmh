@@ -389,7 +389,7 @@ const Booking2 = ({ loader, setLoader }) => {
                     onClick={handleTimeClick}
                   /> : ""}
               {message &&
-                <p>{message}</p>
+                <p className="text-red-600 font-bold">{message}</p>
               }
             </div>
 
