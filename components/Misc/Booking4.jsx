@@ -6,11 +6,9 @@ import Select from "react-select";
 import { useRouter } from "next/router";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
 import { intiateBooking, nexiPayByLink } from "../../pages/api/hello";
+import axios from "axios";
 
 const Booking4 = ({ loader, setLoader }) => {
-
-
-
   const {
     reduxData,
     handleLocalData,
@@ -31,8 +29,29 @@ const Booking4 = ({ loader, setLoader }) => {
     { value: "123123", label: "123123" },
     { value: "123123", label: "12312" },
   ];
+  
+  const [coupon, setCoupon] = useState()
 
-  console.log('booking4', reduxData)
+  const submitCoupon = () => {
+    if(coupon == null){
+      alert('please enter coupon')
+    }
+    let data ={
+      "code": "yahya"
+    }
+    axios.post('https://takemihome.it/en/submit_gift', data)
+    .then((res)=>{
+      if(res.data.success == true){
+        alert('Gift Card applied')
+      }else{
+        alert('Your Code is not correct')
+      }
+      console.log('response from api',res)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
 
 
   const handleBooking = () => {
@@ -208,19 +227,19 @@ const Booking4 = ({ loader, setLoader }) => {
             <div className="mt-2" >
               {
                 confirmation.address ? <Button text='Address Added' filled wfull color='green'
-                onClick={() => {
-                  handleLocalData({
-                    type: "addAdress",
-                  })
-                }}
-              /> : 
-                <Button text='Add Address' filled wfull
                   onClick={() => {
                     handleLocalData({
                       type: "addAdress",
                     })
                   }}
-                />
+                /> :
+                  <Button text='Add Address' filled wfull
+                    onClick={() => {
+                      handleLocalData({
+                        type: "addAdress",
+                      })
+                    }}
+                  />
               }
             </div>
           </div>
@@ -244,9 +263,39 @@ const Booking4 = ({ loader, setLoader }) => {
           </div>
         </div>
       </div>
-      <div className="custom__conatiner mx-auto">
-        <div className="flex justify-end">
-          {/* <div className="w-6/12">
+
+
+
+
+      {/* --------------------------------------------------------------------------- */}
+
+
+
+      <div className="flex custom__conatiner mx-auto gap-4">
+        <div className="w-6/12 border p-5">
+          <h3 className="font-bold">Coupons</h3>
+     
+              <div className="flex justify-between items-center">
+                <p>Add Gift Card</p>
+                <input type='text' onChange={(e)=>{setCoupon(e.target.value)}}  placeholder="Enter your voucher here" className="px-1 py-1 border" />
+                <button onClick={()=>{
+                  submitCoupon()
+                }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Apply</button>
+              </div>
+
+        </div>
+        <div className="w-6/12 border p-5 checkout_address">
+
+        </div>
+      </div>
+
+
+
+        {/* --------------------------------------------------------------------------- */}
+
+        <div className="custom__conatiner mx-auto">
+          <div className="flex justify-end">
+            {/* <div className="w-6/12">
             <div>
               <input placeholder="Add Gift Card" className="py-1 px-5 rounded mr-2" />
               Apply
@@ -263,32 +312,32 @@ const Booking4 = ({ loader, setLoader }) => {
               </div>
             </div>
           </div> */}
-          <div className="w-6/12">
+            <div className="w-6/12">
+            </div>
           </div>
         </div>
-      </div>
 
-      {
-        open && (
-          <div className="custom__container__success">
-            <div class="w-full md:w-1/3 mx-auto">
-              <div class="flex p-5 rounded-lg shadow bg-white">
-                <div class="ml-3 text-center flex flex-col justify-center gap-3">
-                  <h2 class="font-semibold text-gray-800">Successfully Created Booking</h2>
-                  <p class="mt-2 text-sm text-gray-600 leading-relaxed">Booking has been created Successfully. Emails are sent to user and nexi is integrated in pay by link.</p>
-                  <button type="button" onClick={() => { setOpen(false) }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                    Booking Completed!
-                    <svg class="w-6 h-6 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z" /></svg>
-                  </button>
+        {
+          open && (
+            <div className="custom__container__success">
+              <div class="w-full md:w-1/3 mx-auto">
+                <div class="flex p-5 rounded-lg shadow bg-white">
+                  <div class="ml-3 text-center flex flex-col justify-center gap-3">
+                    <h2 class="font-semibold text-gray-800">Successfully Created Booking</h2>
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">Booking has been created Successfully. Emails are sent to user and nexi is integrated in pay by link.</p>
+                    <button type="button" onClick={() => { setOpen(false) }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                      Booking Completed!
+                      <svg class="w-6 h-6 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z" /></svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
 
-    </div>
-  );
+      </div>
+      );
 };
 
-export default Booking4;
+      export default Booking4;
