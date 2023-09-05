@@ -273,7 +273,6 @@ const Booking2 = ({ loader, setLoader }) => {
   }
 
 
-  console.log('booking3', reduxData)
 
 
   return (

@@ -75,6 +75,7 @@ const Booking2 = ({ loader, setLoader }) => {
       //   type1: "remove",
       //   type: "resetDataAfterCart"
       // })
+      
       handleLocalData({
         type: "updateCart",
         data: myCart,

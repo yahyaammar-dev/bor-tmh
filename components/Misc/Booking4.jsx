@@ -42,7 +42,10 @@ const Booking4 = ({ loader, setLoader }) => {
     axios.post('https://takemihome.it/en/submit_gift', data)
     .then((res)=>{
       if(res.data.success == true){
-        alert('Gift Card applied')
+        let amountOfGiftCard = res?.data?.voucherAmount
+
+        // get total amount from cart and show it here
+        alert('Gift card applied applied, Amount reduced is', amountOfGiftCard)
       }else{
         alert('Your Code is not correct')
       }
