@@ -91,7 +91,7 @@ export default async (req, res) => {
         res.status(200).json(final_array);
     } catch (error) {
         console.error('Error consuming external API:', error);
-        res.status(500).json({ error: 'Error consuming external API' });
+        res.status(500).json({ error: error });
     }
 };
 
