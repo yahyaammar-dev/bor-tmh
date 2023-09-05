@@ -11,7 +11,7 @@ export default async (req, res) => {
 
 
         // Make a GET request to the external API to get all of data
-        const response = await axios.post('http://localhost:8000/it/front/booking/get-professional-calendar', input);
+        const response = await axios.post('http://takemihome.it/it/front/booking/get-professional-calendar', input);
 
 
         // remove deleted dates
