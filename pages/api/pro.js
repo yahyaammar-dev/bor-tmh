@@ -14,6 +14,13 @@ export default async (req, res) => {
         const response = await axios.post('https://takemihome.it/it/front/booking/get-professional-calendar', input);
 
 
+        if(response?.data?.calendarData?.length == 0 ){
+          res.status(200).json({
+            message: 'No Professional Found'
+          });
+
+        }
+
         // remove deleted dates
         const active_dates = response?.data?.calendarData?.filter((item)=>item.deleted == false)
 
