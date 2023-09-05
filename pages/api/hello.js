@@ -233,7 +233,7 @@ const nexiPayByLink = async (data) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+    alert("Nexi pay by link failed- Unable to send Email, Expiration time from request is in the past"); // Throw a custom error message
   }
 };
 
