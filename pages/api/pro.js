@@ -10,8 +10,8 @@ export default async (req, res) => {
         };
 
 
-        // Make a GET request to the external API to get all of data
-        const response = await axios.post('http://takemihome.it/it/front/booking/get-professional-calendar', input);
+        // Make a GET request to the external API to get all of data with https
+        const response = await axios.post('https://takemihome.it/it/front/booking/get-professional-calendar', input);
 
 
         // remove deleted dates
