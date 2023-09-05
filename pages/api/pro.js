@@ -6,7 +6,7 @@ export default async (req, res) => {
     try {
 
         const input = {
-            "professional": 14
+            "professional": req.body.professional
         };
 
 
