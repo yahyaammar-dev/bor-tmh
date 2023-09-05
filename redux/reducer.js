@@ -28,7 +28,8 @@ const initialState = {
   newAddress: null,
   currCorporate: null,
   newCity: null,
-  currentAddress: null
+  currentAddress: null,
+  totalAmount: 0
 };
 
 const authReducer = (state = initialState, action) => {
@@ -49,6 +50,11 @@ const authReducer = (state = initialState, action) => {
 
 const appData = (state = initialState, action) => {
   switch (action.type) {
+    case "TOTALAMOUNT":
+      return{
+        ...state,
+        totalAmount: action.payload
+      }
     case "TYPE":
       return {
         ...state,

@@ -195,6 +195,17 @@ export function useDataHandler(setLoader) {
 
     } else if (newData.type === "updateCart"){
       setLoader(true);
+
+      if(newData?.data){
+        var totalAmount = 0
+        newData?.data?.map((item)=>{
+          totalAmount = Number(totalAmount) + Number(item.price)
+        })
+        dispatch({type: "TOTALAMOUNT", payload: totalAmount})
+      }
+
+      
+
       setLocalData({ ...localData, cart: newData.data });
       dispatch({ type: "CART", payload: newData.data });
       setLoader(false);
