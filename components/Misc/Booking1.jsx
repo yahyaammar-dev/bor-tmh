@@ -6,6 +6,7 @@ import Fade from "../Transition/Fade";
 import selectStyles from "../../styles/selectStyles";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
 import CorporateBooking from "./CorporateBooking";
+import Link from "next/link";
 
 const Booking1 = ({ loader, setLoader }) => {
   const [dowloaded , setDowloaded] = useState(false);
@@ -367,6 +368,11 @@ const Booking1 = ({ loader, setLoader }) => {
                         placeholder="Select User"
                         styles={selectStyles}
                       />
+                    </div>
+                    <div>
+                      <Link href='create-user'>
+                        <button className="px-5 py-2 rounded button-filled">Create User</button>
+                      </Link>
                     </div>
                   </div>
                 </div>

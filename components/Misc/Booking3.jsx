@@ -283,7 +283,12 @@ const Booking2 = ({ loader, setLoader }) => {
         {/* Porfessional Detail */}
         <div className="flex gap-10">
           <div className="item w-3/12">
-            <img src={`https://takemihome.it/${reduxData?.appData?.currentProfessional?.profile_image?.url}`} />
+            <img src={
+              reduxData?.appData?.currentProfessional?.image == undefined ?
+              `https://takemihome.it/${reduxData?.appData?.currentProfessional?.profile_image?.url}`
+              :
+              `https://takemihome.it/${reduxData?.appData?.currentProfessional?.image}`
+              } />
           </div>
           <div className="item w-7/12">
             <h2 className="mb-1 text-4xl font-extrabold dark:text-white">
