@@ -193,11 +193,17 @@ const Booking4 = ({ loader, setLoader }) => {
                 <div className="flex w-full">
                   <label className="w-1/2">Address</label>
                   <p>{reduxData?.appData?.currentAddress ? reduxData?.appData?.currentAddress : 'No Address Found'}</p>
+                  <p><pre>,   </pre></p>
+                  <p> 
+                    <b>
+                      {reduxData?.appData?.currentCity?.value ? reduxData?.appData?.currentCity?.value : 'No City Selected'}
+                    </b>
+                  </p>
                 </div>
               </p>
             </div>
           </div>
-          <div>
+          {/* <div>
             <div className="iconBox flex">
               <p className="w-full">
                 <div className="flex w-full">
@@ -211,11 +217,11 @@ const Booking4 = ({ loader, setLoader }) => {
                 </div>
               </p>
             </div>
-          </div>
+          </div> */}
 
 
 
-          <div>
+          {/* <div>
             <div className="iconBox flex">
               <p className="w-full customContainer">
                 <div className="flex w-full customBordered">
@@ -244,7 +250,7 @@ const Booking4 = ({ loader, setLoader }) => {
                 </div>
               </p>
             </div>
-          </div>
+          </div> */}
 
           <div className="iconBox flex h justify-end">
             <div className="mt-2" >
