@@ -155,6 +155,7 @@ const Booking2 = ({ loader, setLoader }) => {
               </p>
               {professionalDetail?.proService?.map((item) => (
                 <div className="flex gap-10 mt-3 mx-auto justify-center">
+                  {console.log(item)}
                   <div className="flex gap-10 border py-3 justify-between px-3 w-lg border border-black w-2/3">
                     <p>{item?.name}</p>
                     <div className="flex items-center">
@@ -166,7 +167,7 @@ const Booking2 = ({ loader, setLoader }) => {
                     </div>
                   </div>
 
-                  <button style={reduxData?.appData?.cart?.some((itm) => itm?.name == item?.name) ? { backgroundColor: "#DAA520", borderRadius: "20%" } : {}}>
+                  <button style={reduxData?.appData?.cart?.some((itm) => itm?.id == item?.id) ? { backgroundColor: "#DAA520", borderRadius: "20%" } : {}}>
                     <img
                       src="/imgs/addcircle.svg"
                       className="w-8"

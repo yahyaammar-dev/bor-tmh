@@ -190,14 +190,14 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
 
 };
 
-const SetNewPrimaryAddress = async (address, city, userId) => {
+const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode) => {
   try {
     const requestBody =
     {
       "userId": userId,
-      "address": address,
-      "address2": "street name 2",
-      "postalCode": "56165",
+      "address": address1,
+      "address2": address2,
+      "postalCode": postalCode,
       "city": city
     }
 
@@ -214,11 +214,12 @@ const SetNewPrimaryAddress = async (address, city, userId) => {
 };
 
 
-const intiateBooking = async (day, time, duration, city, service, pro, customerEmail) => {
+const intiateBooking = async (day, time, duration, city, service, pro, customer) => {
   try {
     const res = await axios.get(
-      `https://takemihome.it/it/front/booking/set_new_appointment?day=${day}&time=${time}duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customerEmail}`
+      `https://takemihome.it/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}`
     );
+    console.log('appointment have been set', res.data)
     return res.data;
   } catch (err) {
     alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
@@ -253,6 +254,58 @@ const getAddress = async (id) => {
   }
 };
 
+
+
+const getAllAddresses = async (id) => {
+  try {
+    const data = {
+      'id': id
+    }
+    const res = await axios.post(
+      `https://takemihome.it/it/api/public_api/subcategories/getUserAddresses`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    alert("Something went wrong while fetching your data, please try again later");
+    console.log(err)
+  }
+};
+
+const getCorporateCategories = async (corporate) => {
+  try {
+    const data = {
+      corporate : corporate
+    }
+    const res = await axios.post(
+      `https://takemihome.it/it/front/booking/corporateCategories`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    alert("Something went wrong while fetching your data, please try again later");
+    console.log(err)
+  }
+};
+
+const getCorporateSubcategories = async (city) => {
+  try {
+    const data = {
+      'city': city
+    }
+    const res = await axios.get(
+      `https://takemihome.it/it/api/public_api/corporateSubcategories`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    alert("Something went wrong while fetching your data, please try again later");
+    console.log(err)
+  }
+};
+
+
+
 export {
   loginUser,
   getUsers,
@@ -273,5 +326,8 @@ export {
   SetNewPrimaryAddress,
   intiateBooking,
   nexiPayByLink,
-  getAddress
+  getAddress,
+  getAllAddresses,
+  getCorporateCategories,
+  getCorporateSubcategories
 };

@@ -7,6 +7,7 @@ import selectStyles from "../../styles/selectStyles";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
 import CorporateBooking from "./CorporateBooking";
 import Link from "next/link";
+import { getCorporateCategories } from "../../pages/api/hello";
 
 const Booking1 = ({ loader, setLoader }) => {
   const [dowloaded , setDowloaded] = useState(false);
@@ -75,6 +76,20 @@ const Booking1 = ({ loader, setLoader }) => {
   }
   
 
+  // temporary testing - must be removed 
+  const fetchdata = async () => {
+      let corporate = reduxData?.appData?.currCorporate?.id
+      const cats = await getCorporateCategories(corporate)
+      console.log('response from categories is', cats)
+  }
+  
+  useEffect(()=>{
+    fetchdata()
+  },[])
+
+
+  console.log(reduxData)
+  
   return (
     <div>
       {dowloaded && (<>
@@ -200,7 +215,7 @@ const Booking1 = ({ loader, setLoader }) => {
               <Fade>
                 <div className="city mb-10">
                   <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
-                    Select Corproate Users
+                    Select Corporate Users
                   </h1>
                   <div className="flex justify-center gap-5">
                     <div className="item">

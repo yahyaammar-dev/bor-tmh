@@ -5,7 +5,7 @@ import Button from "./Button";
 import Select from "react-select";
 import { useRouter } from "next/router";
 import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
-import { intiateBooking, nexiPayByLink } from "../../pages/api/hello";
+import { SetNewPrimaryAddress, getAllAddresses, intiateBooking, nexiPayByLink } from "../../pages/api/hello";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
@@ -16,11 +16,37 @@ const Booking4 = ({ loader, setLoader }) => {
     confirmation,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
-
+  const [addressoptions, setAddressOptions] = useState()
   const dispatch = useDispatch()
+  const [addressData, setAddressData] = useState({
+    address1: '',
+    address2: '',
+    city: '',
+    postalCode: ''
+  })
+
+  const handleAddressChange = (e) => {
+    handleLocalData({
+      type: "address",
+      data: e,
+    })
+  }
+
+  const getAddresses = async () => {
+    let id
+    if (reduxData?.appData?.user?.id) {
+      id = reduxData?.appData?.user?.id
+    } else {
+      id = reduxData?.appData?.currentCorporateUser?.id
+    }
+    let res = await getAllAddresses(id)
+    setAddressOptions(res.data)
+  }
+
 
   useEffect(() => {
     console.log(reduxData)
+    getAddresses()
   }, [])
   const [open, setOpen] = useState(false)
 
@@ -48,13 +74,13 @@ const Booking4 = ({ loader, setLoader }) => {
         if (res.data.success == true) {
           let amountOfGiftCard = res?.data?.voucherAmount
 
-          let reduxAmount  = reduxData?.appData?.totalAmount
+          let reduxAmount = reduxData?.appData?.totalAmount
           let calculatedAmount = reduxAmount - amountOfGiftCard
 
-          if(calculatedAmount < 0 ){
+          if (calculatedAmount < 0) {
             calculatedAmount = 0
           }
-          dispatch({type: "TOTALAMOUNT", payload: totalAmount})
+          dispatch({ type: "TOTALAMOUNT", payload: totalAmount })
 
           // get total amount from cart and show it here
           alert('Gift card applied applied, Amount reduced is', amountOfGiftCard)
@@ -71,35 +97,36 @@ const Booking4 = ({ loader, setLoader }) => {
 
   const handleBooking = () => {
     if (reduxData?.appData?.type == 'Corporate') {
-
       let totalDuration = 0;
       let services = []
       for (const item of reduxData?.appData?.cart) {
         totalDuration += item.duration;
         services.push(item.id)
       }
-      let email = reduxData?.appData?.currentCorporateUser?.email
+      let email = reduxData?.appData?.currentCorporateUser?.id
+      console.log('total duration is', totalDuration)
       const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, email)
       // const data = {
       //   "email": email
       // }
-      const data = {
-        "email": 'yahyaammar4807@gmail.com'
-      }
-      const paybylink = nexiPayByLink(data)
+      // const data = {
+      //   "email": 'yahyaammar4807@gmail.com'
+      // }
+      // const paybylink = nexiPayByLink(data)
       setOpen(true)
     } else {
       const data = {
         "email": reduxData?.appData?.user?.email
       }
-      let email = reduxData?.appData?.currentCorporateUser?.email
+      let customerId = reduxData?.appData?.user?.id
+      console.log('you know the customer is', customerId)
       let totalDuration = 0;
       let services = []
       for (const item of reduxData?.appData?.cart) {
         totalDuration += item.duration;
         services.push(item.id)
       }
-      const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, email)
+      const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, customerId)
       const paybylink = nexiPayByLink(data)
       setOpen(true)
     }
@@ -133,6 +160,29 @@ const Booking4 = ({ loader, setLoader }) => {
       color: "black", // Change the color of the selected value text
     }),
   };
+
+
+  const handleAddress = async (data) => {
+    let addressData = data
+    if (reduxData?.appData?.user?.id) {
+      let id_concer = reduxData?.appData?.user?.id
+      addressData = { ...addressData, id: id_concer }
+    } else {
+      let id_corporate = reduxData?.appData?.currentCorporateUser?.id
+      addressData = { ...addressData, id: id_corporate }
+    }
+    if (!addressData?.postalCode) {
+      addressData.postalCode = null
+    }
+    const res = await SetNewPrimaryAddress(addressData?.address1, addressData?.address2, addressData?.city, addressData?.id, addressData?.postalCode)
+    if (res.status == 200) {
+      alert('Address Added Successfully')
+    } else {
+      alert('Something went wrong!! Plesae try again later')
+    }
+  }
+
+
   const router = useRouter();
   const navigate_to_booking3 = () => {
     router.push("/booking3");
@@ -190,38 +240,60 @@ const Booking4 = ({ loader, setLoader }) => {
           <div>
             <div className="iconBox flex">
               <p className="w-full">
-                <div className="flex w-full">
-                  <label className="w-1/2">Address</label>
-                  <p>{reduxData?.appData?.currentAddress ? reduxData?.appData?.currentAddress : 'No Address Found'}</p>
+                <div className="flex w-full mb-2">
+                  <label className="w-2/3">Address</label>
+                  <select className="border w-full address" onChange={(e) => handleAddressChange(JSON.parse(e.target.value))}>
+                    {addressoptions?.map((item) => (
+                      <option key={item.id} value={JSON.stringify(item)}>
+                        {item.address} {item.address2}
+                      </option>
+                    ))}
+                  </select>
+                  {/* <p>{reduxData?.appData?.currentAddress ? reduxData?.appData?.currentAddress : 'No Address Found'}</p>
                   <p><pre>,   </pre></p>
-                  <p> 
+                  <p>
                     <b>
                       {reduxData?.appData?.currentCity?.value ? reduxData?.appData?.currentCity?.value : 'No City Selected'}
                     </b>
-                  </p>
+                  </p> */}
                 </div>
               </p>
             </div>
           </div>
-          {/* <div>
+          <div>
             <div className="iconBox flex">
               <p className="w-full">
                 <div className="flex w-full">
-                  <label className="w-2/3 flex items-center">Enter new Address</label>
+                  <label className="w-2/3 flex items-center">Enter Address 1</label>
                   <input className="border w-full address"
-                    onChange={(item) => handleLocalData({
-                      type: "address",
-                      data: item,
-                    })}
+                    onChange={(e) => {
+                      setAddressData({ ...addressData, address1: e.target.value })
+                      // handleLocalData({
+                      //   type: "address",
+                      //   data: item,
+                      // })
+                    }}
+                    type="text" />
+                </div>
+                <div className="flex w-full">
+                  <label className="w-2/3 flex items-center">Enter Address 2</label>
+                  <input className="border w-full address"
+                    onChange={(e) => {
+                      setAddressData({ ...addressData, address2: e.target.value })
+                      // handleLocalData({
+                      //   type: "address",
+                      //   data: item,
+                      // })
+                    }}
                     type="text" />
                 </div>
               </p>
             </div>
-          </div> */}
+          </div>
 
 
 
-          {/* <div>
+          <div>
             <div className="iconBox flex">
               <p className="w-full customContainer">
                 <div className="flex w-full customBordered">
@@ -235,10 +307,13 @@ const Booking4 = ({ loader, setLoader }) => {
                           : reduxData?.appData?.currentCity ?
                             reduxData?.appData?.currentCity : []
                       }
-                      onChange={(item) => handleLocalData({
-                        type: "newcity",
-                        data: item,
-                      })}
+                      onChange={(e) => {
+                        setAddressData({ ...addressData, city: e.id })
+                        // handleLocalData({
+                        //   type: "newcity",
+                        //   data: item,
+                        // })
+                      }}
                       // onChange={(item) => {
                       //   setLocale(item.value);
                       // }}
@@ -250,26 +325,58 @@ const Booking4 = ({ loader, setLoader }) => {
                 </div>
               </p>
             </div>
-          </div> */}
+          </div>
+
+
+          {
+            addressData?.city == 2 ? <div>
+              <div className="iconBox flex">
+                <p className="w-full">
+                  <div className="flex w-full">
+                    <label className="w-2/3 flex items-center">Enter Postal Code</label>
+                    <input className="border w-full address"
+                      onChange={(e) => {
+                        setAddressData({ ...addressData, postalCode: e.target.value })
+                      }}
+                      type="text" />
+                  </div>
+                </p>
+              </div>
+            </div>
+              :
+              <></>
+          }
+
+
 
           <div className="iconBox flex h justify-end">
             <div className="mt-2" >
-              {
+              <Button text='Add Address' filled wfull
+                onClick={() => {
+                  handleAddress(addressData)
+                  // handleLocalData({
+                  //   type: "addAdress",
+                  // })
+                }}
+              />
+              {/* {
                 confirmation.address ? <Button text='Address Added' filled wfull color='green'
                   onClick={() => {
-                    handleLocalData({
-                      type: "addAdress",
-                    })
+                    console.log(addressData)
+                    // handleLocalData({
+                    //   type: "addAdress",
+                    // })
                   }}
                 /> :
                   <Button text='Add Address' filled wfull
                     onClick={() => {
-                      handleLocalData({
-                        type: "addAdress",
-                      })
+                      console.log(addressData)
+                      // handleLocalData({
+                      //   type: "addAdress",
+                      // })
                     }}
                   />
-              }
+              } */}
             </div>
           </div>
           <div>
@@ -302,7 +409,6 @@ const Booking4 = ({ loader, setLoader }) => {
 
       <div className="flex custom__conatiner mx-auto gap-4">
         <div className="w-6/12 border p-5">
-          <h3 className="font-bold">Coupons</h3>
 
           <div className="flex justify-between items-center">
             <p>Add Gift Card</p>
@@ -350,11 +456,15 @@ const Booking4 = ({ loader, setLoader }) => {
         open && (
           <div className="custom__container__success">
             <div class="w-full md:w-1/3 mx-auto">
-              <div class="flex p-5 rounded-lg shadow bg-white">
+              <div class="flex p-5 rounded-lg shadow bg-white justify-center">
                 <div class="ml-3 text-center flex flex-col justify-center gap-3">
                   <h2 class="font-semibold text-gray-800">Successfully Created Booking</h2>
-                  <p class="mt-2 text-sm text-gray-600 leading-relaxed">Booking has been created Successfully. Emails are sent to user and nexi is integrated in pay by link.</p>
-                  <button type="button" onClick={() => { setOpen(false) }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                  <p class="mt-2 text-sm text-gray-600 leading-relaxed">Booking has been created Successfully. Please Check Your Email.</p>
+                  <button type="button" onClick={() => { 
+                    setOpen(false)
+                    dispatch({ type: "RESETALLDATA" });
+                    router.push('/')
+                    }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     Booking Completed!
                     <svg class="w-6 h-6 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z" /></svg>
                   </button>

@@ -13,7 +13,8 @@ import {
   getCorporateProfessionals,
   getProfessionalFromCorporateServices,
   SetNewPrimaryAddress,
-  getAddress
+  getAddress,
+  getCorporateCategories
 } from "../pages/api/hello"; // Import your API functions here
 import { type } from "os";
 
@@ -60,6 +61,7 @@ export function useDataHandler(setLoader) {
         dispatch({ type: "USERS", payload: allUsers });
         setLoader(false);
         const usersAsOptions = allUsers?.map((user) => ({
+          id: user.id,
           value: user.name,
           label: user.name,
           email: user.email
@@ -187,8 +189,12 @@ export function useDataHandler(setLoader) {
     } else if (newData.type == "corporateCategories"){
       setLoader(true);
       dispatch({ type: "CURRENTCORPORATEUSER", payload: newData.data });
-      const categories = await getCategories(localData.city);
-
+      const corporate = reduxData?.appData?.currCorporate?.id
+      let categories = await getCorporateCategories(corporate);
+      if(categories.length == undefined){
+        categories  = [categories]
+      }
+      console.log('sadf',categories)
       setLocalData({ ...localData, categories: categories });
       dispatch({ type: "GETCATEGORIES", payload: categories });
       setLoader(false);
@@ -219,7 +225,8 @@ export function useDataHandler(setLoader) {
       setCity(newData.data)
     }
     else if(newData.type === "address"){
-      setAddress(newData.data.target.value)
+      setAddress(newData.data)
+      dispatch({ type: "SETADDRESS", payload: newData.data });
     }
     else if(newData.type === "addAdress"){
       setLocalData({ ...localData, newAdress: address, newCity: city});

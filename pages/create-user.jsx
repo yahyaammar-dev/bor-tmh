@@ -2,12 +2,13 @@ import Navbar from "../components/Misc/Navbar";
 import Footer from "../components/Misc/Footer";
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function CreateUser() {
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState(null);
+    const [corporateList, setCorporateList] = useState()
     const [formData, setFormData] = useState({
         email: '',
         lastname: '',
@@ -26,7 +27,22 @@ function CreateUser() {
         subscription: true,
         approve_civil_code: true,
         isCustomerDataProcessingApproved: true,
+        isCorporate: false
     });
+
+    const getCoporates = () => {
+        axios.get('https://takemihome.it/it/api/public_api/subcategories/getCorporateClientsByCity/1')
+            .then((res) => {
+                setCorporateList(res?.data?.corporate_clients)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    useEffect(() => {
+        getCoporates()
+    }, [])
 
     const checkEmail = async () => {
         try {
@@ -35,7 +51,7 @@ function CreateUser() {
                 { email }
             );
             setStatus(response.data.available);
-            if(response.data.available == false){
+            if (response.data.available == false) {
                 alert('Email already exists')
             }
         } catch (error) {
@@ -44,11 +60,70 @@ function CreateUser() {
         }
     };
 
+    const validateForm = () => {
+        const missingFields = [];
+
+        if (!formData.firstname) {
+            missingFields.push('First Name');
+        }
+
+        if (!formData.lastname) {
+            missingFields.push('Last Name');
+        }
+
+        if (!formData.dateOfBirth) {
+            missingFields.push('Date of Birth');
+        }
+
+        if (!formData.address) {
+            missingFields.push('Address');
+        }
+
+
+        if (!formData.city) {
+            missingFields.push('City');
+        }
+
+        if (formData.city === '2' && !formData.postal) {
+            missingFields.push('Postal Code');
+        }
+
+        if (!formData.nationality) {
+            missingFields.push('Nationality');
+        }
+
+        if (!formData.phone) {
+            missingFields.push('Phone');
+        }
+
+
+        if (!formData.password) {
+            missingFields.push('Password');
+        }
+
+        if (missingFields.length > 0) {
+            const missingFieldsMessage = `Please fill in the following fields: ${missingFields.join(', ')}`;
+            alert(missingFieldsMessage);
+            return false;
+        }
+
+        return true;
+    };
+
     const registerUser = async () => {
         try {
-            const res = await axios.post('https://takemihome.it/en/user/register', formData);
-            console.log(res)
-            alert('Successfully Created User')
+            if (validateForm()) {
+                let mydata= {...formData, email: email}
+                const res = await axios.post('https://takemihome.it/en/user/register', mydata);
+                if(res.status == 200 || res.status == 201){
+                    alert('Successfully Created User')
+                }else {
+                    alert('Could Not Create User')
+                }
+                console.log(mydata)
+            } else {
+                return
+            }
         } catch (error) {
             alert('Somthing went wrong, please try again later')
             console.error('Error registering user:', error);
@@ -82,7 +157,7 @@ function CreateUser() {
                     <div>
                         <h2>Register User</h2>
 
-                        <div>
+                        {/* <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">
                                 Email
                             </label>
@@ -93,11 +168,7 @@ function CreateUser() {
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 placeholder="Email"
                             />
-                        </div>
-
-
-
-
+                        </div> */}
 
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -124,11 +195,6 @@ function CreateUser() {
                                 placeholder="First Name"
                             />
                         </div>
-
-
-
-
-
 
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -176,19 +242,21 @@ function CreateUser() {
                             </select>
                         </div>
 
+                        {
+                            formData?.city == 2 ? <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">
+                                    Postal Code
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.postal}
+                                    onChange={(e) => setFormData({ ...formData, postal: e.target.value })}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Postal Code"
+                                />
+                            </div> : <></>
+                        }
 
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">
-                                Postal Code
-                            </label>
-                            <input
-                                type="text"
-                                value={formData.postal}
-                                onChange={(e) => setFormData({ ...formData, postal: e.target.value })}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Postal Code"
-                            />
-                        </div>
 
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -199,7 +267,7 @@ function CreateUser() {
                                 type='text'
                                 onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                             />
+                            />
                         </div>
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -208,10 +276,8 @@ function CreateUser() {
                             <input
                                 type="tel"
                                 value={formData.phone}
-                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                class="input-style"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-
+                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 placeholder="Phone"
                             />
                         </div>
@@ -255,17 +321,39 @@ function CreateUser() {
                             />
                         </div>
 
-                        <div class="mb-4">
-                            <label class="flex items-center text-gray-700 text-sm font-bold">
-                                <input
-                                    type="checkbox"
-                                    checked={formData.agreeToTerms}
-                                    onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
-                                    class="form-checkbox mr-2"
-                                />
-                                Agree to Terms
+
+                        <div className="flex items-center justify-between">
+                            <label className="block text-gray-700 text-sm font-bold mb-2 w-8/12 mt-4">
+                                <p>Is this Corporate User?</p>
                             </label>
+                            <input
+                                type="checkbox"
+                                value={formData.isCorporate}
+                                onChange={(e) => setFormData({ ...formData, isCorporate: !formData.isCorporate })}
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                                placeholder="Date of Birth (DD/MM/YYYY)"
+                            />
                         </div>
+
+                        {
+                            formData?.isCorporate && <>
+                                <div>
+                                    <label className="block text-gray-700 text-sm font-bold mb-2 w-8/12 mt-4">
+                                        <p>Select the corporate</p>
+                                    </label>
+                                    <select
+                                        onChange={(e) => setFormData({ ...formData, corporate_id: e.target.value })}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    >
+                                        {
+                                            corporateList?.map((item) => (
+                                                <option value={item[0]} key={item[1]}>{item[1]}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                            </>
+                        }
 
                         <button
                             className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10"
@@ -274,7 +362,6 @@ function CreateUser() {
                 )}
             </div>
             <Footer />
-
         </div>
     );
 }
