@@ -143,7 +143,7 @@ const Booking2 = ({ loader, setLoader }) => {
 
     for (let day = 0; day <= lastDay; day++) {
       const dayElement = document.createElement("div");
-      dayElement.textContent = (day+1).toString();
+      dayElement.textContent = (day + 1).toString();
       dayElement.classList.add("day");
 
       const currentDate = new Date(year, month, day + 2);
@@ -174,12 +174,14 @@ const Booking2 = ({ loader, setLoader }) => {
 
       if (repeatableDatesNext6Months.includes(currentDateStr)) {
         dayElement.classList.add("green-day");
-        
-        // check before adding dot
-        console.log(dayElement.innerHTML)
+
         const dotElement = document.createElement("div");
-        dotElement.classList.add("dot");
-        dayElement.appendChild(dotElement);
+
+        const existingDots = dayElement.querySelectorAll('.dot');
+        if (existingDots.length === 0) {
+          dotElement.classList.add("dot");
+          dayElement.appendChild(dotElement);
+        }
         if (clickedDate == dayElement.innerHTML.slice(0, 2)) {
           dayElement.classList.add('yelloo_bg')
         }
@@ -191,8 +193,11 @@ const Booking2 = ({ loader, setLoader }) => {
           dayElement.classList.add("green-day");
           const dotElement = document.createElement("div");
           // check before adding dot
-          dotElement.classList.add("dot");
-          dayElement.appendChild(dotElement);
+          const existingDots = dayElement.querySelectorAll('.dot');
+          if (existingDots.length === 0) {
+            dotElement.classList.add("dot");
+            dayElement.appendChild(dotElement);
+          }
           if (clickedDate == dayElement.innerHTML.slice(0, 2)) {
             dayElement.classList.add('yelloo_bg')
           }
@@ -401,13 +406,13 @@ const Booking2 = ({ loader, setLoader }) => {
         </div>
         <div>
           <div className="grid grid-cols-7 font-bold gap-5">
+            <div className="flex justify-center items-center">SU</div>
             <div className="flex justify-center items-center">M0</div>
             <div className="flex justify-center items-center">TU</div>
             <div className="flex justify-center items-center">WE</div>
             <div className="flex justify-center items-center">TH</div>
             <div className="flex justify-center items-center">FR</div>
             <div className="flex justify-center items-center">SA</div>
-            <div className="flex justify-center items-center">SU</div>
           </div>
           <div
             onClick={(e) => handleDateClick(e)}

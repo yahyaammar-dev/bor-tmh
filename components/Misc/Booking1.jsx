@@ -76,16 +76,7 @@ const Booking1 = ({ loader, setLoader }) => {
   }
   
 
-  // temporary testing - must be removed 
-  const fetchdata = async () => {
-      let corporate = reduxData?.appData?.currCorporate?.id
-      const cats = await getCorporateCategories(corporate)
-      console.log('response from categories is', cats)
-  }
-  
-  useEffect(()=>{
-    fetchdata()
-  },[])
+
 
 
   console.log(reduxData)

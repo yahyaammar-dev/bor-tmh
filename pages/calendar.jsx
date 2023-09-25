@@ -85,10 +85,10 @@ const Calendar = () => {
             const currentDate = new Date(year, month, day + 1);
             const currentDateStr = currentDate.toISOString().split("T")[0];
             if (repeatableDatesNext6Months.includes(currentDateStr)) {
-                dayElement.classList.add("green-day");
-                dayElement.classList.add("dot");
+                // dayElement.classList.add("green-day");
+                // dayElement.classList.add("dot");
             }
-            daysContainer.appendChild(dayElement);
+            // daysContainer.appendChild(dayElement);
         }
 
         const header = document.querySelector(".header");
