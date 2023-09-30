@@ -79,7 +79,6 @@ const Booking1 = ({ loader, setLoader }) => {
 
 
 
-  console.log(reduxData)
   
   return (
     <div>

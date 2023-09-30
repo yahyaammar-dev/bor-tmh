@@ -20,8 +20,12 @@ const Booking2 = ({ loader, setLoader }) => {
 
   // states
 
-
-
+  const [dateAndTimes, setDateAndTimes] = useState([])
+  const [spaces, setSpaces] = useState({
+    currentDay: '',
+    spaces: ''
+  })
+  const [month, setMonth] = useState()
   const [clickedDate, setClickedDate] = useState()
   const [times, setTimes] = useState([]);
   const [message, setMessage] = useState("");
@@ -43,8 +47,13 @@ const Booking2 = ({ loader, setLoader }) => {
   const currentyear = currentYear;
   const router = useRouter();
   const [selectedTime, setSelectedTime] = useState(null);
-
+  const [totalSpaces, setTotalSpaces] = useState()
   const { reduxData, handleLocalData } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
+  const [calendarLoader, setCalendarLoader] = useState()
+  const handleGetTimes = () => {
+    console.log('handled dates is called')
+  }
+
 
   const getProfessionalAvailibility = async () => {
     try {
@@ -73,6 +82,12 @@ const Booking2 = ({ loader, setLoader }) => {
 
   // effects
 
+  useEffect(()=>{
+    if(calendarLoader == false){
+      setDateAndTimes([])
+      setSpaces([])
+    }
+  },[calendarLoader])
 
   useEffect(() => {
     getProfessionalAvailibility();
@@ -122,9 +137,25 @@ const Booking2 = ({ loader, setLoader }) => {
   });
 
 
+  const handleNextMonthClick = () => {
+    const nextMonth = (parseInt(month) + 1).toString().padStart(2, '0');
+    if(Object.keys(dateAndTimes).includes(nextMonth)){
+      setMonth(nextMonth);
+    }
+  }
 
+  const handleDateClickNew  = (item) => {
+    setTimes(item.times)
+  }
 
-
+  
+  const handlePreviousMonthClick = () => {
+    // Decrement the month value by 1 and pad it to two digits
+    const previousMonth = (parseInt(month) - 1).toString().padStart(2, '0');
+    if(Object.keys(dateAndTimes).includes(previousMonth)){
+      setMonth(previousMonth);
+    }
+  }
   // functions
 
   const createCalendar = (year, month) => {
@@ -189,7 +220,6 @@ const Booking2 = ({ loader, setLoader }) => {
 
       data?.map((item) => {
         if (currentDateStr == item.date) {
-          console.log(dayElement, currentDateStr)
           dayElement.classList.add("green-day");
           const dotElement = document.createElement("div");
           // check before adding dot
@@ -335,6 +365,53 @@ const Booking2 = ({ loader, setLoader }) => {
     }
   }
 
+  const getCalendarWithTimes = () => {
+    setCalendarLoader(true)
+
+    let services = []
+    reduxData?.appData?.cart?.forEach((service)=>{
+      services.push(service.id)
+    })
+
+    const data = {
+      "pro": reduxData?.appData?.currentProfessional?.id,
+      "gender": reduxData?.appData?.currentGen?.id,
+      "sub": reduxData?.appData?.currentSub?.id,
+      "services": services
+    }
+    axios.post('http://localhost:8000/it/front/booking/getCalendar', data)
+      .then((res) => {
+        console.log(res.data)
+        setDateAndTimes(res.data.dates)
+        let temp = res?.data?.dates[month][0]?.day
+        setSpaces({ ...spaces, spaces: temp })
+        let arr = []
+        for (let i = 0; i < temp; i++) {
+          arr[i] = ''
+        }
+        setTotalSpaces(arr)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    setCalendarLoader(false)
+  }
+
+  useEffect(() => {
+
+    const currentDate = new Date();
+    const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    setMonth(currentMonth)
+
+
+  }, [])
+
+  useEffect(()=>{
+    getCalendarWithTimes()
+    setTimes([])
+  },[month])
+
+
   return (
     <div>
       {/* Booking 2 */}
@@ -369,7 +446,9 @@ const Booking2 = ({ loader, setLoader }) => {
             Schedule Your Appointment
           </h1>
         </div>
-        <div className="flex justify-between items-center">
+     
+     
+        <div style={{"display": "none"}} className="flex justify-between items-center">
           <button id="prevBtn" onClick={prevMonth}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -404,7 +483,7 @@ const Booking2 = ({ loader, setLoader }) => {
             </svg>
           </button>
         </div>
-        <div>
+        <div style={{"display": "none"}}>
           <div className="grid grid-cols-7 font-bold gap-5">
             <div className="flex justify-center items-center">SU</div>
             <div className="flex justify-center items-center">M0</div>
@@ -456,9 +535,9 @@ const Booking2 = ({ loader, setLoader }) => {
               }
             </div>
 
-            {/* <p className="w-3/4 my-0 my-6 text-justify bg-pink-100 p-4 mx-auto">
+            <p className="w-3/4 my-0 my-6 text-justify bg-pink-100 p-4 mx-auto">
                             The required time for your service is: 110 min. There is no time slot available on this date, please select another date or contact the Concierge +39 333 8131426
-                        </p> */}
+                        </p>
           </div>
           <div className="flex justify-center items-center bg-gray-500 w-1/2 mx-auto p-3 font-serif text-white" style={checkTime === true ? { backgroundColor: "#DAA520" } : {}}>
             <button onClick={handleSaveDate}>SAVE THE DATA AND TIME</button>
@@ -473,12 +552,140 @@ const Booking2 = ({ loader, setLoader }) => {
             />
           </div>
         </div>
+
+
+
+        {/* New Calendar */}
+
+        <div className="flex justify-between items-center">
+          <button id="prevBtn" onClick={handlePreviousMonthClick}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+              />
+            </svg>
+          </button>
+          <p className="header font-bold text-lg m-16"> {month}  </p>
+          <button id="nextBtn" onClick={handleNextMonthClick}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div>
+          <div className="grid grid-cols-7 font-bold gap-5">
+            <div className="flex justify-center items-center">SU</div>
+            <div className="flex justify-center items-center">M0</div>
+            <div className="flex justify-center items-center">TU</div>
+            <div className="flex justify-center items-center">WE</div>
+            <div className="flex justify-center items-center">TH</div>
+            <div className="flex justify-center items-center">FR</div>
+            <div className="flex justify-center items-center">SA</div>
+          </div>
+          <div
+            onClick={(e) => handleDateClick(e)}
+            className="days-container grid grid-cols-7 gap-5"
+          >
+
+{
+              totalSpaces?.map((item) => {
+                return <p className="flex justify-center items-center" >
+                  {item}
+                </p>
+              })
+            }
+
+            {dateAndTimes[month]?.map(item => (
+              <p key={item.date} className="flex justify-center items-center flex-col" onClick={()=>{handleDateClickNew(item)}}>
+                {item.date.split('-')[0]}
+                <div>
+                  {item?.available && <div className="dot"></div>}
+                </div>
+              </p>
+            ))}
+
+              
+
+          
+          </div>
+         
+         
+          <div className="border-b mt-12 border-gray-500"></div>
+         
+         
+         
+         
+         
+          <div>
+            <div className="flex flex-wrap my-4">
+              {times.length > 0 ?
+                times.map((time) => (
+                  <div
+                    key={time}
+                    className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 px-2"
+                  >
+                    <input
+                      key={time}
+                      className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full ${selectedTime === time ? 'bg-yellow-500 text-black' : 'bg-gray-500 text-white'
+                        }`}
+                      type="button"
+                      value={time}
+                      onClick={handleTimeClick}
+                    />
+                  </div>
+                )) : reduxData?.appData?.currentTime ?
+                  <input
+                    className={`py-4 px-6 border-none mx-2 my-2 text-center cursor-pointer w-full bg-yellow-500 text-black`}
+                    type="button"
+                    value={reduxData?.appData?.currentTime}
+                    onClick={handleTimeClick}
+                  /> : ""}
+              {message &&
+                <p className="text-red-600 font-bold">{message}</p>
+              }
+            </div>
+
+          </div>
+
+
+
+          <div className="flex justify-center items-center bg-gray-500 w-1/2 mx-auto p-3 font-serif text-white" style={checkTime === true ? { backgroundColor: "#DAA520" } : {}}>
+            <button onClick={handleSaveDate}>SAVE THE DATA AND TIME</button>
+          </div>
+          <div className="flex justify-end">
+            <input
+              style={checkSaveDate ? { backgroundColor: "#DAA520" } : { backgroundColor: "#6B7280" }}
+              className="py-4 px-6 border-none mx-2 my-2 text-center text-white cursor-pointer"
+              type="button"
+              value="Next"
+              onClick={handleNextPage}
+            />
+          </div>
+        </div>
       </div>
-
-
     </div>
   );
 };
 
 export default Booking2;
-
