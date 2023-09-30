@@ -29,7 +29,8 @@ const initialState = {
   currCorporate: null,
   newCity: null,
   currentAddress: null,
-  totalAmount: 0
+  totalAmount: 0,
+  availibilitiesData: {}
 };
 
 const authReducer = (state = initialState, action) => {
@@ -423,6 +424,12 @@ const appData = (state = initialState, action) => {
         newAddress: null,
         currCorporate: null,
         newCity: null,
+        availibilitiesData: {}
+      }
+    case "STOREAVAILIBILITES":
+      return {
+        ...state, 
+        availibilitiesData : action.payload
       }
     default:
       return state;

@@ -18,9 +18,6 @@ const Booking2 = ({ loader, setLoader }) => {
   const [cart, setCart] = useState([])
   const dispatch = useDispatch()
 
-
-
-
   const {
     localData,
     listUsers,

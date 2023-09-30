@@ -275,7 +275,7 @@ const getAllAddresses = async (id) => {
 const getCorporateCategories = async (corporate) => {
   try {
     const data = {
-      corporate : corporate
+      corporate: corporate
     }
     const res = await axios.post(
       `https://takemihome.it/it/front/booking/corporateCategories`,
@@ -304,6 +304,24 @@ const getCorporateSubcategories = async (city) => {
   }
 };
 
+const getProfessionalDatesAndTimes = async (data) => {
+  try{
+    const params = {
+      pro : data?.pro,
+      gender: data?.gender, 
+      sub: data?.sub, 
+      services: data?.services
+    }
+
+    const res = await axios.post('http://localhost:8000/it/front/booking/getCalendar', params)
+    return res.data
+  }catch(err){
+    console.log(err)
+  }
+  
+}
+
+
 
 
 export {
@@ -329,5 +347,6 @@ export {
   getAddress,
   getAllAddresses,
   getCorporateCategories,
-  getCorporateSubcategories
+  getCorporateSubcategories,
+  getProfessionalDatesAndTimes
 };
