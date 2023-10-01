@@ -8,7 +8,9 @@ const Button = ({ text, wfull, onClick, variant, color }) => {
         variant == "outlined" ? "border--button--outlined" : "button-filled"
       }
       ${color == "green" ? 'green-button' : 'yellow-button'}
+      ${color == "black" ? 'black-button' : 'yellow-button'}
       ${wfull ? "w-full" : ""} `}
+      
     >
       {text}
     </button>

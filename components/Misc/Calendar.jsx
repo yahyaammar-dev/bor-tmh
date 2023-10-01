@@ -1,16 +1,16 @@
-import { weekDays } from "../../utils/calendarHelpers"
+import { handleTimeClick, weekDays } from "../../utils/calendarHelpers"
 import CalendarHeading from "./CalendarHeading"
 import CalendarItem from "./CalendarItem"
 import CalendarLeft from "./CalendarLeft"
 import CalendarNav from "./CalendarNav"
 import Loader from "./Loader"
 
-const Calendar = ({datesAndTimes}) => {
+const Calendar = ({ datesAndTimes, setDatesAndTimes, setMonthCounter, monthCounter }) => {
     return (
         <div class="flex w-3/4">
             <CalendarLeft />
             <div class="w-3/4 bg-[#f5f5f5]">
-                <CalendarNav month={datesAndTimes?.month}  />
+                <CalendarNav month={datesAndTimes?.month} setMonthCounter={setMonthCounter} monthCounter={monthCounter} />
                 <div className="calendar__container  p-2">
                     <div className="grid grid-cols-7 gap-2">
                         {
@@ -26,7 +26,7 @@ const Calendar = ({datesAndTimes}) => {
                         {
                             datesAndTimes?.datesAndTimes?.length > 0 ?
                                 datesAndTimes?.datesAndTimes?.map((day) => (
-                                    <CalendarItem text={day?.text} available={day?.available} active={day?.active} />
+                                    <CalendarItem handleTimeClick={(e)=>{handleTimeClick(e,datesAndTimes, setDatesAndTimes)}} text={day?.text} available={day?.available} active={day?.active} />
                                 ))
                                 :
                                 <Loader />

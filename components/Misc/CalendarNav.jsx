@@ -1,14 +1,18 @@
 import { getMonthName } from "../../utils/calendarHelpers";
 
-const CalendarNav = ({ month, setDatesAndTimes }) => {
+const CalendarNav = ({ month, setMonthCounter, monthCounter }) => {
     const monthName = getMonthName(month)
 
     const handleNextCalendar = () => {
-        console.log('hello from next')
+        if(monthCounter<2){
+            setMonthCounter(monthCounter+1)
+        }
     }
 
     const handlePerviousCalendar = () => {
-        console.log('hello from back')
+        if(monthCounter>0){
+            setMonthCounter(monthCounter-1)
+        }
     }
     
     return (
