@@ -150,6 +150,7 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         availibilitydata: null,
+        availibilitiesData: {}
       };
     case "CURRENTCAT":
       return {
@@ -222,6 +223,7 @@ const appData = (state = initialState, action) => {
         professionals: [],
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         corporates: [],
         currentCat: null,
         currentSub: null,
@@ -238,6 +240,7 @@ const appData = (state = initialState, action) => {
         ...state,
         currentTime: null,
         currentCorporateUser: null,
+        availibilitiesData: {},
         user: null,
         categories: [],
         subCategories: [],
@@ -268,6 +271,7 @@ const appData = (state = initialState, action) => {
         professionals: [],
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         currentCat: null,
         currentSub: null,
         currentGen: null,
@@ -287,6 +291,7 @@ const appData = (state = initialState, action) => {
         professionals: [],
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         currentCat: null,
         currentSub: null,
         currentGen: null,
@@ -304,6 +309,7 @@ const appData = (state = initialState, action) => {
         professionals: [],
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         currentSub: null,
         currentGen: null,
         currentProfessional: null,
@@ -319,6 +325,7 @@ const appData = (state = initialState, action) => {
         professionals: [],
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         currentGen: null,
         currentProfessional: null,
         cart: [],
@@ -332,6 +339,7 @@ const appData = (state = initialState, action) => {
         professionals: [],
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         currentProfessional: null,
         cart: [],
         currentDate: null,
@@ -343,6 +351,7 @@ const appData = (state = initialState, action) => {
         // user: null,
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         cart: [],
         currentDate: null,
       };
@@ -353,6 +362,7 @@ const appData = (state = initialState, action) => {
         // user: null,
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {},
         currentDate: null,
       };
     case "REMOVEAFTERDATE":
@@ -362,6 +372,7 @@ const appData = (state = initialState, action) => {
         // user: null,
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {}
       };
     case "REMOVEAFTERTIME":
       return {
@@ -369,6 +380,7 @@ const appData = (state = initialState, action) => {
         // user: null,
         availibility: [],
         availibilitydata: [],
+        availibilitiesData: {}
       };
     case "CURRENTDATE":
       return {

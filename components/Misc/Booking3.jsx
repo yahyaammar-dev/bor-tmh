@@ -23,7 +23,7 @@ const Booking2 = () => {
     selectedTimeIndex: null
   })
   const [monthCounter, setMonthCounter] = useState(0)
-  const router = useRouter()
+  const router = useRouter()  
 
 
 

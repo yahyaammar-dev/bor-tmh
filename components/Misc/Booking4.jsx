@@ -404,7 +404,7 @@ const Booking4 = ({ loader, setLoader }) => {
 
 
       {/* --------------------------------------------------------------------------- */}
-
+      {/* Gift card */}
 
 
       <div className="flex custom__conatiner mx-auto gap-4">
@@ -423,6 +423,10 @@ const Booking4 = ({ loader, setLoader }) => {
 
         </div>
       </div>
+
+
+
+
 
 
 
