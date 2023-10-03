@@ -215,7 +215,7 @@ const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode
 };
 
 
-const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=null, type=0 ) => {
+const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0 ) => {
   try {
     const res = await axios.get(
       `https://takemihome.it/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}`
