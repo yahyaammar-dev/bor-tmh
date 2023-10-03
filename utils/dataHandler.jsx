@@ -112,7 +112,8 @@ export function useDataHandler(setLoader) {
 
     } else if (newData.type == "category") {
       setLoader(true);
-      const subCategories = await getSubCategories(newData.data);
+      console.log('our our asdf ', reduxData)
+      const subCategories = await getSubCategories(newData.data, reduxData?.appData?.currCorporate?.id);
       setLocalData({ ...localData, category: newData.data });
       dispatch({ type: "CURRENTCAT", payload: newData.data });
       dispatch({ type: "SUBCATEGORIES", payload: subCategories });

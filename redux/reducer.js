@@ -30,7 +30,8 @@ const initialState = {
   newCity: null,
   currentAddress: null,
   totalAmount: 0,
-  availibilitiesData: {}
+  availibilitiesData: {},
+  extras: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -233,7 +234,8 @@ const appData = (state = initialState, action) => {
         cart: [],
         corporateUsers: [],
         currentDate: null,
-        currCorporate: null
+        currCorporate: null,
+        extras: null
       };
     case "REMOVEAFTERCITY":
       return {
@@ -436,7 +438,15 @@ const appData = (state = initialState, action) => {
         newAddress: null,
         currCorporate: null,
         newCity: null,
-        availibilitiesData: {}
+        availibilitiesData: {},
+        extras: null,
+        totalAmount: null,
+        currentAddress: null
+      }
+    case "STOREEXTRAS":
+      return {
+        ...state,
+        extras: action?.payload
       }
     case "STOREAVAILIBILITES":
       return {

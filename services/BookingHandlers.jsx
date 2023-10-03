@@ -54,7 +54,6 @@ const BookingHanlders = (reduxData) => {
                     let updated = [...tempArr, ...res.dates[month]];
                     availablibilites[month] = updated;
                 });
-                console.log('asfd',availablibilites);
                 resolve(availablibilites);
             })
             .catch((err) => {

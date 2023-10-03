@@ -8,6 +8,8 @@ import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataH
 import { SetNewPrimaryAddress, getAllAddresses, intiateBooking, nexiPayByLink } from "../../pages/api/hello";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 const Booking4 = ({ loader, setLoader }) => {
   const {
@@ -24,6 +26,16 @@ const Booking4 = ({ loader, setLoader }) => {
     city: '',
     postalCode: ''
   })
+
+  const validationSchema = Yup.object().shape({
+    percentage: Yup.number()
+      .required('Percentage is required')
+      .min(0, 'Percentage cannot be less than 0')
+      .max(100, 'Percentage cannot be greater than 100')
+  });
+
+  const [outside, setOutside] = useState(false)
+  const [percentage, setPercentage] = useState(0)
 
   const handleAddressChange = (e) => {
     handleLocalData({
@@ -94,8 +106,12 @@ const Booking4 = ({ loader, setLoader }) => {
       })
   }
 
+  const handleSubmit = () => {
+    console.log('hello')
+  }
 
   const handleBooking = () => {
+
     if (reduxData?.appData?.type == 'Corporate') {
       let totalDuration = 0;
       let services = []
@@ -104,8 +120,31 @@ const Booking4 = ({ loader, setLoader }) => {
         services.push(item.id)
       }
       let email = reduxData?.appData?.currentCorporateUser?.id
-      console.log('total duration is', totalDuration)
-      const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, email)
+      if(reduxData?.appData?.extras != null){
+        const res = intiateBooking(
+          reduxData?.appData?.currentDate, 
+          reduxData?.appData?.currentTime, 
+          totalDuration, 
+          reduxData?.appData?.currentCity?.id, 
+          services, 
+          reduxData?.appData?.currentProfessional?.id, 
+          email, 
+          reduxData?.appData?.extras,
+          reduxData?.appData?.type
+          )
+      }else{
+        const res = intiateBooking(
+          reduxData?.appData?.currentDate, 
+          reduxData?.appData?.currentTime, 
+          totalDuration, 
+          reduxData?.appData?.currentCity?.id, 
+          services, 
+          reduxData?.appData?.currentProfessional?.id, 
+          email,
+          null,
+          reduxData?.appData?.type
+          )
+      }
       // const data = {
       //   "email": email
       // }
@@ -126,7 +165,27 @@ const Booking4 = ({ loader, setLoader }) => {
         totalDuration += item.duration;
         services.push(item.id)
       }
-      const res = intiateBooking(reduxData?.appData?.currentDate, reduxData?.appData?.currentTime, totalDuration, reduxData?.appData?.currentCity?.id, services, reduxData?.appData?.currentProfessional?.id, customerId)
+      if(reduxData?.appData?.extras != null){
+        const res = intiateBooking(
+          reduxData?.appData?.currentDate, 
+          reduxData?.appData?.currentTime, 
+          totalDuration, 
+          reduxData?.appData?.currentCity?.id, 
+          services, 
+          reduxData?.appData?.currentProfessional?.id, 
+          customerId, 
+          reduxData?.appData?.extras)
+      }else{
+        const res = intiateBooking(
+          reduxData?.appData?.currentDate, 
+          reduxData?.appData?.currentTime, 
+          totalDuration, 
+          reduxData?.appData?.currentCity?.id, 
+          services, 
+          reduxData?.appData?.currentProfessional?.id, 
+          customerId)
+      }
+      
       const paybylink = nexiPayByLink(data)
       setOpen(true)
     }
@@ -161,7 +220,6 @@ const Booking4 = ({ loader, setLoader }) => {
     }),
   };
 
-
   const handleAddress = async (data) => {
     let addressData = data
     if (reduxData?.appData?.user?.id) {
@@ -182,7 +240,6 @@ const Booking4 = ({ loader, setLoader }) => {
     }
   }
 
-
   const router = useRouter();
   const navigate_to_booking3 = () => {
     router.push("/booking3");
@@ -201,8 +258,8 @@ const Booking4 = ({ loader, setLoader }) => {
         </div>
       </div>
 
-      <div className="flex custom__conatiner mx-auto gap-4">
-        <div className="w-6/12 border p-5">
+      <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
+        <div className="w-full border p-5 ">
           <h3 className="font-bold">Cart</h3>
           <div className="flex justify-between flex-col h-full">
             <ul>
@@ -236,7 +293,7 @@ const Booking4 = ({ loader, setLoader }) => {
                   <p>{user[3] != null ? user[2] : "No Address"}</p>
                 </div> */}
         </div>
-        <div className="w-6/12 border p-5 checkout_address">
+        <div className="w-full border p-5 checkout_address">
           <div>
             <div className="iconBox flex">
               <p className="w-full">
@@ -407,9 +464,8 @@ const Booking4 = ({ loader, setLoader }) => {
       {/* Gift card */}
 
 
-      <div className="flex custom__conatiner mx-auto gap-4">
-        <div className="w-6/12 border p-5">
-
+      <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
+        <div className="w-12/12 border p-5">
           <div className="flex justify-between items-center">
             <p>Add Gift Card</p>
             <input type='text' onChange={(e) => { setCoupon(e.target.value) }} placeholder="Enter your voucher here" className="px-1 py-1 border" />
@@ -419,19 +475,74 @@ const Booking4 = ({ loader, setLoader }) => {
           </div>
 
         </div>
-        <div className="w-6/12 border p-5 checkout_address">
-
+        <div className="w-12/12 border p-5 checkout_address">
         </div>
       </div>
 
 
+      {/* --------------------------------------------------------------------------- */}
+      {/* 20 Percent */}
+
+      {console.log(reduxData)}
+
+      <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
+        <div className="w-12/12 border p-5">
 
 
+          <div class="flex items-center mb-4">
+            <label for="default-checkbox" class="mr-5 text-sm font-medium text-gray-900 dark:text-gray-300">OutSide State?</label>
+            <input id="default-checkbox" type="checkbox" value={outside} onChange={() => { setOutside(!outside) }} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          </div>
 
+          {
+            outside &&
+            <>
+              <div>
+                <Formik
+                  initialValues={{ percentage: '' }}
+                  validationSchema={validationSchema}
+                  onSubmit={(values, { setSubmitting }) => {
+                    dispatch({ type: 'STOREEXTRAS', payload: values?.percentage })
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    /* and other goodies */
+                  }) => (
+                    <form onSubmit={handleSubmit}>
+                      <label for="default-checkbox" class="mr-5 text-sm font-medium text-gray-900 dark:text-gray-300">Enter the Percentage</label>
+                      <input
+                        type="number"
+                        name="percentage"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.percentage}
+                        className="mb-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      />
+                      <p className="text-red-500 mb-2">
+                        {errors.percentage && touched.percentage && errors.percentage}
+                      </p>
+                      <button type="submit" disabled={isSubmitting} className="px-5 py-2 rounded button-filled yellow-button w-full ">
+                        Submit
+                      </button>
+                    </form>
+                  )}
+                </Formik>
+              </div>
+            </>
+          }
 
+        </div>
+
+      </div>
 
       {/* --------------------------------------------------------------------------- */}
-
       <div className="custom__conatiner mx-auto">
         <div className="flex justify-end">
           {/* <div className="w-6/12">
@@ -464,11 +575,11 @@ const Booking4 = ({ loader, setLoader }) => {
                 <div class="ml-3 text-center flex flex-col justify-center gap-3">
                   <h2 class="font-semibold text-gray-800">Successfully Created Booking</h2>
                   <p class="mt-2 text-sm text-gray-600 leading-relaxed">Booking has been created Successfully. Please Check Your Email.</p>
-                  <button type="button" onClick={() => { 
+                  <button type="button" onClick={() => {
                     setOpen(false)
                     dispatch({ type: "RESETALLDATA" });
                     router.push('/')
-                    }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                  }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     Booking Completed!
                     <svg class="w-6 h-6 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z" /></svg>
                   </button>
