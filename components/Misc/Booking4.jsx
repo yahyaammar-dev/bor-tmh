@@ -141,7 +141,7 @@ const Booking4 = ({ loader, setLoader }) => {
           services, 
           reduxData?.appData?.currentProfessional?.id, 
           email,
-          null,
+          0,
           reduxData?.appData?.type
           )
       }
