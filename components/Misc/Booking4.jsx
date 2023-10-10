@@ -120,30 +120,30 @@ const Booking4 = ({ loader, setLoader }) => {
         services.push(item.id)
       }
       let email = reduxData?.appData?.currentCorporateUser?.id
-      if(reduxData?.appData?.extras != null){
+      if (reduxData?.appData?.extras != null) {
         const res = intiateBooking(
-          reduxData?.appData?.currentDate, 
-          reduxData?.appData?.currentTime, 
-          totalDuration, 
-          reduxData?.appData?.currentCity?.id, 
-          services, 
-          reduxData?.appData?.currentProfessional?.id, 
-          email, 
+          reduxData?.appData?.currentDate,
+          reduxData?.appData?.currentTime,
+          totalDuration,
+          reduxData?.appData?.currentCity?.id,
+          services,
+          reduxData?.appData?.currentProfessional?.id,
+          email,
           reduxData?.appData?.extras,
           reduxData?.appData?.type
-          )
-      }else{
+        )
+      } else {
         const res = intiateBooking(
-          reduxData?.appData?.currentDate, 
-          reduxData?.appData?.currentTime, 
-          totalDuration, 
-          reduxData?.appData?.currentCity?.id, 
-          services, 
-          reduxData?.appData?.currentProfessional?.id, 
+          reduxData?.appData?.currentDate,
+          reduxData?.appData?.currentTime,
+          totalDuration,
+          reduxData?.appData?.currentCity?.id,
+          services,
+          reduxData?.appData?.currentProfessional?.id,
           email,
           0,
           reduxData?.appData?.type
-          )
+        )
       }
       // const data = {
       //   "email": email
@@ -165,27 +165,27 @@ const Booking4 = ({ loader, setLoader }) => {
         totalDuration += item.duration;
         services.push(item.id)
       }
-      if(reduxData?.appData?.extras != null){
+      if (reduxData?.appData?.extras != null) {
         const res = intiateBooking(
-          reduxData?.appData?.currentDate, 
-          reduxData?.appData?.currentTime, 
-          totalDuration, 
-          reduxData?.appData?.currentCity?.id, 
-          services, 
-          reduxData?.appData?.currentProfessional?.id, 
-          customerId, 
+          reduxData?.appData?.currentDate,
+          reduxData?.appData?.currentTime,
+          totalDuration,
+          reduxData?.appData?.currentCity?.id,
+          services,
+          reduxData?.appData?.currentProfessional?.id,
+          customerId,
           reduxData?.appData?.extras)
-      }else{
+      } else {
         const res = intiateBooking(
-          reduxData?.appData?.currentDate, 
-          reduxData?.appData?.currentTime, 
-          totalDuration, 
-          reduxData?.appData?.currentCity?.id, 
-          services, 
-          reduxData?.appData?.currentProfessional?.id, 
+          reduxData?.appData?.currentDate,
+          reduxData?.appData?.currentTime,
+          totalDuration,
+          reduxData?.appData?.currentCity?.id,
+          services,
+          reduxData?.appData?.currentProfessional?.id,
           customerId)
       }
-      
+
       const paybylink = nexiPayByLink(data)
       setOpen(true)
     }
@@ -284,7 +284,7 @@ const Booking4 = ({ loader, setLoader }) => {
             <div className="flex justify-between">
               <p className="my-3">Total Amount is:</p>
               <p className="font-bold">
-                {reduxData?.appData?.totalAmount}
+                {reduxData?.appData?.totalAmount} €
               </p>
             </div>
           </div>
@@ -483,15 +483,23 @@ const Booking4 = ({ loader, setLoader }) => {
       {/* --------------------------------------------------------------------------- */}
       {/* 20 Percent */}
 
-      {console.log(reduxData)}
 
       <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
         <div className="w-12/12 border p-5">
 
-
-          <div class="flex items-center mb-4">
-            <label for="default-checkbox" class="mr-5 text-sm font-medium text-gray-900 dark:text-gray-300">OutSide State?</label>
-            <input id="default-checkbox" type="checkbox" value={outside} onChange={() => { setOutside(!outside) }} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <div className="w-full flex justify-between">
+            <div class="flex items-center mb-4">
+              <label for="default-checkbox" class="mr-5 text-sm font-medium text-gray-900 dark:text-gray-300">OutSide State?</label>
+              <input id="default-checkbox" type="checkbox" value={outside} onChange={() => { setOutside(!outside) }} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            </div>
+            {
+              reduxData?.appData?.extras &&
+              <div className="flex">
+                <p>Amount after Extra Fee is:  </p>
+                <pre>    </pre>
+                <p>{parseInt(reduxData?.appData?.totalAmount) + parseInt(reduxData?.appData?.extras)} €</p>
+              </div>
+            }
           </div>
 
           {
@@ -502,6 +510,7 @@ const Booking4 = ({ loader, setLoader }) => {
                   initialValues={{ percentage: '' }}
                   validationSchema={validationSchema}
                   onSubmit={(values, { setSubmitting }) => {
+
                     dispatch({ type: 'STOREEXTRAS', payload: values?.percentage })
                   }}
                 >

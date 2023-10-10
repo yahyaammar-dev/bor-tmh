@@ -88,7 +88,7 @@ const Booking1 = ({ loader, setLoader }) => {
         {/* City */}
         <div className="city mb-10">
           <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
-            Select Type
+            Select Type  
           </h1>
           <div className="flex justify-center gap-5">
             <div className="item">
