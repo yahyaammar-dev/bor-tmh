@@ -155,20 +155,20 @@ function CreateUser() {
                     </div>
                 ) : (
                     <div>
-                        <h2>Register User</h2>
+                        <h2 className="text-3xl mb-5">Register User</h2>
 
-                        {/* <div>
+                        <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">
                                 Email
                             </label>
                             <input
                                 type="email"
-                                value={formData.email}
+                                value={email}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                disabled
                                 placeholder="Email"
                             />
-                        </div> */}
+                        </div>
 
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">

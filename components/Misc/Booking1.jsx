@@ -363,11 +363,16 @@ const Booking1 = ({ loader, setLoader }) => {
                   <div className="flex justify-center gap-5">
                     <div className="item">
                       <Select
-                        options={listUsers}
+                        // options={listUsers}
+                        options={listUsers.map(user => ({
+                          value: user, // Assuming 'email' is the property containing the email
+                          label: `${user.label} (${user.email})`, // Customize the label to display both name and email
+                        }))}
                         onChange={(item) => {
+                          console.log('item is:: ',item)
                           handleLocalData({
                             type: "user",
-                            data: item,
+                            data: item.value,
                           });
                         }}
                         placeholder="Select User"
