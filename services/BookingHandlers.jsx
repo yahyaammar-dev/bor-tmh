@@ -63,4 +63,24 @@ const BookingHanlders = (reduxData) => {
     });
 };
 
-export default BookingHanlders;
+const getCity = (id) => {
+    if(id == 1){
+      return 'Milano'
+    }else if(id ==2){
+      return 'Roma'
+    }else if(id ==3){
+      return 'Monza Brianza'
+    }else if(id ==4){
+      return 'Bergamo'
+    }else if(id==5){
+      return 'Ibiza'
+    }else if(id == 6){
+      return 'Como Versace'
+    }else if(id == 7){
+      return 'Brescia'
+    }else {
+      return ''
+    }
+  }
+
+export  {BookingHanlders, getCity};

@@ -10,6 +10,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { getCity } from "../../services/BookingHandlers";
 
 const Booking4 = ({ loader, setLoader }) => {
   const {
@@ -238,6 +239,13 @@ const Booking4 = ({ loader, setLoader }) => {
     } else {
       alert('Something went wrong!! Plesae try again later')
     }
+    setAddressData({
+      address1: '',
+      address2: '',
+      city: '',
+      postalCode: ''
+    })
+    getAddresses()
   }
 
   const router = useRouter();
@@ -302,7 +310,7 @@ const Booking4 = ({ loader, setLoader }) => {
                   <select className="border w-full address" onChange={(e) => handleAddressChange(JSON.parse(e.target.value))}>
                     {addressoptions?.map((item) => (
                       <option key={item.id} value={JSON.stringify(item)}>
-                        {item.address} {item.address2}
+                        {item.address} {item.address2} - {getCity(item?.city_id)}
                       </option>
                     ))}
                   </select>
@@ -411,29 +419,9 @@ const Booking4 = ({ loader, setLoader }) => {
               <Button text='Add Address' filled wfull
                 onClick={() => {
                   handleAddress(addressData)
-                  // handleLocalData({
-                  //   type: "addAdress",
-                  // })
                 }}
               />
-              {/* {
-                confirmation.address ? <Button text='Address Added' filled wfull color='green'
-                  onClick={() => {
-                    console.log(addressData)
-                    // handleLocalData({
-                    //   type: "addAdress",
-                    // })
-                  }}
-                /> :
-                  <Button text='Add Address' filled wfull
-                    onClick={() => {
-                      console.log(addressData)
-                      // handleLocalData({
-                      //   type: "addAdress",
-                      // })
-                    }}
-                  />
-              } */}
+            
             </div>
           </div>
           <div>
