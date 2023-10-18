@@ -10,7 +10,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { getCity } from "../../services/BookingHandlers";
+// import { getCity } from "../../services/BookingHandlers";
 
 const Booking4 = ({ loader, setLoader }) => {
   const {
@@ -27,6 +27,28 @@ const Booking4 = ({ loader, setLoader }) => {
     city: '',
     postalCode: ''
   })
+
+
+
+const getCity = (id) => {
+  if(id == 1){
+    return 'Milano'
+  }else if(id ==2){
+    return 'Roma'
+  }else if(id ==3){
+    return 'Monza Brianza'
+  }else if(id ==4){
+    return 'Bergamo'
+  }else if(id==5){
+    return 'Ibiza'
+  }else if(id == 6){
+    return 'Como Versace'
+  }else if(id == 7){
+    return 'Brescia'
+  }else {
+    return ''
+  }
+}
 
   const validationSchema = Yup.object().shape({
     percentage: Yup.number()
