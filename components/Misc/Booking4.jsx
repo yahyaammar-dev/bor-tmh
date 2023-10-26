@@ -21,6 +21,8 @@ const Booking4 = ({ loader, setLoader }) => {
 
   const [addressoptions, setAddressOptions] = useState()
   const dispatch = useDispatch()
+  const [giftAmount, setGiftAmount] = useState();
+  const [giftId, setGiftId] = useState(0)
   const [addressData, setAddressData] = useState({
     address1: '',
     address2: '',
@@ -30,25 +32,25 @@ const Booking4 = ({ loader, setLoader }) => {
 
 
 
-const getCity = (id) => {
-  if(id == 1){
-    return 'Milano'
-  }else if(id ==2){
-    return 'Roma'
-  }else if(id ==3){
-    return 'Monza Brianza'
-  }else if(id ==4){
-    return 'Bergamo'
-  }else if(id==5){
-    return 'Ibiza'
-  }else if(id == 6){
-    return 'Como Versace'
-  }else if(id == 7){
-    return 'Brescia'
-  }else {
-    return ''
+  const getCity = (id) => {
+    if (id == 1) {
+      return 'Milano'
+    } else if (id == 2) {
+      return 'Roma'
+    } else if (id == 3) {
+      return 'Monza Brianza'
+    } else if (id == 4) {
+      return 'Bergamo'
+    } else if (id == 5) {
+      return 'Ibiza'
+    } else if (id == 6) {
+      return 'Como Versace'
+    } else if (id == 7) {
+      return 'Brescia'
+    } else {
+      return ''
+    }
   }
-}
 
   const validationSchema = Yup.object().shape({
     percentage: Yup.number()
@@ -108,17 +110,18 @@ const getCity = (id) => {
       .then((res) => {
         if (res.data.success == true) {
           let amountOfGiftCard = res?.data?.voucherAmount
-
+          setGiftId(res?.data?.id)
           let reduxAmount = reduxData?.appData?.totalAmount
           let calculatedAmount = reduxAmount - amountOfGiftCard
 
           if (calculatedAmount < 0) {
             calculatedAmount = 0
           }
+          setGiftAmount(calculatedAmount)
           dispatch({ type: "TOTALAMOUNT", payload: totalAmount })
 
           // get total amount from cart and show it here
-          alert('Gift card applied applied, Amount reduced is', amountOfGiftCard)
+          alert('Gift card applied applied, Amount reduced is: ', amountOfGiftCard)
         } else {
           alert('Your Code is not correct')
         }
@@ -153,7 +156,9 @@ const getCity = (id) => {
           reduxData?.appData?.currentProfessional?.id,
           email,
           reduxData?.appData?.extras,
-          reduxData?.appData?.type
+          reduxData?.appData?.type,
+          giftId,
+          reduxData?.appData?.address?.id
         )
       } else {
         const res = intiateBooking(
@@ -165,7 +170,9 @@ const getCity = (id) => {
           reduxData?.appData?.currentProfessional?.id,
           email,
           0,
-          reduxData?.appData?.type
+          reduxData?.appData?.type,
+          giftId,
+          reduxData?.appData?.address?.id
         )
       }
       // const data = {
@@ -317,6 +324,20 @@ const getCity = (id) => {
                 {reduxData?.appData?.totalAmount} €
               </p>
             </div>
+
+
+
+            {
+              giftAmount && <div className="flex justify-between">
+                <p className="my-3">Amount after gift is:</p>
+                <p className="font-bold">
+                  {giftAmount} €
+                </p>
+              </div>
+            }
+
+
+
           </div>
           {/* <div className="iconBox flex">
                   <img src="/imgs/add.png" />
@@ -443,7 +464,7 @@ const getCity = (id) => {
                   handleAddress(addressData)
                 }}
               />
-            
+
             </div>
           </div>
           <div>
