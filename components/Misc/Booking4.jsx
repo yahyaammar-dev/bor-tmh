@@ -21,7 +21,7 @@ const Booking4 = ({ loader, setLoader }) => {
 
   const [addressoptions, setAddressOptions] = useState()
   const dispatch = useDispatch()
-  const [giftAmount, setGiftAmount] = useState();
+  const [giftAmount, setGiftAmount] = useState(null);
   const [giftId, setGiftId] = useState(0)
   const [addressData, setAddressData] = useState({
     address1: '',
@@ -78,6 +78,11 @@ const Booking4 = ({ loader, setLoader }) => {
     }
     let res = await getAllAddresses(id)
     setAddressOptions(res.data)
+    console.log('am i being called')
+    handleLocalData({
+      type: "address",
+      data: res.data[0],
+    })
   }
 
 
@@ -118,10 +123,11 @@ const Booking4 = ({ loader, setLoader }) => {
             calculatedAmount = 0
           }
           setGiftAmount(calculatedAmount)
-          dispatch({ type: "TOTALAMOUNT", payload: totalAmount })
+
+          dispatch({ type: "TOTALAMOUNT", payload: calculatedAmount })
 
           // get total amount from cart and show it here
-          alert('Gift card applied applied, Amount reduced is: ', amountOfGiftCard)
+          alert(`Gift card applied applied, Amount reduced is: ${calculatedAmount}`,)
         } else {
           alert('Your Code is not correct')
         }
@@ -158,7 +164,7 @@ const Booking4 = ({ loader, setLoader }) => {
           reduxData?.appData?.extras,
           reduxData?.appData?.type,
           giftId,
-          reduxData?.appData?.address?.id
+          reduxData?.appData?.currentAddress?.id
         )
       } else {
         const res = intiateBooking(
@@ -172,7 +178,7 @@ const Booking4 = ({ loader, setLoader }) => {
           0,
           reduxData?.appData?.type,
           giftId,
-          reduxData?.appData?.address?.id
+          reduxData?.appData?.currentAddress?.id
         )
       }
       // const data = {
@@ -204,7 +210,10 @@ const Booking4 = ({ loader, setLoader }) => {
           services,
           reduxData?.appData?.currentProfessional?.id,
           customerId,
-          reduxData?.appData?.extras)
+          reduxData?.appData?.extras,
+          reduxData?.appData?.type,
+          giftId,
+          reduxData?.appData?.currentAddress?.id)
       } else {
         const res = intiateBooking(
           reduxData?.appData?.currentDate,
@@ -213,9 +222,12 @@ const Booking4 = ({ loader, setLoader }) => {
           reduxData?.appData?.currentCity?.id,
           services,
           reduxData?.appData?.currentProfessional?.id,
-          customerId)
+          customerId,
+          reduxData?.appData?.extras,
+          reduxData?.appData?.type,
+          giftId,
+          reduxData?.appData?.currentAddress?.id)
       }
-
       const paybylink = nexiPayByLink(data)
       setOpen(true)
     }
@@ -277,6 +289,8 @@ const Booking4 = ({ loader, setLoader }) => {
     getAddresses()
   }
 
+  console.log(reduxData?.appData)
+
   const router = useRouter();
   const navigate_to_booking3 = () => {
     router.push("/booking3");
@@ -325,13 +339,13 @@ const Booking4 = ({ loader, setLoader }) => {
               </p>
             </div>
 
-
+              {console.log(giftAmount)}
 
             {
-              giftAmount && <div className="flex justify-between">
-                <p className="my-3">Amount after gift is:</p>
+              (giftAmount != null) && <div className="flex justify-between">
+                <p className="my-3">Amount after gift card is:</p>
                 <p className="font-bold">
-                  {giftAmount} €
+                  {giftAmount == 0 ? '0' : giftAmount} €
                 </p>
               </div>
             }
