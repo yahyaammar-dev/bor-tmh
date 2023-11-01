@@ -26,7 +26,7 @@ const setAvailibilites = (res = null, setDatesAndTimes, reduxData, monthCounter)
   let months = []
   if (res) {
     months = Object.keys(res)
-    let single_month = months.sort()[monthCounter]
+    let single_month = months[monthCounter]
     let monthNameInWord = getMonthName(single_month)
     setDatesAndTimes({ monthName: monthNameInWord, datesAndTimes: res[single_month], month: parseInt(single_month) })
   } else {
