@@ -31,7 +31,7 @@ const BookingHanlders = (reduxData) => {
                 keys?.forEach((month) => {
                     let oneMonthData = res.dates[month];
                     let tempArr = [];
-                    let i = 0;
+                    let i = 1;
                     while (i < oneMonthData[0].day) {
                         let tempObj = {
                             "date": "",

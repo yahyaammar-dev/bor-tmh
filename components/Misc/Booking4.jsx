@@ -542,7 +542,7 @@ const Booking4 = ({ loader, setLoader }) => {
               <div className="flex">
                 <p>Amount after Extra Fee is:  </p>
                 <pre>    </pre>
-                <p>{parseInt(reduxData?.appData?.totalAmount) + parseInt(reduxData?.appData?.extras)} €</p>
+                <p>{(reduxData?.appData?.totalAmount) + ((reduxData?.appData?.totalAmount) * ((reduxData?.appData?.extras)/100))} €</p>
               </div>
             }
           </div>

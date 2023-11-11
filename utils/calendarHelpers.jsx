@@ -20,7 +20,7 @@ const getMonthName = (monthNumber) => {
   return monthName
 }
 
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 const setAvailibilites = (res = null, setDatesAndTimes, reduxData, monthCounter) => {
   let months = []
