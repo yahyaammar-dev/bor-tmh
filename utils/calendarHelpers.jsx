@@ -31,7 +31,8 @@ const setAvailibilites = (res = null, setDatesAndTimes, reduxData, monthCounter)
     setDatesAndTimes({ monthName: monthNameInWord, datesAndTimes: res[single_month], month: parseInt(single_month) })
   } else {
     months = Object.keys(reduxData?.appData?.availibilitiesData)
-    let single_month = months.sort()[monthCounter]
+    // let single_month = months.sort()[monthCounter]
+    let single_month = months[monthCounter]
     let monthNameInWord = getMonthName(single_month)
     setDatesAndTimes({ monthName: monthNameInWord, datesAndTimes: reduxData?.appData?.availibilitiesData[single_month], month: parseInt(single_month) })
   }

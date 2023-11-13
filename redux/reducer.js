@@ -31,7 +31,8 @@ const initialState = {
   currentAddress: null,
   totalAmount: 0,
   availibilitiesData: {},
-  extras: null
+  extras: null,
+  cuurentMonth : {}
 };
 
 const authReducer = (state = initialState, action) => {
@@ -452,6 +453,11 @@ const appData = (state = initialState, action) => {
       return {
         ...state, 
         availibilitiesData : action.payload
+      }
+    case "CURRENT_MONTH":
+      return {
+        ...state,
+        currentMonth: action.payload
       }
     default:
       return state;

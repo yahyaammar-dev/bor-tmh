@@ -75,10 +75,6 @@ const Booking1 = ({ loader, setLoader }) => {
     });
   }
   
-
-
-  console.log(reduxData)
-
   
   return (
     <div>
@@ -234,10 +230,13 @@ const Booking1 = ({ loader, setLoader }) => {
             {reduxData?.appData?.categories?.length > 0 && (
               <div className="categories my-16">
                 <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
-                  Select a Category
+                  Select a Category 
                 </h1>
                 <div className="flex justify-center gap-5">
                   {reduxData?.appData?.categories?.map((item) => {
+
+                 
+
                     return (
                       <Button
                         text={item?.name}
@@ -331,6 +330,7 @@ const Booking1 = ({ loader, setLoader }) => {
                   {reduxData?.appData?.professionals?.map((item) => {
                     return (
                       <Professional
+                      available={item?.available}
                         profile_image={`https://takemihome.it/${item.image}`}
                         fullName={item?.full_name ? item?.full_name : item?.name ? item?.name : ''}
                         position={item?.position}
@@ -362,14 +362,15 @@ const Booking1 = ({ loader, setLoader }) => {
                   </h1>
                   <div className="flex justify-center gap-5">
                     <div className="item">
-                      <Select
+
+
+                    <Select
                         // options={listUsers}
-                        options={listUsers.map(user => ({
+                        options={reduxData?.appData?.users.map(user => ({
                           value: user, // Assuming 'email' is the property containing the email
                           label: `${user.label} (${user.email})`, // Customize the label to display both name and email
                         }))}
                         onChange={(item) => {
-                          console.log('item is:: ',item)
                           handleLocalData({
                             type: "user",
                             data: item.value,
@@ -377,7 +378,11 @@ const Booking1 = ({ loader, setLoader }) => {
                         }}
                         placeholder="Select User"
                         styles={selectStyles}
+                        value={reduxData?.appData?.user}
                       />
+
+
+                   
                     </div>
                     <div>
                       <Link href='create-user'>
@@ -398,7 +403,7 @@ const Booking1 = ({ loader, setLoader }) => {
                   <div className="flex justify-center gap-5">
                     <div className="item">
                       <Select
-                        options={listCities}
+                        options={reduxData?.appData?.cities}
                         onChange={(item) => {
                           handleLocalData({
                             type: "city",
@@ -407,6 +412,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         }}
                         placeholder="City"
                         styles={selectStyles}
+                        value={reduxData?.appData?.currentCity}
                       />
                     </div>
                     <div className="item">
@@ -427,15 +433,16 @@ const Booking1 = ({ loader, setLoader }) => {
             {reduxData?.appData?.categories?.length > 0 && (
               <div className="categories my-16">
                 <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
-                  Select a Category
+                  Select a Category 
                 </h1>
                 <div className="flex justify-center gap-5">
                   {reduxData?.appData?.categories?.map((item) => {
+
                     return (
                       <Button
                         text={item?.name}
                         variant={
-                          localData?.category?.name == item?.name
+                          reduxData?.appData?.currentCat?.name == item?.name
                             ? "active"
                             : "outlined"
                         }
@@ -464,7 +471,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         <Button
                           text={item?.name}
                           variant={
-                            localData?.currentSubCat?.name == item?.name
+                            reduxData?.appData?.currentSub?.name == item?.name
                               ? "active"
                               : "outlined"
                           }
@@ -493,7 +500,7 @@ const Booking1 = ({ loader, setLoader }) => {
                       <Button
                         text={item?.name}
                         variant={
-                          localData?.currentGender?.name == item?.name
+                          reduxData?.appData?.currentGen?.name == item?.name
                             ? "active"
                             : "outlined"
                         }
@@ -520,6 +527,7 @@ const Booking1 = ({ loader, setLoader }) => {
                     return (
                       <Professional
                         profile_image={item?.profile_image?.full_url}
+                        available={item?.available}
                         fullName={item?.full_name}
                         position={item?.position}
                         onClick={() => {

@@ -339,7 +339,7 @@ const Booking4 = ({ loader, setLoader }) => {
               </p>
             </div>
 
-              {console.log(giftAmount)}
+            {console.log(giftAmount)}
 
             {
               (giftAmount != null) && <div className="flex justify-between">
@@ -542,7 +542,7 @@ const Booking4 = ({ loader, setLoader }) => {
               <div className="flex">
                 <p>Amount after Extra Fee is:  </p>
                 <pre>    </pre>
-                <p>{(reduxData?.appData?.totalAmount) + ((reduxData?.appData?.totalAmount) * ((reduxData?.appData?.extras)/100))} €</p>
+                <p>{(reduxData?.appData?.totalAmount) + ((reduxData?.appData?.totalAmount) * ((reduxData?.appData?.extras) / 100))} €</p>
               </div>
             }
           </div>
@@ -554,9 +554,10 @@ const Booking4 = ({ loader, setLoader }) => {
                 <Formik
                   initialValues={{ percentage: '' }}
                   validationSchema={validationSchema}
-                  onSubmit={(values, { setSubmitting }) => {
-
+                  onSubmit={(values, { setSubmitting, resetForm }) => {
                     dispatch({ type: 'STOREEXTRAS', payload: values?.percentage })
+                    resetForm();
+                    setSubmitting(false); // Manually set submitting to false after the reset
                   }}
                 >
                   {({

@@ -5,10 +5,8 @@ import Button from "./Button";
 import { useRouter } from "next/router";
 import {
   getProfessionalDetail,
-  getSubCategories,
   getcorporateprofessionalServices,
 } from "../../pages/api/hello";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useDataHandler } from "../../utils/dataHandler";
 
@@ -29,7 +27,6 @@ const Booking2 = ({ loader, setLoader }) => {
     corporateCustomerList,
   } = useDataHandler(setLoader);
 
-  console.log('booking2', reduxData)
 
 
   const getProfessionalDeatils = async () => {
@@ -43,19 +40,23 @@ const Booking2 = ({ loader, setLoader }) => {
     let res = null
     let proDetail = null
     let proService = null
+    let corporateServices = null
     if (reduxData.appData.type == 'Normal') {
       res = await getProfessionalDetail(data);
-      proDetail = JSON.parse(res.pro);
-      proService = JSON.parse(res.services);
+      proDetail = res.pro
+      proService = res.services;
+      corporateServices = Object.values(res.subCategoriesServices)
     } else {
       res = await getcorporateprofessionalServices(reduxData?.appData?.currentProfessional?.id)
-      proDetail = JSON.parse(res.professional);
+      corporateServices = Object.values(res.subCategoriesServices)
+      proDetail = res.professional
       proService = res.corporate_services;
     }
     setLoader(false)
     const professionalData = {
       proDetail,
       proService,
+      corporateServices
     };
     setProfessionalDetail(professionalData);
   };
@@ -72,7 +73,7 @@ const Booking2 = ({ loader, setLoader }) => {
       //   type1: "remove",
       //   type: "resetDataAfterCart"
       // })
-      
+
       handleLocalData({
         type: "updateCart",
         data: myCart,
@@ -94,6 +95,9 @@ const Booking2 = ({ loader, setLoader }) => {
     }
   };
 
+  const handleCategory = (item) => {
+    setProfessionalDetail({...professionalDetail, proService: item?.services})
+  }
 
   useEffect(() => {
     getProfessionalDeatils();
@@ -150,29 +154,53 @@ const Booking2 = ({ loader, setLoader }) => {
                 You can select one or more category - Minimum Booking Order : 35
                 euro
               </p>
-              {professionalDetail?.proService?.map((item) => (
-                <div className="flex gap-10 mt-3 mx-auto justify-center">
-                  {console.log(item)}
-                  <div className="flex gap-10 border py-3 justify-between px-3 w-lg border border-black w-2/3">
-                    <p>{item?.name}</p>
-                    <div className="flex items-center">
-                      <img src="/imgs/hand.svg" className="w-8" />
-                      <p>{item?.duration}</p>
-                      <p className="mx-10">|</p>
-                      <img src="/imgs/download.svg" className="w-8" />
-                      <p>{item?.price}</p>
-                    </div>
+              <div className="flex">
+                <div className="w-3/12">
+
+                <div class="flex flex-col space-y-2">
+
+                  {
+                    professionalDetail?.corporateServices?.map((item) => (
+                      <label class="flex items-center space-x-2" onClick={()=>handleCategory(item)}>
+                        <span>{item?.name}</span>
+                        <input type="radio" className="form-checkbox p-3" name="category" />
+                      </label>
+                    ))
+                  }
                   </div>
 
-                  <button style={reduxData?.appData?.cart?.some((itm) => itm?.id == item?.id) ? { backgroundColor: "#DAA520", borderRadius: "20%" } : {}}>
-                    <img
-                      src="/imgs/addcircle.svg"
-                      className="w-8"
-                      onClick={() => handleProfessionalCart(item)}
-                    />
-                  </button>
+
                 </div>
-              ))}
+                <div className="w-9/12">
+
+                  {professionalDetail?.proService?.map((item) => (
+                    <div className="flex gap-10 mt-3 mx-auto justify-center">
+                      <div className="flex gap-10 border py-3 justify-between px-3 w-lg border border-black w-2/3">
+                        <p>{item?.name}</p>
+                        <div className="flex items-center">
+                          <img src="/imgs/hand.svg" className="w-8" />
+                          <p>{item?.duration}</p>
+                          <p className="mx-10">|</p>
+                          <img src="/imgs/download.svg" className="w-8" />
+                          <p>{item?.price}</p>
+                        </div>
+                      </div>
+
+                      <button style={reduxData?.appData?.cart?.some((itm) => itm?.id == item?.id) ? { backgroundColor: "#DAA520", borderRadius: "20%" } : {}}>
+                        <img
+                          src="/imgs/addcircle.svg"
+                          className="w-8"
+                          onClick={() => handleProfessionalCart(item)}
+                        />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+
+
+
             </div>
             <div></div>
           </div>

@@ -16,7 +16,6 @@ import {
   getAddress,
   getCorporateCategories
 } from "../pages/api/hello"; // Import your API functions here
-import { type } from "os";
 
 
 export function useDataHandler(setLoader) {
@@ -58,7 +57,7 @@ export function useDataHandler(setLoader) {
         dispatch({ type: "TYPE", payload: newData.data });
         setLoader(true);
         const allUsers = await getUsers();
-        dispatch({ type: "USERS", payload: allUsers });
+        // dispatch({ type: "USERS", payload: allUsers });
         setLoader(false);
         const usersAsOptions = allUsers?.map((user) => ({
           id: user.id,
@@ -67,6 +66,7 @@ export function useDataHandler(setLoader) {
           email: user.email
         }));
         setListUsers(usersAsOptions);
+        dispatch({ type: "USERS", payload: usersAsOptions });
       }
     } else if (newData.type == "user") {
       setLocalData({ ...localData, user: newData.data });
