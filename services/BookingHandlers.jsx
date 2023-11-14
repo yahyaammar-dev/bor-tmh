@@ -6,6 +6,7 @@ const BookingHanlders = (reduxData) => {
         let gender = reduxData?.appData?.currentGen?.id;
         let sub = reduxData?.appData?.currentSub?.id;
         let cart = reduxData?.appData?.cart;
+        let type = reduxData?.appData?.type
 
         if (!pro || !gender || !sub || !cart) {
             reject('Something went wrong, Please Try again Later');
@@ -17,12 +18,27 @@ const BookingHanlders = (reduxData) => {
             services.push(service.id);
         });
 
-        const data = {
-            pro,
-            gender,
-            sub,
-            services
-        };
+        let data = null
+
+
+        if(type == 'Corporate'){
+            console.log('i am in corporate')
+           data = {
+                pro,
+                gender,
+                sub,
+                services,
+                corporate: true
+            };
+        }else{
+            data = {
+                pro,
+                gender,
+                sub,
+                services,
+            };
+        }
+
 
         getProfessionalDatesAndTimes(data)
             .then((res) => {

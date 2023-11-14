@@ -312,7 +312,8 @@ const getProfessionalDatesAndTimes = async (data) => {
       pro : data?.pro,
       gender: data?.gender, 
       sub: data?.sub, 
-      services: data?.services
+      services: data?.services,
+      corporate: data?.corporate
     }
 
     const res = await axios.post('https://takemihome.it/it/front/booking/getCalendar', params)

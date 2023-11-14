@@ -34,8 +34,6 @@ export function useDataHandler(setLoader) {
 })
   const router = useRouter();
 
-  
-
   const handleLocalData = async (newData) => {
     if (newData.type === "type") {
       if (newData.data == "Corporate") {

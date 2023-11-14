@@ -29,7 +29,21 @@ const Booking4 = ({ loader, setLoader }) => {
     city: '',
     postalCode: ''
   })
+  const [initalAmount, setInitialAmount] = useState(null)
+  const [outside, setOutside] = useState(false)
+  const [percentage, setPercentage] = useState(0)
 
+
+  useEffect(()=>{
+    setInitialAmount(reduxData?.appData?.totalAmount)
+  },[])
+
+  useEffect(()=>{
+    if(outside == false && initalAmount){
+      dispatch({ type: "TOTALAMOUNT", payload: initalAmount })
+      dispatch({ type: 'STOREEXTRAS', payload: null })
+    }
+  },[outside])
 
 
   const getCity = (id) => {
@@ -55,12 +69,14 @@ const Booking4 = ({ loader, setLoader }) => {
   const validationSchema = Yup.object().shape({
     percentage: Yup.number()
       .required('Percentage is required')
-      .min(0, 'Percentage cannot be less than 0')
+      .min(1, 'Percentage cannot be less than 1')
       .max(100, 'Percentage cannot be greater than 100')
   });
 
-  const [outside, setOutside] = useState(false)
-  const [percentage, setPercentage] = useState(0)
+
+
+  console.log('inital amount is', initalAmount)
+
 
   const handleAddressChange = (e) => {
     handleLocalData({
@@ -87,7 +103,7 @@ const Booking4 = ({ loader, setLoader }) => {
 
 
   useEffect(() => {
-    console.log(reduxData)
+    console.log('total amount is ',reduxData?.appData?.totalAmount)
     getAddresses()
   }, [])
   const [open, setOpen] = useState(false)
@@ -136,6 +152,10 @@ const Booking4 = ({ loader, setLoader }) => {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  const resetCoupon = () => {
+    dispatch({ type: 'STOREEXTRAS', payload: initalAmount })
   }
 
   const handleSubmit = () => {
@@ -289,8 +309,6 @@ const Booking4 = ({ loader, setLoader }) => {
     getAddresses()
   }
 
-  console.log(reduxData?.appData)
-
   const router = useRouter();
   const navigate_to_booking3 = () => {
     router.push("/booking3");
@@ -339,7 +357,6 @@ const Booking4 = ({ loader, setLoader }) => {
               </p>
             </div>
 
-            {console.log(giftAmount)}
 
             {
               (giftAmount != null) && <div className="flex justify-between">
@@ -502,12 +519,8 @@ const Booking4 = ({ loader, setLoader }) => {
         </div>
       </div>
 
-
-
-
       {/* --------------------------------------------------------------------------- */}
       {/* Gift card */}
-
 
       <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
         <div className="w-12/12 border p-5">
@@ -517,8 +530,10 @@ const Booking4 = ({ loader, setLoader }) => {
             <button onClick={() => {
               submitCoupon()
             }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Apply</button>
+          <button onClick={() => {
+              resetCoupon()
+            }} class="flex gap-2 justify-center items-center focus:outline-none  font-medium  text-sm px-5 py-2.5 mr-2 mb-2 bg-amber-500">Reset</button>
           </div>
-
         </div>
         <div className="w-12/12 border p-5 checkout_address">
         </div>
@@ -538,11 +553,12 @@ const Booking4 = ({ loader, setLoader }) => {
               <input id="default-checkbox" type="checkbox" value={outside} onChange={() => { setOutside(!outside) }} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
             </div>
             {
+              outside && 
               reduxData?.appData?.extras &&
               <div className="flex">
                 <p>Amount after Extra Fee is:  </p>
                 <pre>    </pre>
-                <p>{(reduxData?.appData?.totalAmount) + ((reduxData?.appData?.totalAmount) * ((reduxData?.appData?.extras) / 100))} €</p>
+                <p>{((reduxData?.appData?.totalAmount) + ((reduxData?.appData?.totalAmount) * ((reduxData?.appData?.extras) / 100))).toFixed(2)} €</p>
               </div>
             }
           </div>

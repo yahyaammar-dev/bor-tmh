@@ -96,7 +96,7 @@ const Booking2 = ({ loader, setLoader }) => {
   };
 
   const handleCategory = (item) => {
-    setProfessionalDetail({...professionalDetail, proService: item?.services})
+    setProfessionalDetail({ ...professionalDetail, proService: item?.services })
   }
 
   useEffect(() => {
@@ -106,24 +106,7 @@ const Booking2 = ({ loader, setLoader }) => {
   return (
     !loader && (
       <div>
-        <div className="booking2 custom__conatiner mx-auto">
-          {/* Porfessional Detail */}
-          <div className="flex gap-10">
-            <div className="item w-3/12">
-              {/* <img src="https://takemihome.it/upload/media/default/0001/01/thumb_603_default_card.jpeg" /> */}
-              <img src={`https://takemihome.it/${professionalDetail?.proDetail?.profile_image?.url}`} />
-            </div>
-            <div className="item w-7/12">
-              <h2 className="mb-1 text-4xl font-extrabold dark:text-white">{ }</h2>
-              <h3 className="mb-6 text-xl font-bold dark:text-white">
-                {professionalDetail?.proDetail?.full_name}
-              </h3>
-              <p className="text-lg font-normal text-gray-500 dark:text-gray-400">
-                {professionalDetail?.proDetail?.biography}
-              </p>
-            </div>
-          </div>
-        </div>
+
 
         {/* Select Service */}
         <div className="mt-20 booking2 custom__conatiner mx-auto text-center">
@@ -150,28 +133,80 @@ const Booking2 = ({ loader, setLoader }) => {
             <CategoryCheckbox />
           </div> */}
             <div className="w-full mx-auto">
-              <p className="mb-2">
+              <p className="mb-10">
                 You can select one or more category - Minimum Booking Order : 35
                 euro
               </p>
               <div className="flex">
                 <div className="w-3/12">
 
-                <div class="flex flex-col space-y-2">
+                  <div class="flex flex-col space-y-2 border p-2">
 
-                  {
-                    professionalDetail?.corporateServices?.map((item) => (
-                      <label class="flex items-center space-x-2" onClick={()=>handleCategory(item)}>
-                        <span>{item?.name}</span>
-                        <input type="radio" className="form-checkbox p-3" name="category" />
-                      </label>
-                    ))
-                  }
+                    <h1 className="text-2xl font-bold text-left">SubCategories</h1>
+
+                    {
+                      professionalDetail?.corporateServices?.map((item) => (
+                        <label class="flex justify-between space-x-2 border p-2" onClick={() => handleCategory(item)}>
+                          <span>{item?.name}</span>
+                          <input type="radio" className="form-checkbox p-3" name="category" />
+                        </label>
+                      ))
+                    }
                   </div>
 
 
+
+
+
+                  {/* Cart and navigation  */}
+                  <div className="mt-4 cart w-12/12 border p-5">
+                    <h1 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                      Cart Summary
+                    </h1>
+                    {/* <p>
+                        Professional: <b>Silvia Aru</b>
+                      </p>
+                      <p>My Services</p>
+                      <p>Beauty and wellenss/Woman</p> */}
+                    <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                      {
+                        reduxData?.appData?.cart?.map((item) => {
+                          return <div>
+                            <p className="inline">{item?.name} :</p>
+                            <p className="inline">{item?.price}</p>
+                          </div>
+                        })
+                      }
+                      {
+                        reduxData?.appData?.totalAmount && <>
+                          <p className="inline font-bold">Total Amount is: </p>
+                          {
+                            reduxData?.appData?.totalAmount
+                          }
+                        </>
+                      }
+                    </ul>
+                  </div>
+
+
+                  {/* <div className="w-8/12 flex gap-5">
+          <div className="w-3/12">
+            <Button text="Pervious" outlined wfull />
+          </div>
+          <div className="w-9/12">
+            <Button
+              text="Next"
+              filled
+              wfull
+              onClick={() => router.push("/booking/booking3")}
+            />
+          </div>
+        </div> */}
+
+
+
                 </div>
-                <div className="w-9/12">
+                <div className="w-9/12 h-[20rem] overflow-y-auto custom-scrollbar">
 
                   {professionalDetail?.proService?.map((item) => (
                     <div className="flex gap-10 mt-3 mx-auto justify-center">
@@ -201,10 +236,13 @@ const Booking2 = ({ loader, setLoader }) => {
 
 
 
+
+
+
             </div>
             <div></div>
           </div>
-          <div className="flex gap-10 justify-end">
+          <div className="flex gap-10 justify-end mt-[3rem]">
             <Button
               text="Back"
               onClick={() => {
@@ -220,37 +258,37 @@ const Booking2 = ({ loader, setLoader }) => {
           </div>
         </div>
 
-        {/* Cart and navigation  */}
-        {/* <div className="mt-20 booking2 custom__conatiner mx-auto flex gap-12">
-        <div className="cart w-3/12 border p-5">
-          <h1 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-            My Cart Summary
-          </h1>
-          <p>
-            Professional: <b>Silvia Aru</b>
-          </p>
-          <p>My Services</p>
-          <p>Beauty and wellenss/Woman</p>
-          <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-            <li>Chest -Normal wax - 30 mins 40€</li>
-            <li>Chest -Normal wax - 30 mins 35€</li>
-            <li>Total Amount - 75€</li>
-          </ul>
-        </div>
-        <div className="w-8/12 flex gap-5">
-          <div className="w-3/12">
-            <Button text="Pervious" outlined wfull />
-          </div>
-          <div className="w-9/12">
-            <Button
-              text="Next"
-              filled
-              wfull
-              onClick={() => router.push("/booking/booking3")}
-            />
+
+
+
+
+
+        <div className="booking2 custom__conatiner mx-auto mt-[5rem]">
+          {/* Porfessional Detail */}
+          <div className="flex gap-10">
+            <div className="item w-3/12">
+              {/* <img src="https://takemihome.it/upload/media/default/0001/01/thumb_603_default_card.jpeg" /> */}
+              <img src={`https://takemihome.it/${professionalDetail?.proDetail?.profile_image?.url}`} />
+            </div>
+            <div className="item w-7/12">
+              <h2 className="mb-1 text-4xl font-extrabold dark:text-white">{ }</h2>
+              <h3 className="mb-6 text-xl font-bold dark:text-white">
+                {professionalDetail?.proDetail?.full_name}
+              </h3>
+              <p className="text-lg font-normal text-gray-500 dark:text-gray-400">
+                {professionalDetail?.proDetail?.biography}
+              </p>
+            </div>
           </div>
         </div>
-      </div> */}
+
+
+
+
+
+
+
+
       </div>
     )
   );
