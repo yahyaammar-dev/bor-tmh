@@ -118,7 +118,7 @@ const Booking2 = ({ loader, setLoader }) => {
               Select the category and your professional
             </h3>
           </div>
-          <div className="flex gap-10">
+          <div className="flex gap-10 justify-center">
             {/* Needs to be uncommented and integrated later */}
             {/* <div className="w-3/12 flex flex-col gap-3">
             <p className="text-black bg-white py-3 px-10 text-center mb-5">
@@ -137,8 +137,8 @@ const Booking2 = ({ loader, setLoader }) => {
                 You can select one or more category - Minimum Booking Order : 35
                 euro
               </p>
-              <div className="flex">
-                <div className="w-3/12">
+              <div className="flex flex-wrap">
+                <div className="md:w-3/12 sm:w-full">
 
                   <div class="flex flex-col space-y-2 border p-2">
 
@@ -206,11 +206,11 @@ const Booking2 = ({ loader, setLoader }) => {
 
 
                 </div>
-                <div className="w-9/12 h-[20rem] overflow-y-auto custom-scrollbar">
+                <div className="md:w-9/12 h-[20rem] overflow-y-auto custom-scrollbar sm:w-12/12">
 
                   {professionalDetail?.proService?.map((item) => (
                     <div className="flex gap-10 mt-3 mx-auto justify-center">
-                      <div className="flex gap-10 border py-3 justify-between px-3 w-lg border border-black w-2/3">
+                      <div className="flex gap-10 border py-3 justify-between px-3 w-lg border border-black w-2/3 flex-wrap sm:gap-1">
                         <p>{item?.name}</p>
                         <div className="flex items-center">
                           <img src="/imgs/hand.svg" className="w-8" />
