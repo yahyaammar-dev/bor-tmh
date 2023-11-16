@@ -4,13 +4,12 @@ import Image from "next/image";
 import Button from "./Button";
 import Select from "react-select";
 import { useRouter } from "next/router";
-import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataHandler function from the dataHandler.js file
+import { useDataHandler } from "../../utils/dataHandler";
 import { SetNewPrimaryAddress, getAllAddresses, intiateBooking, nexiPayByLink } from "../../pages/api/hello";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-// import { getCity } from "../../services/BookingHandlers";
 
 const Booking4 = ({ loader, setLoader }) => {
   const {
@@ -32,18 +31,19 @@ const Booking4 = ({ loader, setLoader }) => {
   const [initalAmount, setInitialAmount] = useState(null)
   const [outside, setOutside] = useState(false)
   const [percentage, setPercentage] = useState(0)
+  const [groupDiscount, setGroupDisCount] = useState(null)
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setInitialAmount(reduxData?.appData?.totalAmount)
-  },[])
+    discountGroup()
+  }, [])
 
-  useEffect(()=>{
-    if(outside == false && initalAmount){
+  useEffect(() => {
+    if (outside == false && initalAmount) {
       dispatch({ type: "TOTALAMOUNT", payload: initalAmount })
       dispatch({ type: 'STOREEXTRAS', payload: null })
     }
-  },[outside])
+  }, [outside])
 
 
   const getCity = (id) => {
@@ -74,10 +74,6 @@ const Booking4 = ({ loader, setLoader }) => {
   });
 
 
-
-  console.log('inital amount is', initalAmount)
-
-
   const handleAddressChange = (e) => {
     handleLocalData({
       type: "address",
@@ -94,7 +90,6 @@ const Booking4 = ({ loader, setLoader }) => {
     }
     let res = await getAllAddresses(id)
     setAddressOptions(res.data)
-    console.log('am i being called')
     handleLocalData({
       type: "address",
       data: res.data[0],
@@ -103,7 +98,7 @@ const Booking4 = ({ loader, setLoader }) => {
 
 
   useEffect(() => {
-    console.log('total amount is ',reduxData?.appData?.totalAmount)
+    console.log('total amount is ', reduxData?.appData?.totalAmount)
     getAddresses()
   }, [])
   const [open, setOpen] = useState(false)
@@ -147,7 +142,6 @@ const Booking4 = ({ loader, setLoader }) => {
         } else {
           alert('Your Code is not correct')
         }
-        console.log('response from api', res)
       })
       .catch((err) => {
         console.log(err)
@@ -156,10 +150,6 @@ const Booking4 = ({ loader, setLoader }) => {
 
   const resetCoupon = () => {
     dispatch({ type: 'STOREEXTRAS', payload: initalAmount })
-  }
-
-  const handleSubmit = () => {
-    console.log('hello')
   }
 
   const handleBooking = () => {
@@ -214,7 +204,6 @@ const Booking4 = ({ loader, setLoader }) => {
         "email": reduxData?.appData?.user?.email
       }
       let customerId = reduxData?.appData?.user?.id
-      console.log('you know the customer is', customerId)
       let totalDuration = 0;
       let services = []
       for (const item of reduxData?.appData?.cart) {
@@ -309,6 +298,24 @@ const Booking4 = ({ loader, setLoader }) => {
     getAddresses()
   }
 
+  const discountGroup = () => {
+    axios.post('http://localhost:8000/it/front/booking/customerCoupons', {
+      customer: reduxData?.appData?.user?.id
+    })
+      .then((res) => {
+        if (res?.data?.coupons.length > 0) {
+          setGroupDisCount({
+            name: res.data.coupons[0].name,
+            discount: res.data.coupons[0].discount
+          })
+        }
+      })
+      .catch((err) => {
+        console.error('Error', err.message)
+      })
+  }
+
+
   const router = useRouter();
   const navigate_to_booking3 = () => {
     router.push("/booking3");
@@ -330,7 +337,7 @@ const Booking4 = ({ loader, setLoader }) => {
       <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
         <div className="w-full border p-5 ">
           <h3 className="font-bold">Cart</h3>
-          <div className="flex justify-between flex-col h-full">
+          <div className="flex flex-col h-full">
             <ul>
               <p className="my-3">Services Added to Cart</p>
               {reduxData.appData.cart.map((item) => {
@@ -350,13 +357,25 @@ const Booking4 = ({ loader, setLoader }) => {
                 )
               })}
             </ul>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <p className="my-3">Total Amount is:</p>
               <p className="font-bold">
                 {reduxData?.appData?.totalAmount} €
               </p>
             </div>
 
+
+            {
+              groupDiscount &&
+              <div className="flex justify-between"> 
+                <p>
+                  The discount from {groupDiscount?.name} is:
+                </p>
+                <p className="font-bold">
+                  {groupDiscount?.discount}
+                </p>
+              </div>
+            }
 
             {
               (giftAmount != null) && <div className="flex justify-between">
@@ -524,15 +543,15 @@ const Booking4 = ({ loader, setLoader }) => {
 
       <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
         <div className="w-12/12 border p-5">
-          <div className="flex justify-between items-center">
-            <p>Add Gift Card</p>
-            <input type='text' onChange={(e) => { setCoupon(e.target.value) }} placeholder="Enter your voucher here" className="px-1 py-1 border" />
+          <div className="flex items-left flex-col">
+            <p className="text-left">Add Gift Card</p>
+            <input type='text' onChange={(e) => { setCoupon(e.target.value) }} placeholder="Enter your voucher here" className="mb-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700" />
             <button onClick={() => {
               submitCoupon()
             }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Apply</button>
-          <button onClick={() => {
+            <button onClick={() => {
               resetCoupon()
-            }} class="flex gap-2 justify-center items-center focus:outline-none  font-medium  text-sm px-5 py-2.5 mr-2 mb-2 bg-amber-500">Reset</button>
+            }} class="px-5 py-2 rounded button-filled yellow-button w-full">Reset</button>
           </div>
         </div>
         <div className="w-12/12 border p-5 checkout_address">
@@ -553,7 +572,7 @@ const Booking4 = ({ loader, setLoader }) => {
               <input id="default-checkbox" type="checkbox" value={outside} onChange={() => { setOutside(!outside) }} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
             </div>
             {
-              outside && 
+              outside &&
               reduxData?.appData?.extras &&
               <div className="flex">
                 <p>Amount after Extra Fee is:  </p>
@@ -591,6 +610,7 @@ const Booking4 = ({ loader, setLoader }) => {
                       <input
                         type="number"
                         name="percentage"
+                        placeholder="Enter Your percentage here"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.percentage}

@@ -146,7 +146,7 @@ const Booking2 = ({ loader, setLoader }) => {
 
                     {
                       professionalDetail?.corporateServices?.map((item) => (
-                        <label class="flex justify-between space-x-2 border p-2" onClick={() => handleCategory(item)}>
+                        <label class="flex justify-between space-x-2 border p-2 items-center" onClick={() => handleCategory(item)}>
                           <span>{item?.name}</span>
                           <input type="radio" className="form-checkbox p-3" name="category" />
                         </label>
@@ -160,7 +160,7 @@ const Booking2 = ({ loader, setLoader }) => {
 
                   {/* Cart and navigation  */}
                   <div className="mt-4 cart w-12/12 border p-5">
-                    <h1 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                    <h1 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white text-left">
                       Cart Summary
                     </h1>
                     {/* <p>
@@ -168,7 +168,7 @@ const Booking2 = ({ loader, setLoader }) => {
                       </p>
                       <p>My Services</p>
                       <p>Beauty and wellenss/Woman</p> */}
-                    <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                    <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 text-left">
                       {
                         reduxData?.appData?.cart?.map((item) => {
                           return <div>
@@ -211,7 +211,7 @@ const Booking2 = ({ loader, setLoader }) => {
                   {professionalDetail?.proService?.map((item) => (
                     <div className="flex gap-10 mt-3 mx-auto justify-center">
                       <div className="flex gap-10 border py-3 justify-between px-3 w-lg border border-black w-2/3 flex-wrap sm:gap-1">
-                        <p>{item?.name}</p>
+                        <p className="w-6/12 sm:w-12/12 text-left">{item?.name}</p>
                         <div className="flex items-center">
                           <img src="/imgs/hand.svg" className="w-8" />
                           <p>{item?.duration}</p>
@@ -281,14 +281,6 @@ const Booking2 = ({ loader, setLoader }) => {
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
       </div>
     )
   );

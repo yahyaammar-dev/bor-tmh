@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = ({ text, wfull, onClick, variant, color, disableded }) => {
+const Button = ({ text, wfull, onClick, variant, color, disableded, width=null }) => {
   return (
     <button
       disabled={disableded}
@@ -11,6 +11,7 @@ const Button = ({ text, wfull, onClick, variant, color, disableded }) => {
       ${color == "black" ? 'black-button' : 'yellow-button'}
       ${wfull ? "w-full" : ""} 
       ${disableded ? "cursor-not-allowed dark": ""}
+      ${(width != null) ? width : ''}
       `}
 
     >

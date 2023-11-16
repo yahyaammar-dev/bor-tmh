@@ -15,7 +15,7 @@ const Times = ({ datesAndTimes, setDatesAndTimes, handleLocalData, router }) => 
                 <div className="all_times flex gap-1 flex-wrap justify-around">
                     {
                         datesAndTimes?.selectedTimes?.map((time, index) => {
-                            return <Button text={time} onClick={(e) => handleTimeClick(e, index)} color={datesAndTimes?.selectedTimeIndex == index ? 'black' : ''} />
+                            return <Button text={time} onClick={(e) => handleTimeClick(e, index)} width="w-[6rem]" color={datesAndTimes?.selectedTimeIndex == index ? 'black' : ''} />
                         })
                     }
                 </div>
