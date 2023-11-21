@@ -299,7 +299,7 @@ const Booking4 = ({ loader, setLoader }) => {
   }
 
   const discountGroup = () => {
-    axios.post('http://localhost:8000/it/front/booking/customerCoupons', {
+    axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
       customer: reduxData?.appData?.user?.id
     })
       .then((res) => {

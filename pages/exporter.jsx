@@ -6,7 +6,7 @@ function Exporter() {
 
     const [name, setName] = useState()
     const handleSubmit = () => {
-        window.location.href = `http://localhost:8000/it/front/booking/exportEntity?entity=${name}`
+        window.location.href = `https://takemihome.it/it/front/booking/exportEntity?entity=${name}`
     }
 
     return (
