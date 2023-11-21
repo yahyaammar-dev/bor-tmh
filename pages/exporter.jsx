@@ -20,7 +20,7 @@ function Exporter() {
                         <option value="newsletter">NewsLetters</option>
                         <option value="user">Customers</option>
                         <option value="payment">Payments</option>
-                        <option value="postal_codes">Customers</option>
+                        <option value="postal_codes">Postal Codes</option>
                         <option value="city">City</option>
                     </select>
                 </div>
