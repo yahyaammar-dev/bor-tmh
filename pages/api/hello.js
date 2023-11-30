@@ -1,9 +1,14 @@
-import axios from "axios";
+import axios from `axios`;
+
+
+const base_url = 'https://takemihome.it'
+// const base_url = '${base_url}'
+
 
 const loginUser = async (values) => {
   try {
     const res = await axios.post(
-      "https://takemihome.it/it/api/public_api/subcategories/loginAdminfpa",
+      `${base_url}/it/api/public_api/subcategories/loginAdminfpa`,
       {
         email: values.email,
         password: values.password,
@@ -12,30 +17,30 @@ const loginUser = async (values) => {
 
     return res.data;
   } catch (err) {
-    alert("Login failed"); // Throw a custom error message
+    alert(`Login failed`); // Throw a custom error message
   }
 };
 
 const getUsers = async () => {
   try {
     const res = await axios.get(
-      "http://localhost:8000/it/front/api/searchAllUsers"
+      `${base_url}/it/front/api/searchAllUsers`
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch Users, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch Users, something went wrong`); // Throw a custom error message
   }
 };
 
 const getCities = async () => {
   try {
     const res = await axios.get(
-      "https://takemihome.it/it/front/booking/cities"
+      `${base_url}/it/front/booking/cities`
     );
     return res.data;
   } catch (err) {
     console.log('errr', err)
-    alert("Unable to fetch Cities, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch Cities, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -46,7 +51,7 @@ const getCategories = async (item) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch categories, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch categories, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -58,7 +63,7 @@ const getSubCategories = async (item, corporate_id) => {
     return res.data;
   } catch (err) {
     console.log(err)
-    alert("Unable to fetch subcategories, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch subcategories, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -69,7 +74,7 @@ const getGenders = async (item) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch genders, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch genders, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -80,7 +85,7 @@ const getProfessionals = async (item) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch professionals, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch professionals, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -91,7 +96,7 @@ const getProfessionalDetail = async (data) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch professional detail, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch professional detail, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -102,7 +107,7 @@ const getAvailability = async (data) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch availibility of a professional, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch availibility of a professional, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -113,7 +118,7 @@ const getAvailabilityData = async (data) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch availibility time of professional, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch availibility time of professional, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -129,7 +134,7 @@ const getCorporateClient = async (city_name) => {
     }
 
   } catch (err) {
-    alert("Unable to fetch corporate clients, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch corporate clients, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -140,7 +145,7 @@ const getCorporateServices = async (item) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch corporate services, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch corporate services, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -152,7 +157,7 @@ const getCorporateCustomers = async (corporateClientId) => {
     console.log('api response is', res)
     return res.data.corporate_clients;
   } catch (err) {
-    alert("Unable to fetch corporate customers, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch corporate customers, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -163,7 +168,7 @@ const getCorporateProfessionals = async (corporateServiceId, gender) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch corporate professionals, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -175,7 +180,7 @@ const getcorporateprofessionalServices = async (professionalId) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch corporate professional services, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch corporate professional services, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -186,7 +191,7 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
     );
     return res.data;
   } catch (err) {
-    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch corporate professionals, something went wrong`); // Throw a custom error message
   }
 
 };
@@ -203,14 +208,14 @@ const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode
     }
 
     const res = await axios.post(
-      "https://takemihome.it/it/front/booking/new_primary",
+      `${base_url}/it/front/booking/new_primary`,
       requestBody
     );
 
     // console.log(res);
     return res;
   } catch (err) {
-    throw new Error("Unable to add new address");
+    throw new Error(`Unable to add new address`);
   }
 };
 
@@ -218,12 +223,12 @@ const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode
 const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0, appointment_id = 0 ) => {
   try {
     const res = await axios.get(
-      `http://localhost:8000/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}`
+      `${base_url}/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}`
     );
     console.log('appointment have been set', res.data)
     return res.data;
   } catch (err) {addressId
-    alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
+    alert(`Unable to fetch corporate professionals, something went wrong`); // Throw a custom error message
   }
 };
 
@@ -235,7 +240,7 @@ const nexiPayByLink = async (data) => {
   //   );
   //   return res.data;
   // } catch (err) {
-  //   alert("Nexi pay by link failed- Unable to send Email, Expiration time from request is in the past"); // Throw a custom error message
+  //   alert(`Nexi pay by link failed- Unable to send Email, Expiration time from request is in the past`); // Throw a custom error message
   // }
   return true
 };
@@ -251,7 +256,7 @@ const getAddress = async (id) => {
     );
     return res.data;
   } catch (err) {
-    alert("Something went wrong while fetching your data, please try again later");
+    alert(`Something went wrong while fetching your data, please try again later`);
     console.log(err)
   }
 };
@@ -269,7 +274,7 @@ const getAllAddresses = async (id) => {
     );
     return res.data;
   } catch (err) {
-    alert("Something went wrong while fetching your data, please try again later");
+    alert(`Something went wrong while fetching your data, please try again later`);
     console.log(err)
   }
 };
@@ -285,7 +290,7 @@ const getCorporateCategories = async (corporate) => {
     );
     return res.data;
   } catch (err) {
-    alert("Something went wrong while fetching your data, please try again later");
+    alert(`Something went wrong while fetching your data, please try again later`);
     console.log(err)
   }
 };
@@ -301,7 +306,7 @@ const getCorporateSubcategories = async (city) => {
     );
     return res.data;
   } catch (err) {
-    alert("Something went wrong while fetching your data, please try again later");
+    alert(`Something went wrong while fetching your data, please try again later`);
     console.log(err)
   }
 };
@@ -317,7 +322,7 @@ const getProfessionalDatesAndTimes = async (data) => {
       appointment_id: data?.appointmentId
     }
 
-    const res = await axios.post('http://localhost:8000/it/front/booking/getCalendar', params)
+    const res = await axios.post('${base_url}/it/front/booking/getCalendar', params)
     return res.data
   }catch(err){
     console.log(err)
