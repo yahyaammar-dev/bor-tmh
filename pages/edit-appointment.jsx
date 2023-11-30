@@ -101,6 +101,12 @@ function Table() {
       const response = await fetch(`https://takemihome.it/it/front/api/getSingleAppointment/${item?.id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
       let data = await response.json();
 
+      if(data?.status == false){
+        alert("Some entities not found, plesae select another appointment")
+        return 
+      }
+
+
       data = {...data, availibilitydata: {}}
       dispatch({type: "ALLDATA", payload: data})
 

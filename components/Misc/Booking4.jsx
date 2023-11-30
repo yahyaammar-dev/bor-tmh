@@ -324,7 +324,7 @@ const Booking4 = ({ loader, setLoader }) => {
 
 
   const corporateDiscountGroupData = () => {
-    axios.post('http://localhost:8000/it/front/booking/corporateCoupons', {
+    axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
       customer: reduxData?.appData?.user?.id
     })
       .then((res) => {
