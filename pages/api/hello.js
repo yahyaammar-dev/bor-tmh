@@ -215,16 +215,14 @@ const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode
     // console.log(res);
     return res;
   } catch (err) {
-    throw new Error(`Unable to add new address');
+    throw new Error('Unable to add new address');
   }
 };
 
 
 const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0, appointment_id = 0 ) => {
   try {
-    const res = await axios.get(
-      `${base_url}/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}`
-    );
+    const res = await axios.get(`${base_url}/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}`);
     console.log('appointment have been set', res.data)
     return res.data;
   } catch (err) {addressId
