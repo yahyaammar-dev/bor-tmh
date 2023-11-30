@@ -19,7 +19,7 @@ const loginUser = async (values) => {
 const getUsers = async () => {
   try {
     const res = await axios.get(
-      "https://takemihome.it/it/api/public_api/subcategories/getAllUser"
+      "http://localhost:8000/it/front/api/searchAllUsers"
     );
     return res.data;
   } catch (err) {
@@ -215,14 +215,14 @@ const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode
 };
 
 
-const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0 ) => {
+const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0, appointment_id = 0 ) => {
   try {
     const res = await axios.get(
-      `https://takemihome.it/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}`
+      `http://localhost:8000/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}`
     );
     console.log('appointment have been set', res.data)
     return res.data;
-  } catch (err) {
+  } catch (err) {addressId
     alert("Unable to fetch corporate professionals, something went wrong"); // Throw a custom error message
   }
 };
@@ -313,10 +313,11 @@ const getProfessionalDatesAndTimes = async (data) => {
       gender: data?.gender, 
       sub: data?.sub, 
       services: data?.services,
-      corporate: data?.corporate
+      corporate: data?.corporate,
+      appointment_id: data?.appointmentId
     }
 
-    const res = await axios.post('https://takemihome.it/it/front/booking/getCalendar', params)
+    const res = await axios.post('http://localhost:8000/it/front/booking/getCalendar', params)
     return res.data
   }catch(err){
     console.log(err)

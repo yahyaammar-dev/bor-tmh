@@ -32,10 +32,12 @@ const Booking4 = ({ loader, setLoader }) => {
   const [outside, setOutside] = useState(false)
   const [percentage, setPercentage] = useState(0)
   const [groupDiscount, setGroupDisCount] = useState(null)
+  const [corporateDiscountGroup, setCorporateDiscountGroup] = useState()
 
   useEffect(() => {
     setInitialAmount(reduxData?.appData?.totalAmount)
     discountGroup()
+    corporateDiscountGroupData()
   }, [])
 
   useEffect(() => {
@@ -153,7 +155,6 @@ const Booking4 = ({ loader, setLoader }) => {
   }
 
   const handleBooking = () => {
-
     if (reduxData?.appData?.type == 'Corporate') {
       let totalDuration = 0;
       let services = []
@@ -174,7 +175,8 @@ const Booking4 = ({ loader, setLoader }) => {
           reduxData?.appData?.extras,
           reduxData?.appData?.type,
           giftId,
-          reduxData?.appData?.currentAddress?.id
+          reduxData?.appData?.currentAddress?.id,
+          reduxData?.appData?.appointmentId,
         )
       } else {
         const res = intiateBooking(
@@ -188,7 +190,8 @@ const Booking4 = ({ loader, setLoader }) => {
           0,
           reduxData?.appData?.type,
           giftId,
-          reduxData?.appData?.currentAddress?.id
+          reduxData?.appData?.currentAddress?.id,
+          reduxData?.appData?.appointmentId,
         )
       }
       // const data = {
@@ -222,7 +225,9 @@ const Booking4 = ({ loader, setLoader }) => {
           reduxData?.appData?.extras,
           reduxData?.appData?.type,
           giftId,
-          reduxData?.appData?.currentAddress?.id)
+          reduxData?.appData?.currentAddress?.id,
+          reduxData?.appData?.appointmentId,
+        )
       } else {
         const res = intiateBooking(
           reduxData?.appData?.currentDate,
@@ -235,7 +240,9 @@ const Booking4 = ({ loader, setLoader }) => {
           reduxData?.appData?.extras,
           reduxData?.appData?.type,
           giftId,
-          reduxData?.appData?.currentAddress?.id)
+          reduxData?.appData?.currentAddress?.id,
+          reduxData?.appData?.appointmentId,
+        )
       }
       const paybylink = nexiPayByLink(data)
       setOpen(true)
@@ -316,6 +323,24 @@ const Booking4 = ({ loader, setLoader }) => {
   }
 
 
+  const corporateDiscountGroupData = () => {
+    axios.post('http://localhost:8000/it/front/booking/corporateCoupons', {
+      customer: reduxData?.appData?.user?.id
+    })
+      .then((res) => {
+        if (res?.data?.coupons.length > 0) {
+          setCorporateDiscountGroup({
+            name: res.data.coupons[0].name,
+            discount: res.data.coupons[0].discount
+          })
+        }
+      })
+      .catch((err) => {
+        console.error('Error', err.message)
+      })
+  }
+
+
   const router = useRouter();
   const navigate_to_booking3 = () => {
     router.push("/booking3");
@@ -367,15 +392,34 @@ const Booking4 = ({ loader, setLoader }) => {
 
             {
               groupDiscount &&
-              <div className="flex justify-between"> 
-                <p>
-                  The discount from {groupDiscount?.name} is:
-                </p>
-                <p className="font-bold">
-                  {groupDiscount?.discount}
-                </p>
+              <div>
+                <h3><b>Discount Groups:</b></h3>
+                <div className="flex justify-between">
+                  <p>
+                    The discount from {groupDiscount?.name} is:
+                  </p>
+                  <p className="font-bold">
+                    {groupDiscount?.discount} $
+                  </p>
+                </div>
               </div>
             }
+
+            {
+              corporateDiscountGroup &&
+              <div>
+                <h3><b>Corporate Discount Groups:</b></h3>
+                <div className="flex justify-between">
+                  <p>
+                    The discount from {groupDiscount?.name} is:
+                  </p>
+                  <p className="font-bold">
+                    {corporateDiscountGroup?.discount} $
+                  </p>
+                </div>
+              </div>
+            }
+
 
             {
               (giftAmount != null) && <div className="flex justify-between">

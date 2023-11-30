@@ -68,14 +68,21 @@ const Booking1 = ({ loader, setLoader }) => {
       type: "resetDataAfterGender",
     });
   }
-  const handleAfterProfessional = () => {
-    handleLocalData({
-      type1:"remove",
-      type: "resetDataAfterProfessional",
-    });
+  const handleAfterProfessional = (item) => {
+    if(item?.id == reduxData?.appData?.currentProfessional?.id){
+      return
+    }else{
+      handleLocalData({
+        type1:"remove",
+        type: "resetDataAfterProfessional",
+      });
+    }
   }
   
   
+  console.log('Data in redux is', reduxData)
+
+
   return (
     <div>
       {dowloaded && (<>
@@ -83,7 +90,7 @@ const Booking1 = ({ loader, setLoader }) => {
       <div className="booking1 custom__conatiner mx-auto custom__margin__top">
         {/* City */}
         <div className="city mb-10">
-          <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+          <h1 className="mt-24 mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
             Select Type  
           </h1>
           <div className="flex justify-center gap-5">
@@ -335,7 +342,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         fullName={item?.full_name ? item?.full_name : item?.name ? item?.name : ''}
                         position={item?.position}
                         onClick={() => {
-                          handleAfterProfessional(),
+                          handleAfterProfessional(item),
                           handleLocalData({
                             type: "professional",
                             data: item,

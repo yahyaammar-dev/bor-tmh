@@ -57,7 +57,10 @@ export function useDataHandler(setLoader) {
         const allUsers = await getUsers();
         // dispatch({ type: "USERS", payload: allUsers });
         setLoader(false);
-        const usersAsOptions = allUsers?.map((user) => ({
+
+
+
+        const usersAsOptions = allUsers.users?.map((user) => ({
           id: user.id,
           value: user.name,
           label: user.name,

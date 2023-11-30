@@ -3,9 +3,17 @@ import Select from "react-select";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { useDataHandler } from "../../utils/dataHandler";
 
 const Navbar = ({ setLocale }) => {
   const dispatch = useDispatch();
+
+
+  const {
+    reduxData
+  } = useDataHandler(); // Use the useDataHandler hook to access the functions and state
+
   const router = useRouter()
   const options = [
     { value: "English", label: "English" },
@@ -52,6 +60,16 @@ const Navbar = ({ setLocale }) => {
               </span>
             </a>
             <div className="flex items-center lg:order-2">
+              {
+                reduxData?.appData?.isEdit && 
+                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Edit Mode</span>
+              }
+              <a
+                href="/edit-appointment"
+                className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              >
+                Appointments 
+              </a>
               <a
                 href="/exporter"
                 className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"

@@ -32,7 +32,9 @@ const initialState = {
   totalAmount: 0,
   availibilitiesData: {},
   extras: null,
-  cuurentMonth : {}
+  cuurentMonth : {},
+  isEdit: false,
+  appointmentId: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -442,7 +444,9 @@ const appData = (state = initialState, action) => {
         availibilitiesData: {},
         extras: null,
         totalAmount: null,
-        currentAddress: null
+        currentAddress: null,
+        isEdit: false,
+        appointmentId: null
       }
     case "STOREEXTRAS":
       return {
@@ -459,6 +463,26 @@ const appData = (state = initialState, action) => {
         ...state,
         currentMonth: action.payload
       }
+    case "SETISEDIT":{
+      return {
+        ...state,
+        isEdit: action.payload
+      }
+    }
+    case "ALLDATA":{
+      return {
+        ...action.payload,
+        isEdit: true
+      }
+    }
+
+    case "SELECTEDAPPOINTMENT":{
+      return {
+        ...state,
+        appointmentId: action.payload
+      }
+    }
+
     default:
       return state;
   };

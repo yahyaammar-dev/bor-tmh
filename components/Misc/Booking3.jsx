@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAvailibilites } from "../../utils/calendarHelpers";
 import Calendar from "./Calendar";
 import Times from "./Times";
-import { useDataHandler } from "../../utils/dataHandler"; 
+import { useDataHandler } from "../../utils/dataHandler";
 import { useRouter } from "next/router";
 
 const Booking2 = () => {
@@ -12,7 +12,7 @@ const Booking2 = () => {
   // ************************************
   // states
   // ************************************
-  const { handleLocalData } = useDataHandler(); 
+  const { handleLocalData } = useDataHandler();
   const reduxData = useSelector((state) => state)
   const dispatch = useDispatch()
   const [datesAndTimes, setDatesAndTimes] = useState({
@@ -23,9 +23,7 @@ const Booking2 = () => {
     selectedTimeIndex: null
   })
   const [monthCounter, setMonthCounter] = useState(0)
-  const router = useRouter()  
-
-
+  const router = useRouter()
 
 
   // ************************************
@@ -34,7 +32,11 @@ const Booking2 = () => {
 
 
   useEffect(() => {
-    if (Object.keys(reduxData?.appData?.availibilitiesData).length == 0) {
+    if (
+      !reduxData?.appData?.availibilitiesData ||
+      (typeof reduxData.appData.availibilitiesData === 'object' &&
+        Object.keys(reduxData.appData.availibilitiesData).length === 0)
+    ) {
       BookingHanlders(reduxData)
         .then((res) => {
           dispatch({ type: "STOREAVAILIBILITES", payload: res })

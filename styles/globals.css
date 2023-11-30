@@ -180,3 +180,10 @@ body {
 .ugh-white {
   color: white;
 }
+
+header{
+  background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}

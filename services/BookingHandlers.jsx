@@ -22,7 +22,6 @@ const BookingHanlders = (reduxData) => {
 
 
         if(type == 'Corporate'){
-            console.log('i am in corporate')
            data = {
                 pro,
                 gender,
@@ -37,6 +36,13 @@ const BookingHanlders = (reduxData) => {
                 sub,
                 services,
             };
+        }
+
+        if(reduxData?.appData?.appointmentId){
+            data= {
+                ...data,
+                appointmentId: reduxData?.appData?.appointmentId
+            }
         }
 
 

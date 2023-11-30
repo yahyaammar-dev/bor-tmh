@@ -83,10 +83,6 @@ const Booking2 = ({ loader, setLoader }) => {
     else {
       const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id);
       setCart(updatedCart)
-      // handleLocalData({
-      //   type1: "remove",
-      //   type: "resetDataAfterCart"
-      // })
       handleLocalData({
         type: "updateCart",
         data: updatedCart,
@@ -102,6 +98,7 @@ const Booking2 = ({ loader, setLoader }) => {
   useEffect(() => {
     getProfessionalDeatils();
   }, []);
+
 
   return (
     !loader && (
