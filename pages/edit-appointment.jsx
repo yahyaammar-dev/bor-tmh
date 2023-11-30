@@ -50,7 +50,7 @@ function Table() {
   // Function to fetch user data from the API
   const fetchUserData = async () => {
     try {
-      const response = await fetch('http://localhost:8000/it/front/api/searchAllUsers'); // Replace 'your-api-endpoint' with your actual API endpoint
+      const response = await fetch('https://takemihome.it/it/front/api/searchAllUsers'); // Replace 'your-api-endpoint' with your actual API endpoint
       const data = await response.json();
 
       const dataAsOption = data?.users?.map((item) => ({
@@ -73,7 +73,7 @@ function Table() {
 
   const fetchAppointments = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/it/front/api/getUserAppointments/${id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
+      const response = await fetch(`https://takemihome.it/it/front/api/getUserAppointments/${id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
       const data = await response.json();
       setAppointments(data?.appointments);
 
@@ -98,7 +98,7 @@ function Table() {
     dispatch({ type: "SETISEDIT", payload: true })
 
     try {
-      const response = await fetch(`http://localhost:8000/it/front/api/getSingleAppointment/${item?.id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
+      const response = await fetch(`https://takemihome.it/it/front/api/getSingleAppointment/${item?.id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
       let data = await response.json();
 
       data = {...data, availibilitydata: {}}

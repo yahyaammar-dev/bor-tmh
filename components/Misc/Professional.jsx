@@ -1,7 +1,13 @@
 import React from "react";
 import Button from "./Button";
+import { useDataHandler } from "../../utils/dataHandler";
 
-const Professional = ({ profile_image, fullName, position, onClick, available }) => {
+const Professional = ({ profile_image, fullName, position, onClick, available, id }) => {
+
+
+  const {
+    reduxData,
+  } = useDataHandler(); 
 
   const isNetservex = profile_image.includes('https://tmh.netservex.com/');
 
@@ -10,11 +16,14 @@ const Professional = ({ profile_image, fullName, position, onClick, available })
     ? profile_image.replace('https://tmh.netservex.com/', 'https://takemihome.it//')
     : profile_image;
 
+  console.log(id , reduxData?.appData?.currentProfessional?.id)
+
+console.log(reduxData)
   return (
     <div>
       {
 
-        <div className="py-5 px-12 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className={`${id == reduxData?.appData?.currentProfessional?.id ? 'bg-yellow-100' : ''}  py-5 px-12 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700`}>
 
           <div className="flex flex-col items-center pb-10">
             <img

@@ -399,7 +399,7 @@ const Booking4 = ({ loader, setLoader }) => {
                     The discount from {groupDiscount?.name} is:
                   </p>
                   <p className="font-bold">
-                    {groupDiscount?.discount} $
+                    {groupDiscount?.discount} %
                   </p>
                 </div>
               </div>
@@ -414,7 +414,7 @@ const Booking4 = ({ loader, setLoader }) => {
                     The discount from {groupDiscount?.name} is:
                   </p>
                   <p className="font-bold">
-                    {corporateDiscountGroup?.discount} $
+                    {corporateDiscountGroup?.discount} %
                   </p>
                 </div>
               </div>
