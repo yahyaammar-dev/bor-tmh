@@ -34,6 +34,14 @@ const Booking4 = ({ loader, setLoader }) => {
   const [groupDiscount, setGroupDisCount] = useState(null)
   const [corporateDiscountGroup, setCorporateDiscountGroup] = useState()
 
+  const [isChecked, setIsChecked] = useState(false);
+
+  // Event handler to update the state when the checkbox is changed
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
+
   useEffect(() => {
     setInitialAmount(reduxData?.appData?.totalAmount)
     discountGroup()
@@ -279,7 +287,15 @@ const Booking4 = ({ loader, setLoader }) => {
   };
 
   const handleAddress = async (data) => {
+
     let addressData = data
+
+    console.log("working", addressData)
+    if (addressData?.address1 == '' || addressData?.address2 == '' || addressData?.city == '') {
+      alert("Please Enter All Fields")
+      return
+    }
+
     if (reduxData?.appData?.user?.id) {
       let id_concer = reduxData?.appData?.user?.id
       addressData = { ...addressData, id: id_concer }
@@ -444,7 +460,7 @@ const Booking4 = ({ loader, setLoader }) => {
               <p className="w-full">
                 <div className="flex w-full mb-2">
                   <label className="w-2/3">Address</label>
-                  <select className="border w-full address" onChange={(e) => handleAddressChange(JSON.parse(e.target.value))}>
+                  <select className="border w-full address rounded" onChange={(e) => handleAddressChange(JSON.parse(e.target.value))}>
                     {addressoptions?.map((item) => (
                       <option key={item.id} value={JSON.stringify(item)}>
                         {item.address} {item.address2} - {getCity(item?.city_id)}
@@ -462,105 +478,114 @@ const Booking4 = ({ loader, setLoader }) => {
               </p>
             </div>
           </div>
-          <div>
-            <div className="iconBox flex">
-              <p className="w-full">
-                <div className="flex w-full">
-                  <label className="w-2/3 flex items-center">Enter Address 1</label>
-                  <input className="border w-full address"
-                    onChange={(e) => {
-                      setAddressData({ ...addressData, address1: e.target.value })
-                      // handleLocalData({
-                      //   type: "address",
-                      //   data: item,
-                      // })
-                    }}
-                    type="text" />
-                </div>
-                <div className="flex w-full">
-                  <label className="w-2/3 flex items-center">Enter Address 2</label>
-                  <input className="border w-full address"
-                    onChange={(e) => {
-                      setAddressData({ ...addressData, address2: e.target.value })
-                      // handleLocalData({
-                      //   type: "address",
-                      //   data: item,
-                      // })
-                    }}
-                    type="text" />
-                </div>
-              </p>
-            </div>
-          </div>
 
 
-
-          <div>
-            <div className="iconBox flex">
-              <p className="w-full customContainer">
-                <div className="flex w-full customBordered">
-                  <label className="w-2/3 flex items-center">Select a city</label>
-
-                  <div className="w-full">
-                    <Select
-                      options={
-                        reduxData?.appData?.cities?.length > 0
-                          ? reduxData?.appData?.cities
-                          : reduxData?.appData?.currentCity ?
-                            reduxData?.appData?.currentCity : []
-                      }
-                      onChange={(e) => {
-                        setAddressData({ ...addressData, city: e.id })
-                        // handleLocalData({
-                        //   type: "newcity",
-                        //   data: item,
-                        // })
-                      }}
-                      // onChange={(item) => {
-                      //   setLocale(item.value);
-                      // }}
-                      placeholder="City"
-                      styles={selectStyles}
-                    />
-                  </div>
-
-                </div>
-              </p>
-            </div>
-          </div>
-
-
-          {
-            addressData?.city == 2 ? <div>
+          <div className="bg-gray-200 p-3 rounded-xl my-10">
+            <h4 className="font-bold">Add New Address:</h4>
+            <div>
               <div className="iconBox flex">
                 <p className="w-full">
                   <div className="flex w-full">
-                    <label className="w-2/3 flex items-center">Enter Postal Code</label>
-                    <input className="border w-full address"
+                    <label className="w-2/3 flex items-center">Enter Address 1</label>
+                    <input className="border w-full rounded p-1 pl-2"
+                      placeholder="Enter Address 1"
                       onChange={(e) => {
-                        setAddressData({ ...addressData, postalCode: e.target.value })
+                        setAddressData({ ...addressData, address1: e.target.value })
+                        // handleLocalData({
+                        //   type: "address",
+                        //   data: item,
+                        // })
+                      }}
+                      type="text" />
+                  </div>
+                  <div className="flex w-full">
+                    <label className="w-2/3 flex items-center">Enter Address 2</label>
+                    <input className="border w-full p-1 pl-2 rounded"
+                      placeholder="Enter Address 2"
+                      onChange={(e) => {
+                        setAddressData({ ...addressData, address2: e.target.value })
+                        // handleLocalData({
+                        //   type: "address",
+                        //   data: item,
+                        // })
                       }}
                       type="text" />
                   </div>
                 </p>
               </div>
             </div>
-              :
-              <></>
-          }
 
 
 
-          <div className="iconBox flex h justify-end">
-            <div className="mt-2" >
-              <Button text='Add Address' filled wfull
-                onClick={() => {
-                  handleAddress(addressData)
-                }}
-              />
+            <div>
+              <div className="iconBox flex">
+                <p className="w-full customContainer">
+                  <div className="flex w-full customBordered">
+                    <label className="w-2/3 flex items-center">Select a city</label>
 
+                    <div className="w-full">
+                      <Select
+                        options={
+                          reduxData?.appData?.cities?.length > 0
+                            ? reduxData?.appData?.cities
+                            : reduxData?.appData?.currentCity ?
+                              reduxData?.appData?.currentCity : []
+                        }
+                        onChange={(e) => {
+                          setAddressData({ ...addressData, city: e.id })
+                          // handleLocalData({
+                          //   type: "newcity",
+                          //   data: item,
+                          // })
+                        }}
+                        // onChange={(item) => {
+                        //   setLocale(item.value);
+                        // }}
+                        placeholder="City"
+                        styles={selectStyles}
+                      />
+                    </div>
+
+                  </div>
+                </p>
+              </div>
+            </div>
+
+
+            {
+              addressData?.city == 2 ? <div>
+                <div className="iconBox flex">
+                  <p className="w-full">
+                    <div className="flex w-full">
+                      <label className="w-2/3 flex items-center">Enter Postal Code</label>
+                      <input className="border w-full address"
+                        onChange={(e) => {
+                          setAddressData({ ...addressData, postalCode: e.target.value })
+                        }}
+                        type="text" />
+                    </div>
+                  </p>
+                </div>
+              </div>
+                :
+                <></>
+            }
+
+
+
+            <div className="iconBox flex h justify-end">
+              <div className="mt-2" >
+                <Button text='Add Address' filled wfull
+                  onClick={() => {
+                    handleAddress(addressData)
+                  }}
+                />
+              </div>
             </div>
           </div>
+
+
+
           <div>
             <p className="mt-5">
               Do you have a massage bed at home? Click also if the massage bed
@@ -574,8 +599,14 @@ const Booking4 = ({ loader, setLoader }) => {
               <input type="radio" name='address' className="mr-2" />
               <label>No</label>
             </div>
+
+            <div className="flex gap-2 my-5">
+              <input type="checkbox" onChange={handleCheckboxChange} />
+              <p>Do you accept <a href="/terms" className="text-blue-400 font-bold" target="blank">Terms and Conditions</a></p>
+            </div>
+
             <div className="mt-4">
-              <Button text="Complete Booking" filled wfull onClick={handleBooking} />
+              <Button text="Complete Booking" disableded={!isChecked} filled wfull onClick={handleBooking} />
             </div>
 
           </div>
