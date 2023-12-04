@@ -365,7 +365,7 @@ const Booking4 = ({ loader, setLoader }) => {
     <div>
       {/* Booking 4 */}
       <div className="booking2 custom__conatiner mx-auto">
-        <div className="mb-20 mt-10">
+        <div className="mb-20 mt-[10rem]">
           <h2 className="text-center mb-1 text-4xl font-extrabold dark:text-white">
             Complete the Booking
           </h2>
