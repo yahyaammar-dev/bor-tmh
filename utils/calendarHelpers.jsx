@@ -39,6 +39,9 @@ const setAvailibilites = (res = null, setDatesAndTimes, reduxData, monthCounter)
 }
 
 const handleTimeClick = (e, datesAndTimes, setDatesAndTimes) => {
+  
+  console.log(e.target.innerText)
+  
   if (e.currentTarget.classList.contains('cursor-not-allowed')) return
   let item = datesAndTimes?.datesAndTimes?.filter((day) => {
     return day?.date?.split('-')[0] == e.target.innerText
@@ -50,7 +53,6 @@ const handleTimeClick = (e, datesAndTimes, setDatesAndTimes) => {
       active: isActive,
     };
   });
-
   setDatesAndTimes({ ...datesAndTimes, selectedTimes: item[0]?.times, datesAndTimes: newDatesAndTimes })
 }
 
