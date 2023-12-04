@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 
-const base_url = 'https://takemihome.it'
-// const base_url = '${base_url}'
+// const base_url = 'https://takemihome.it'
+const base_url = 'http://localhost:8000'
 
 
 const loginUser = async (values) => {
