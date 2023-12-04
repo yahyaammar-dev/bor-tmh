@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useDataHandler } from "../../utils/dataHandler";
 
-const Navbar = ({ setLocale }) => {
+const Navbar = () => {
   const dispatch = useDispatch();
 
 
