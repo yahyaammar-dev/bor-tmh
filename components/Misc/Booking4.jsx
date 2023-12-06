@@ -34,13 +34,7 @@ const Booking4 = ({ loader, setLoader }) => {
   const [groupDiscount, setGroupDisCount] = useState(null)
   const [corporateDiscountGroup, setCorporateDiscountGroup] = useState()
   const [appointmentId, setAppointmentId] = useState()
-  const [isChecked, setIsChecked] = useState(false);
   const [customLoader, setCustomLoader] = useState()
-
-  // Event handler to update the state when the checkbox is changed
-  const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
-  };
 
 
   useEffect(() => {
@@ -615,13 +609,9 @@ const Booking4 = ({ loader, setLoader }) => {
               <label>No</label>
             </div>
 
-            <div className="flex gap-2 my-5">
-              <input type="checkbox" onChange={handleCheckboxChange} />
-              <p>Do you accept <a href="/terms" className="text-blue-400 font-bold" target="blank">Terms and Conditions</a></p>
-            </div>
 
             <div className="mt-4 flex justify-center items-center flex-col gap-5">
-              <Button text="Complete Booking" disableded={!isChecked} filled wfull onClick={handleBooking} />
+              <Button text="Complete Booking"  filled wfull onClick={handleBooking} />
               {
                 customLoader &&
                 <div role="status">

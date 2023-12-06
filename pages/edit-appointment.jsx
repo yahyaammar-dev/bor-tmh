@@ -46,7 +46,7 @@ function Table() {
   const fetchUserData = async () => {
     try {
       setLoader(true)
-      const response = await fetch('https://takemihome.it/it/front/api/searchAllUsers'); // Replace 'your-api-endpoint' with your actual API endpoint
+      const response = await fetch('http://localhost:8000/it/front/api/searchAllUsers'); // Replace 'your-api-endpoint' with your actual API endpoint
       const data = await response.json();
 
 
@@ -73,7 +73,7 @@ function Table() {
 
   const fetchAppointments = async (id) => {
     try {
-      const response = await fetch(`https://takemihome.it/it/front/api/getUserAppointments/${id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
+      const response = await fetch(`http://localhost:8000/it/front/api/getUserAppointments/${id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
       const data = await response.json();
       setAppointments(data?.appointments);
     } catch (error) {
@@ -88,23 +88,30 @@ function Table() {
 
   const handleEdit = async (item) => {
     setLoader(false)
-    dispatch({ type: "SETISEDIT", payload: true })
-    try {
-      const response = await fetch(`https://takemihome.it/it/front/api/getSingleAppointment/${item?.id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
-      let data = await response.json();
-      if (data?.status == false || data?.message) {
-        alert(data?.message)
-        return
+
+
+    if(new Date(item?.booking_date) >= new Date()){
+      dispatch({ type: "SETISEDIT", payload: true })
+      try {
+        const response = await fetch(`https://takemihome.it/it/front/api/getSingleAppointment/${item?.id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
+        let data = await response.json();
+        if (data?.status == false || data?.message) {
+          alert(data?.message)
+          return
+        }
+        data = { ...data, availibilitydata: {} }
+        dispatch({ type: "ALLDATA", payload: data })
+        dispatch({ type: "SELECTEDAPPOINTMENT", payload: item?.id })
+        // set redux data here and redirect the user to main page - also set that this is modified appointment for current id 
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
       }
-      data = { ...data, availibilitydata: {} }
-      dispatch({ type: "ALLDATA", payload: data })
-      dispatch({ type: "SELECTEDAPPOINTMENT", payload: item?.id })
-      // set redux data here and redirect the user to main page - also set that this is modified appointment for current id 
-    } catch (error) {
-      console.error('Error fetching appointments:', error);
+      router.push('/')
+      setLoader(true)
+    }else{
+      return
     }
-    router.push('/')
-    setLoader(true)
+
   }
 
 
@@ -135,29 +142,33 @@ function Table() {
                 </h2>
                 <div class="flex flex-wrap items-center justify-between px-4 py-2 border-b dark:border-gray-700">
                 </div>
-                <table class="w-full table-auto">
+                <table class="w-full table-auto" style={{borderCollapse: 'separate', borderSpacing: '2px 10px' }}>
                   <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr class="text-xs text-left text-gray-500 border-b border-gray-200 dark:border-gray-800">
                       <th class="px-6 py-3 font-medium dark:text-gray-400">Appointment Id</th>
                       <th class="px-6 py-3 font-medium dark:text-gray-400">User</th>
                       <th class="px-6 py-3 font-medium dark:text-gray-400">Professional</th>
-                      <th class="px-6 py-3 font-medium dark:text-gray-400">Status</th>
-                      <th class="px-6 py-3 font-medium dark:text-gray-400">Created</th>
+                      <th class="px-6 py-3 font-medium dark:text-gray-400">Payment Status</th>
+                      <th class="px-6 py-3 font-medium dark:text-gray-400">Date of Booking</th>
+                      <th class="px-6 py-3 font-medium dark:text-gray-400">Booked Date</th>
                       <th class="px-6 py-3 font-medium dark:text-gray-400">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
                       appointment?.length > 0 ? appointment?.map((item) => (
-                        <tr class="border-b border-gray-200 dark:border-gray-800 my-1">
+                        <tr class="border-b border-gray-200 dark:border-gray-800">
                           <td class="px-6 text-sm font-medium dark:text-gray-400">{item?.id}</td>
                           <td class="px-6 text-sm font-medium dark:text-gray-400">{item?.customer}</td>
                           <td class="px-6 text-sm font-medium dark:text-gray-400">{item?.professional}</td>
                           <td class="px-6 text-sm font-medium dark:text-gray-400">{item?.status}</td>
+                          <td class="px-6 text-sm font-medium dark:text-gray-400">{item?.booking_date}</td>
                           <td class="px-6 text-sm font-medium dark:text-gray-400">{item?.created}</td>
                           <td class="px-6 text-sm my-1">
                             <span
-                              class="my-1 inline-block px-2 py-1 text-blue-700 bg-blue-100 rounded-md dark:bg-gray-800 dark:text-gray-400 cursor-pointer" onClick={() => handleEdit(item)}>Edit</span>
+                              className={`'my-1 inline-block px-2 py-1 text-blue-700  rounded-md dark:bg-gray-800 dark:text-gray-400 cursor-pointer' ${new Date(item?.booking_date) >= new Date() ? 'bg-blue-100 cursor-pointer' : 'bg-blue-50 cursor-not-allowed'}`} onClick={() => handleEdit(item)}>
+                                Edit
+                            </span>
                           </td>
                         </tr>
                       ))
