@@ -46,7 +46,7 @@ function Table() {
   const fetchUserData = async () => {
     try {
       setLoader(true)
-      const response = await fetch('http://localhost:8000/it/front/api/searchAllUsers'); // Replace 'your-api-endpoint' with your actual API endpoint
+      const response = await fetch('https://takemihome.it/it/front/api/searchAllUsers'); // Replace 'your-api-endpoint' with your actual API endpoint
       const data = await response.json();
 
 
@@ -73,7 +73,7 @@ function Table() {
 
   const fetchAppointments = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/it/front/api/getUserAppointments/${id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
+      const response = await fetch(`https://takemihome.it/it/front/api/getUserAppointments/${id}`); // Replace 'your-appointments-api-endpoint' with your actual appointments API endpoint
       const data = await response.json();
       setAppointments(data?.appointments);
     } catch (error) {
@@ -149,8 +149,8 @@ function Table() {
                       <th class="px-6 py-3 font-medium dark:text-gray-400">User</th>
                       <th class="px-6 py-3 font-medium dark:text-gray-400">Professional</th>
                       <th class="px-6 py-3 font-medium dark:text-gray-400">Payment Status</th>
-                      <th class="px-6 py-3 font-medium dark:text-gray-400">Date of Booking</th>
-                      <th class="px-6 py-3 font-medium dark:text-gray-400">Booked Date</th>
+                      <th class="px-6 py-3 font-medium dark:text-gray-400">Booked Date | Start Date</th>
+                      <th class="px-6 py-3 font-medium dark:text-gray-400">Booking Created At</th>
                       <th class="px-6 py-3 font-medium dark:text-gray-400">Action</th>
                     </tr>
                   </thead>
