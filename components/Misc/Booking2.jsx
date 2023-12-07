@@ -258,7 +258,7 @@ const Booking2 = ({ loader, setLoader }) => {
           </div>
         </div>
 
-        <div className="booking2 custom__conatiner mx-auto mt-[5rem]">
+        <div className="booking2 custom__conatiner gap-1 sm:gap-4 mx-auto mt-[5rem]">
           {/* Porfessional Detail */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-10">
             <div className="item sm:w-3/12">
