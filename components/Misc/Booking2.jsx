@@ -227,7 +227,7 @@ const Booking2 = ({ loader, setLoader }) => {
                       >
                         <img
                           src="/imgs/addcircle.svg"
-                          className="w-8"
+                          className="w-10"
                           onClick={() => handleProfessionalCart(item)}
                         />
                       </button>

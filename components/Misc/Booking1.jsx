@@ -87,7 +87,7 @@ const Booking1 = ({ loader, setLoader }) => {
           <div className="booking1 custom__conatiner mx-auto custom__margin__top">
             {/* City */}
             <div className="city mb-10">
-              <h1 className="mt-24 mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+              <h1 className="mt-24 mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                 Select Type
               </h1>
               <div className="flex justify-center items-center gap-2 sm:gap-5">
@@ -138,7 +138,7 @@ const Booking1 = ({ loader, setLoader }) => {
                 {reduxData?.appData?.cities?.length > 0 && (
                   <Fade>
                     <div className="city mb-10">
-                      <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                      <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select a city
                       </h1>
                       <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5  items-center">
@@ -181,7 +181,7 @@ const Booking1 = ({ loader, setLoader }) => {
                 {reduxData?.appData?.corporates?.length > 0 && (
                   <Fade>
                     <div className="city mb-10">
-                      <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                      <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select a Corporate
                       </h1>
                       <div className="sm:flex justify-center gap-5">
@@ -218,7 +218,7 @@ const Booking1 = ({ loader, setLoader }) => {
                 {reduxData?.appData?.corporateUsers?.length > 0 && (
                   <Fade>
                     <div className="city mb-10">
-                      <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                      <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select Corporate Users
                       </h1>
                       <div className="sm:flex justify-center gap-5">
@@ -254,7 +254,7 @@ const Booking1 = ({ loader, setLoader }) => {
 
                 {reduxData?.appData?.categories?.length > 0 && (
                   <div className="categories my-16">
-                    <h1 className="mb-4  text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                    <h1 className="mb-4  text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                       Select a Category
                     </h1>
                     <div className="flex flex-wrap justify-center gap-2 sm:gap-5">
@@ -284,7 +284,7 @@ const Booking1 = ({ loader, setLoader }) => {
                 {reduxData?.appData?.subCategories?.length > 0 && (
                   <Fade>
                     <div className="categories my-16">
-                      <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                      <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select SubCategory
                       </h1>
                       <div className="flex flex-wrap justify-center gap-2 sm:gap-5">
@@ -315,7 +315,7 @@ const Booking1 = ({ loader, setLoader }) => {
 
                 {reduxData?.appData?.genders?.length > 0 && (
                   <div className="categories my-16">
-                    <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                    <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                       Select Gender
                     </h1>
                     <div className="flex justify-center gap-5">
@@ -344,7 +344,7 @@ const Booking1 = ({ loader, setLoader }) => {
 
                 {reduxData?.appData?.professionals?.length > 0 && (
                   <div className="categories my-16">
-                    <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                    <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                       Select Professional
                     </h1>
                     <div className="flex justify-center gap-5 flex-wrap">
@@ -382,7 +382,7 @@ const Booking1 = ({ loader, setLoader }) => {
                 {reduxData?.appData?.users?.length > 0 && (
                   <Fade>
                     <div className="city mb-10">
-                      <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                      <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select a User
                       </h1>
                       <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5 items-center">
@@ -419,7 +419,7 @@ const Booking1 = ({ loader, setLoader }) => {
                 {reduxData?.appData?.cities?.length > 0 && (
                   <Fade>
                     <div className="city mb-10">
-                      <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                      <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select a city
                       </h1>
                       <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5 items-center">
@@ -454,7 +454,7 @@ const Booking1 = ({ loader, setLoader }) => {
 
                 {reduxData?.appData?.categories?.length > 0 && (
                   <div className="categories my-16">
-                    <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                    <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                       Select a Category
                     </h1>
                     <div className="flex flex-wrap justify-center gap-2 sm:gap-5">
@@ -483,7 +483,7 @@ const Booking1 = ({ loader, setLoader }) => {
                 {reduxData?.appData?.subCategories?.length > 0 && (
                   <Fade>
                     <div className="categories my-16">
-                      <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                      <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select SubCategory
                       </h1>
                       <div className="flex flex-wrap justify-center gap-2 sm:gap-5">
@@ -513,7 +513,7 @@ const Booking1 = ({ loader, setLoader }) => {
 
                 {reduxData?.appData?.genders?.length > 0 && (
                   <div className="categories my-16">
-                    <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                    <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                       Select Gender
                     </h1>
                     <div className="flex justify-center gap-5">
@@ -541,7 +541,7 @@ const Booking1 = ({ loader, setLoader }) => {
 
                 {reduxData?.appData?.professionals?.length > 0 && (
                   <div className="categories my-16">
-                    <h1 className="mb-4 text-center text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
+                    <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                       Select Professional
                     </h1>
                     <div className="flex justify-center gap-5 flex-wrap">
