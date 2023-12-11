@@ -20,25 +20,153 @@ const Booking4 = ({ loader, setLoader }) => {
 
   const [addressoptions, setAddressOptions] = useState()
   const dispatch = useDispatch()
-  const [giftAmount, setGiftAmount] = useState(null);
+  const [giftAmount, setGiftAmount] = useState(0);
   const [giftId, setGiftId] = useState(0)
+  const [percentage, setPercentage] = useState()
   const [addressData, setAddressData] = useState({
     address1: '',
     address2: '',
     city: '',
     postalCode: ''
   })
-  const [initalAmount, setInitialAmount] = useState(null)
   const [outside, setOutside] = useState(false)
-  const [percentage, setPercentage] = useState(0)
   const [groupDiscount, setGroupDisCount] = useState(null)
   const [corporateDiscountGroup, setCorporateDiscountGroup] = useState()
   const [appointmentId, setAppointmentId] = useState()
   const [customLoader, setCustomLoader] = useState()
+  const [hasMassageBed, setHasMassageBed] = useState(false);
+  const [currentGiftAmount, setCurrentGiftAmount] = useState()
+  const [amountAfterCalculations, setAmountAfterCalculations] = useState(null)
+  const [priceTableData, setPriceTableData] = useState()
 
+
+  const [priceTableLoader, setPriceTableLoader] = useState(false)
+
+  // price calculattion  
+  const [initalAmount, setInitialAmount] = useState(null)
+
+  const calculatePrice = async () => {
+    try {
+      setPriceTableLoader(true)
+      let firstAmount = reduxData?.appData?.totalAmount;
+      let percentageAmount = 0
+      let customerCoupons = 0
+      let corporateCoupons = 0
+      let giftCard = 0
+      let finalAmount = 0
+
+      // percentage
+      if (!isNaN(percentage) && percentage !== null) {
+        percentageAmount = (parseFloat(firstAmount) * (parseFloat(percentage) / 100)).toFixed(2);
+        firstAmount = parseFloat(firstAmount) + parseFloat(percentageAmount)
+      }
+      parseFloat(firstAmount).toFixed(2)
+
+
+
+      if (reduxData?.appData?.user?.id) {
+
+
+        // customer coupons
+        const customerCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
+          customer: reduxData?.appData?.user?.id
+        });
+        customerCouponsResponse?.data?.coupons.forEach((coupon) => {
+          if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
+            let currentCustomerCoupon = (firstAmount * (parseFloat(coupon.discount) / 100)).toFixed(2);
+            customerCoupons += parseFloat(currentCustomerCoupon).toFixed(2)
+          }
+        });
+        customerCoupons = parseFloat(customerCoupons).toFixed(2);
+
+        // corporate coupons 
+        const corporateCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
+          customer: reduxData?.appData?.user?.id
+        });
+        corporateCouponsResponse?.data?.coupons.forEach((coupon) => {
+          if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
+            let currentCorproateCoupons = (firstAmount * (coupon.discount / 100)).toFixed(2);
+            corporateCoupons += parseFloat(currentCorproateCoupons).toFixed(2)
+          }
+        });
+      } else {
+        // customer coupons
+        const customerCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
+          customer: reduxData?.appData?.currentCorporateUser?.id
+        });
+
+
+        customerCouponsResponse?.data?.coupons.forEach((coupon) => {
+          if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
+            let currentCustomerCoupon = (firstAmount * (parseFloat(coupon.discount) / 100)).toFixed(2);
+            customerCoupons += parseFloat(currentCustomerCoupon).toFixed(2)
+          }
+        });
+        customerCoupons = parseFloat(customerCoupons).toFixed(2);
+
+        // corporate coupons 
+        const corporateCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
+          customer: reduxData?.appData?.currentCorporateUser?.id
+        });
+        corporateCouponsResponse?.data?.coupons.forEach((coupon) => {
+          if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
+            let currentCorproateCoupons = (firstAmount * (coupon.discount / 100)).toFixed(2);
+            corporateCoupons += parseFloat(currentCorproateCoupons).toFixed(2)
+          }
+        });
+      }
+
+
+
+
+      corporateCoupons = parseFloat(corporateCoupons).toFixed(2);
+
+      if (!isNaN(currentGiftAmount) && currentGiftAmount !== null) {
+        giftCard = currentGiftAmount
+      }
+
+
+      finalAmount =
+        parseFloat(firstAmount) +
+        parseFloat(percentageAmount) -
+        parseFloat(customerCoupons) -
+        parseFloat(corporateCoupons) -
+        parseFloat(giftCard);
+
+      setPriceTableData({
+        firstAmount,
+        percentageAmount,
+        customerCoupons,
+        corporateCoupons,
+        giftCard
+      })
+
+      finalAmount = parseFloat(finalAmount.toFixed(2));
+
+
+      setAmountAfterCalculations(finalAmount)
+      setPriceTableLoader(false)
+
+
+    } catch (error) {
+      console.error('Error', error.message);
+    }
+  };
+
+  useEffect(() => {
+    calculatePrice()
+  }, [percentage, currentGiftAmount])
+
+
+
+  // Handle radio button change
+  const handleRadioChange = (value) => {
+    setHasMassageBed(value)
+  };
 
   useEffect(() => {
     setInitialAmount(reduxData?.appData?.totalAmount)
+    // setX(reduxData?.appData?.totalAmount)
     discountGroup()
     corporateDiscountGroupData()
   }, [])
@@ -49,7 +177,6 @@ const Booking4 = ({ loader, setLoader }) => {
       dispatch({ type: 'STOREEXTRAS', payload: null })
     }
   }, [outside])
-
 
   const getCity = (id) => {
     if (id == 1) {
@@ -78,7 +205,6 @@ const Booking4 = ({ loader, setLoader }) => {
       .max(100, 'Percentage cannot be greater than 100')
   });
 
-
   const handleAddressChange = (e) => {
     handleLocalData({
       type: "address",
@@ -100,7 +226,6 @@ const Booking4 = ({ loader, setLoader }) => {
       data: res.data[0],
     })
   }
-
 
   useEffect(() => {
     console.log('total amount is ', reduxData?.appData?.totalAmount)
@@ -131,7 +256,14 @@ const Booking4 = ({ loader, setLoader }) => {
       .then((res) => {
         if (res.data.success == true) {
           let amountOfGiftCard = res?.data?.voucherAmount
+
+          dispatch({ type: "GIFTCARDAMOUNT", payload: amountOfGiftCard })
+
+          setCurrentGiftAmount(amountOfGiftCard)
           setGiftId(res?.data?.id)
+
+
+
           let reduxAmount = reduxData?.appData?.totalAmount
           let calculatedAmount = reduxAmount - amountOfGiftCard
 
@@ -155,6 +287,11 @@ const Booking4 = ({ loader, setLoader }) => {
 
   const resetCoupon = () => {
     dispatch({ type: 'STOREEXTRAS', payload: initalAmount })
+  }
+
+  const resetGiftCard = () => {
+    setCurrentGiftAmount(0)
+    dispatch({ type: 'REMOVEGIFTCARDAMOUNT' })
   }
 
   const handleBooking = () => {
@@ -184,6 +321,7 @@ const Booking4 = ({ loader, setLoader }) => {
           giftId,
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
+          hasMassageBed
         )
       } else {
         res = intiateBooking(
@@ -199,6 +337,7 @@ const Booking4 = ({ loader, setLoader }) => {
           giftId,
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
+          hasMassageBed
         )
       }
       // const data = {
@@ -234,6 +373,7 @@ const Booking4 = ({ loader, setLoader }) => {
           giftId,
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
+          hasMassageBed
         )
       } else {
         res = intiateBooking(
@@ -249,6 +389,7 @@ const Booking4 = ({ loader, setLoader }) => {
           giftId,
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
+          hasMassageBed
         )
       }
       const paybylink = nexiPayByLink(data)
@@ -262,8 +403,6 @@ const Booking4 = ({ loader, setLoader }) => {
       setOpen(true)
 
     })
-
-
   }
 
   // Define custom styles for React Select
@@ -296,15 +435,11 @@ const Booking4 = ({ loader, setLoader }) => {
   };
 
   const handleAddress = async (data) => {
-
     let addressData = data
-
-    console.log("working", addressData)
     if (addressData?.address1 == '' || addressData?.address2 == '' || addressData?.city == '') {
       alert("Please Enter All Fields")
       return
     }
-
     if (reduxData?.appData?.user?.id) {
       let id_concer = reduxData?.appData?.user?.id
       addressData = { ...addressData, id: id_concer }
@@ -331,40 +466,84 @@ const Booking4 = ({ loader, setLoader }) => {
   }
 
   const discountGroup = () => {
-    axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
-      customer: reduxData?.appData?.user?.id
-    })
-      .then((res) => {
-        if (res?.data?.coupons.length > 0) {
-          setGroupDisCount({
-            name: res.data.coupons[0].name,
-            discount: res.data.coupons[0].discount
-          })
-        }
-      })
-      .catch((err) => {
-        console.error('Error', err.message)
-      })
-  }
 
+    if (reduxData?.appData?.user?.id) {
+      axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
+        customer: reduxData?.appData?.user?.id
+      })
+        .then((res) => {
+          if (res?.data?.coupons.length > 0) {
+            setGroupDisCount({
+              name: res.data.coupons[0].name,
+              discount: res.data.coupons[0].discount
+            })
+          }
+        })
+        .catch((err) => {
+          console.error('Error', err.message)
+        })
+    } else {
+      axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
+        customer: reduxData?.appData?.currentCorporateUser?.id
+      })
+        .then((res) => {
+          if (res?.data?.coupons.length > 0) {
+            setGroupDisCount({
+              name: res.data.coupons[0].name,
+              discount: res.data.coupons[0].discount
+            })
+          }
+        })
+        .catch((err) => {
+          console.error('Error', err.message)
+        })
+    }
+
+
+
+  }
 
   const corporateDiscountGroupData = () => {
-    axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
-      customer: reduxData?.appData?.user?.id
-    })
-      .then((res) => {
-        if (res?.data?.coupons.length > 0) {
-          setCorporateDiscountGroup({
-            name: res.data.coupons[0].name,
-            discount: res.data.coupons[0].discount
-          })
-        }
+
+    if (reduxData?.appData?.user?.id) {
+      axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
+        customer: reduxData?.appData?.user?.id
       })
-      .catch((err) => {
-        console.error('Error', err.message)
+        .then((res) => {
+          if (res?.data?.coupons.length > 0) {
+            setCorporateDiscountGroup({
+              name: res.data.coupons[0].name,
+              discount: res.data.coupons[0].discount
+            })
+          }
+        })
+        .catch((err) => {
+          console.error('Error', err.message)
+        })
+    } else {
+      axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
+        customer: reduxData?.appData?.currentCorporateUser?.id
       })
+        .then((res) => {
+          if (res?.data?.coupons.length > 0) {
+            setCorporateDiscountGroup({
+              name: res.data.coupons[0].name,
+              discount: res.data.coupons[0].discount
+            })
+          }
+        })
+        .catch((err) => {
+          console.error('Error', err.message)
+        })
+    }
+
   }
 
+  const resetPercentage = (e) => {
+    e.preventDefault()
+    dispatch({ type: 'STOREEXTRAS', payload: 0 })
+    setPercentage(0)
+  }
 
   const router = useRouter();
   const navigate_to_booking3 = () => {
@@ -408,7 +587,7 @@ const Booking4 = ({ loader, setLoader }) => {
               })}
             </ul>
             <div className="flex justify-between items-center">
-              <p className="my-3">Total Amount is:</p>
+              <p className="my-3">Inital Amount is:</p>
               <p className="font-bold">
                 {reduxData?.appData?.totalAmount} €
               </p>
@@ -416,46 +595,84 @@ const Booking4 = ({ loader, setLoader }) => {
 
 
             {
-              groupDiscount &&
-              <div>
-                <h3><b>Discount Groups:</b></h3>
-                <div className="flex justify-between">
-                  <p>
-                    The discount from {groupDiscount?.name} is:
-                  </p>
-                  <p className="font-bold">
-                    {groupDiscount?.discount} %
-                  </p>
+              !priceTableLoader ? <>
+
+                {
+                  (priceTableData?.percentageAmount > 0) && <div className="flex justify-between items-center">
+                    <p className="mt-3">Amount after Outside Extra Fee is:  </p>
+                    <pre>    </pre>
+                    <p className="font-bold">{priceTableData?.percentageAmount} €</p>
+                  </div>
+                }
+
+
+
+                {
+                  (priceTableData?.customerCoupons > 0) && <div className="flex justify-between items-center">
+                    <p className="mt-3">Customer Coupon Amount is:  </p>
+                    <pre>    </pre>
+                    <p className="font-bold">{priceTableData?.customerCoupons} €</p>
+                  </div>
+                }
+
+
+                {
+                  (priceTableData?.corporateCoupons > 0) && <div className="flex justify-between items-center">
+                    <p className="mt-3">Corporate Coupon Amount is:  </p>
+                    <pre>    </pre>
+                    <p className="font-bold">{priceTableData?.corporateCoupons} €</p>
+                  </div>
+                }
+
+
+                {
+                  (priceTableData?.giftAmount > 0) && <div className="flex justify-between items-center">
+                    <p className="mt-3">Gift Card Amount is:  </p>
+                    <pre>    </pre>
+                    <p className="font-bold">{priceTableData?.giftAmount} €</p>
+                  </div>
+                }
+
+                {
+                  amountAfterCalculations && <div className="flex justify-between items-center">
+                    <p className="my-3">Final Amount is:</p>
+                    <p className="font-bold">
+                      {amountAfterCalculations} €
+                    </p>
+                  </div>
+                }
+
+              </>
+
+                :
+
+
+                <div className="flex w-full justify-center">
+                  <div role="status">
+                    <svg
+                      aria-hidden="true"
+                      className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                    <span className="sr-only">Loading...</span>
+                  </div>
                 </div>
-              </div>
+
+
             }
 
-            {
-              corporateDiscountGroup &&
-              <div>
-                <h3><b>Corporate Discount Groups:</b></h3>
-                <div className="flex justify-between">
-                  <p>
-                    The discount from {groupDiscount?.name} is:
-                  </p>
-                  <p className="font-bold">
-                    {corporateDiscountGroup?.discount} %
-                  </p>
-                </div>
-              </div>
-            }
-
-
-            {
-              (giftAmount != null) && <div className="flex justify-between">
-                <p className="my-3">Amount after gift card is:</p>
-                <p className="font-bold">
-                  {giftAmount == 0 ? '0' : giftAmount} €
-                </p>
-              </div>
-            }
-
-
+            {console.log(priceTableLoader)}
 
           </div>
           {/* <div className="iconBox flex">
@@ -601,17 +818,19 @@ const Booking4 = ({ loader, setLoader }) => {
               is not needed for the service you are booking
             </p>
             <div className="radio">
-              <input type="radio" name='address' className="mr-2" />
+              <input type="radio" name='address' className="mr-2" checked={hasMassageBed}
+                onChange={() => handleRadioChange(true)} />
               <label>Yes</label>
             </div>
             <div className="radio">
-              <input type="radio" name='address' className="mr-2" />
+              <input type="radio" name='address' className="mr-2" checked={!hasMassageBed}
+                onChange={() => handleRadioChange(false)} />
               <label>No</label>
             </div>
 
 
             <div className="mt-4 flex justify-center items-center flex-col gap-5">
-              <Button text="Complete Booking"  filled wfull onClick={handleBooking} />
+              <Button text="Complete Booking" filled wfull onClick={handleBooking} />
               {
                 customLoader &&
                 <div role="status">
@@ -631,98 +850,129 @@ const Booking4 = ({ loader, setLoader }) => {
       {/* --------------------------------------------------------------------------- */}
       {/* Gift card */}
 
-      <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
-        <div className="w-12/12 border p-5">
-          <div className="flex items-left flex-col">
-            <p className="text-left">Add Gift Card</p>
-            <input type='text' onChange={(e) => { setCoupon(e.target.value) }} placeholder="Enter your voucher here" className="mb-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700" />
-            <button onClick={() => {
-              submitCoupon()
-            }} class="flex gap-2 justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Apply</button>
-            <button onClick={() => {
-              resetCoupon()
-            }} class="px-5 py-2 rounded button-filled yellow-button w-full">Reset</button>
-          </div>
-        </div>
-        <div className="w-12/12 border p-5 checkout_address">
-        </div>
-      </div>
+      <div className="custom__conatiner mx-auto p-5 border ">
+        <h1 className="mb-5"><b>Price Table</b></h1>
+
+        {/* Outside State */}
+
+        <div className="w-full flex">
+
+          <div className="w-6/12">
 
 
-      {/* --------------------------------------------------------------------------- */}
-      {/* 20 Percent */}
-
-
-      <div className="grid md:grid-cols-2 sm:grid-cols-1 custom__conatiner mx-auto gap-4">
-        <div className="w-12/12 border p-5">
-
-          <div className="w-full flex justify-between">
-            <div class="flex items-center mb-4">
-              <label for="default-checkbox" class="mr-5 text-sm font-medium text-gray-900 dark:text-gray-300">OutSide State?</label>
-              <input id="default-checkbox" type="checkbox" value={outside} onChange={() => { setOutside(!outside) }} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <div className="w-12/12 border p-5">
+              <>
+                <div>
+                  <Formik
+                    initialValues={{ percentage: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={(values, { setSubmitting, resetForm }) => {
+                      dispatch({ type: 'STOREEXTRAS', payload: values?.percentage })
+                      setPercentage(values.percentage)
+                      resetForm();
+                      setSubmitting(false); // Manually set submitting to false after the reset
+                    }}
+                  >
+                    {({
+                      values,
+                      errors,
+                      touched,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                      isSubmitting,
+                      /* and other goodies */
+                    }) => (
+                      <form onSubmit={handleSubmit}>
+                        <label for="default-checkbox" class="mr-5 text-sm font-medium text-gray-900 dark:text-gray-300">Enter the Percentage</label>
+                        <input
+                          type="number"
+                          name="percentage"
+                          placeholder="Enter Your percentage here"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.percentage}
+                          className="mb-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                        <p className="text-red-500 mb-2">
+                          {errors.percentage && touched.percentage && errors.percentage}
+                        </p>
+                        <button type="submit" disabled={isSubmitting} className="px-5 py-2 rounded button-filled yellow-button w-full ">
+                          Submit
+                        </button>
+                        <button onClick={(e) => resetPercentage(e)} className="px-5 py-2 rounded  bg-black w-full mt-2">
+                          Reset
+                        </button>
+                      </form>
+                    )}
+                  </Formik>
+                </div>
+              </>
             </div>
-            {
-              outside &&
-              reduxData?.appData?.extras &&
-              <div className="flex">
-                <p>Amount after Extra Fee is:  </p>
-                <pre>    </pre>
-                <p>{((reduxData?.appData?.totalAmount) + ((reduxData?.appData?.totalAmount) * ((reduxData?.appData?.extras) / 100))).toFixed(2)} €</p>
-              </div>
-            }
           </div>
 
-          {
-            outside &&
-            <>
-              <div>
-                <Formik
-                  initialValues={{ percentage: '' }}
-                  validationSchema={validationSchema}
-                  onSubmit={(values, { setSubmitting, resetForm }) => {
-                    dispatch({ type: 'STOREEXTRAS', payload: values?.percentage })
-                    resetForm();
-                    setSubmitting(false); // Manually set submitting to false after the reset
-                  }}
-                >
-                  {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    isSubmitting,
-                    /* and other goodies */
-                  }) => (
-                    <form onSubmit={handleSubmit}>
-                      <label for="default-checkbox" class="mr-5 text-sm font-medium text-gray-900 dark:text-gray-300">Enter the Percentage</label>
-                      <input
-                        type="number"
-                        name="percentage"
-                        placeholder="Enter Your percentage here"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.percentage}
-                        className="mb-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      />
-                      <p className="text-red-500 mb-2">
-                        {errors.percentage && touched.percentage && errors.percentage}
-                      </p>
-                      <button type="submit" disabled={isSubmitting} className="px-5 py-2 rounded button-filled yellow-button w-full ">
-                        Submit
-                      </button>
-                    </form>
-                  )}
-                </Formik>
+          <div className="w-6/12">
+            <div className="w-12/12 border p-5">
+              <div className="w-12/12 ">
+                <div className="flex items-left flex-col">
+                  <p className="text-left">Add Gift Card</p>
+                  <input type='text' onChange={(e) => { setCoupon(e.target.value) }} placeholder="Enter your voucher here" className="mb-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700" />
+                  <button onClick={() => {
+                    submitCoupon()
+                  }} class="mb-2 px-5 py-2 rounded button-filled yellow-button w-full">Submit</button>
+                  <button onClick={() => {
+                    resetGiftCard()
+                  }} class="w-full rounded flex gap-2 justify-center items-center focus:outline-none  bg-black hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Reset</button>
+                </div>
               </div>
-            </>
-          }
-
+            </div>
+          </div>
         </div>
 
-      </div>
 
+
+
+
+        {/* Gift Cards */}
+
+
+
+
+        {/* All Discounts */}
+
+        <div className="w-12/12 border p-5">
+          {
+            groupDiscount &&
+            <div>
+              <h3><b>Discount Groups:</b></h3>
+              <div className="flex justify-between">
+                <p>
+                  The discount from {groupDiscount?.name} is:
+                </p>
+                <p className="font-bold">
+                  {groupDiscount?.discount} %
+                </p>
+              </div>
+            </div>
+          }
+          {
+            corporateDiscountGroup &&
+            <div>
+              <h3><b>Corporate Discount Groups:</b></h3>
+              <div className="flex justify-between">
+                <p>
+                  The discount from {groupDiscount?.name} is:
+                </p>
+                <p className="font-bold">
+                  {corporateDiscountGroup?.discount} %
+                </p>
+              </div>
+            </div>
+          }
+        </div>
+
+
+      </div>
       {/* --------------------------------------------------------------------------- */}
       <div className="custom__conatiner mx-auto">
         <div className="flex justify-end">
@@ -775,5 +1025,4 @@ const Booking4 = ({ loader, setLoader }) => {
     </div>
   );
 };
-
 export default Booking4;

@@ -34,7 +34,8 @@ const initialState = {
   extras: null,
   cuurentMonth : {},
   isEdit: false,
-  appointmentId: null
+  appointmentId: null,
+  amountOfGiftCard: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -480,6 +481,20 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         appointmentId: action.payload
+      }
+    }
+
+    case "GIFTCARDAMOUNT" : {
+      return {
+        ...state,
+        amountOfGiftCard: action.payload
+      }
+    }
+
+    case "REMOVEGIFTCARDAMOUNT" : {
+      return {
+        ...state,
+        amountOfGiftCard: null
       }
     }
 

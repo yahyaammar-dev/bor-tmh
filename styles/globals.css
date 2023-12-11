@@ -187,3 +187,7 @@ header{
   top: 0;
   width: 100%;
 }
+
+.bg-black{
+  color: white;
+}
