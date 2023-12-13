@@ -56,7 +56,6 @@ body {
   background-color: goldenrod;
 }
 
-
 .day {
   display: flex;
   justify-content: center;
@@ -90,7 +89,6 @@ body {
   /* Adjust the margin to position the circle below the item */
 }
 
-
 .mycontainer {
   width: 100%;
   height: 75px;
@@ -111,7 +109,7 @@ body {
 }
 
 .text-black {
-  background-color: #DAA520;
+  background-color: #daa520;
   color: black;
 }
 
@@ -139,19 +137,18 @@ body {
 }
 
 .yelloo_bg {
-  background: #DAA520;
+  background: #daa520;
   border-radius: 2px;
 }
 
 .green-button {
-  background-color: #96C291 !important;
+  background-color: #96c291 !important;
 }
 
 .black-button {
   background-color: black !important;
   color: white;
 }
-
 
 .dark {
   background-color: #fff3d6;
@@ -176,18 +173,17 @@ body {
   border-radius: 6px;
 }
 
-
 .ugh-white {
   color: white;
 }
 
-header{
+header {
   background-color: white;
   position: fixed;
   top: 0;
   width: 100%;
 }
 
-.bg-black{
+.bg-black {
   color: white;
 }
