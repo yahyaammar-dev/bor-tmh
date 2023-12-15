@@ -220,9 +220,9 @@ const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode
 };
 
 
-const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0, appointment_id = 0,  bed_at_home = false) => {
+const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0, appointment_id = 0,  bed_at_home = false, paymentLink) => {
   try {
-    const res = await axios.get(`${base_url}/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}&bed_at_home=${bed_at_home}`);
+    const res = await axios.get(`${base_url}/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}&bed_at_home=${bed_at_home}&paymentLink=${paymentLink}`);
     console.log('appointment have been set', res.data)
     return res.data;
   } catch (err) {addressId
