@@ -288,7 +288,6 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        user: null,
         categories: [],
         subCategories: [],
         genders: [],
@@ -322,7 +321,6 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        user: null,
         genders: [],
         professionals: [],
         availibility: [],
@@ -337,7 +335,6 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        user: null,
         professionals: [],
         availibility: [],
         availibilitydata: [],
@@ -350,7 +347,6 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        // user: null,
         availibility: [],
         availibilitydata: [],
         availibilitiesData: {},
@@ -361,7 +357,6 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        // user: null,
         availibility: [],
         availibilitydata: [],
         availibilitiesData: {},
@@ -371,7 +366,6 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        // user: null,
         availibility: [],
         availibilitydata: [],
         availibilitiesData: {}
@@ -379,7 +373,6 @@ const appData = (state = initialState, action) => {
     case "REMOVEAFTERTIME":
       return {
         ...state,
-        // user: null,
         availibility: [],
         availibilitydata: [],
         availibilitiesData: {}
