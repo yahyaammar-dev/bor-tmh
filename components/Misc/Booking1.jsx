@@ -32,6 +32,7 @@ const Booking1 = ({ loader, setLoader }) => {
   }, [])
 
 
+
   const handleAfterCity = () => {
     handleLocalData({
       type1: "remove",
@@ -414,6 +415,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         <Select
                           options={reduxData?.appData?.cities}
                           onChange={(item) => {
+                            handleAfterCity()
                             handleLocalData({
                               type: "city",
                               data: item,
@@ -456,6 +458,7 @@ const Booking1 = ({ loader, setLoader }) => {
                               : "outlined"
                           }
                           onClick={() => {
+                            handleAfterCategory()
                             handleLocalData({
                               type: "category",
                               data: item,
@@ -485,6 +488,7 @@ const Booking1 = ({ loader, setLoader }) => {
                                 : "outlined"
                             }
                             onClick={() => {
+                              handleAfterSubCategory()
                               handleLocalData({
                                 type: "subcategory",
                                 data: item,
@@ -514,6 +518,7 @@ const Booking1 = ({ loader, setLoader }) => {
                               : "outlined"
                           }
                           onClick={() => {
+                            handleAfterGender()
                             handleLocalData({
                               type: "gender",
                               data: item,

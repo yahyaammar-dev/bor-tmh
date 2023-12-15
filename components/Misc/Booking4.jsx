@@ -83,41 +83,46 @@ const Booking4 = ({ loader, setLoader }) => {
         const corporateCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
           customer: reduxData?.appData?.user?.id
         });
-        corporateCouponsResponse?.data?.coupons.forEach((coupon) => {
+        corporateCouponsResponse?.data?.coupons?.forEach((coupon) => {
           if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
             let currentCorproateCoupons = (firstAmount * (coupon.discount / 100)).toFixed(2);
             corporateCoupons += parseFloat(currentCorproateCoupons).toFixed(2)
           }
         });
+
+
+
       } else {
         // customer coupons
-        const customerCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
-          customer: reduxData?.appData?.currentCorporateUser?.id
-        });
+        // const customerCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/customerCoupons', {
+        //   customer: reduxData?.appData?.currentCorporateUser?.id
+        // });
 
 
-        customerCouponsResponse?.data?.coupons.forEach((coupon) => {
-          if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
-            let currentCustomerCoupon = (firstAmount * (parseFloat(coupon.discount) / 100)).toFixed(2);
-            customerCoupons += parseFloat(currentCustomerCoupon).toFixed(2)
-          }
-        });
-        customerCoupons = parseFloat(customerCoupons).toFixed(2);
+        // customerCouponsResponse?.data?.coupons.forEach((coupon) => {
+        //   if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
+        //     let currentCustomerCoupon = (firstAmount * (parseFloat(coupon.discount) / 100)).toFixed(2);
+        //     customerCoupons += parseFloat(currentCustomerCoupon).toFixed(2)
+        //   }
+        // });
+        // customerCoupons = parseFloat(customerCoupons).toFixed(2);
 
-        // corporate coupons 
-        const corporateCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
-          customer: reduxData?.appData?.currentCorporateUser?.id
-        });
-        corporateCouponsResponse?.data?.coupons.forEach((coupon) => {
-          if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
-            let currentCorproateCoupons = (firstAmount * (coupon.discount / 100)).toFixed(2);
-            corporateCoupons += parseFloat(currentCorproateCoupons).toFixed(2)
-          }
-        });
+        // // corporate coupons 
+        // const corporateCouponsResponse = await axios.post('https://takemihome.it/it/front/booking/corporateCoupons', {
+        //   customer: reduxData?.appData?.currentCorporateUser?.id
+        // });
+        // corporateCouponsResponse?.data?.coupons.forEach((coupon) => {
+        //   if (coupon.type === 'PERCENTAGE' && coupon.enabled) {
+        //     let currentCorproateCoupons = (firstAmount * (coupon.discount / 100)).toFixed(2);
+        //     corporateCoupons += parseFloat(currentCorproateCoupons).toFixed(2)
+        //   }
+        // });
+
+
+        customerCoupons = 0;
+        corporateCoupons = 0;
+
       }
-
-
-
 
       corporateCoupons = parseFloat(corporateCoupons).toFixed(2);
 
@@ -125,10 +130,8 @@ const Booking4 = ({ loader, setLoader }) => {
         giftCard = currentGiftAmount
       }
 
-
       finalAmount =
-        parseFloat(firstAmount) +
-        parseFloat(percentageAmount) -
+        parseFloat(firstAmount) -
         parseFloat(customerCoupons) -
         parseFloat(corporateCoupons) -
         parseFloat(giftCard);

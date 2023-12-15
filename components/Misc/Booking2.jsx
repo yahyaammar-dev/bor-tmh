@@ -28,6 +28,10 @@ const Booking2 = ({ loader, setLoader }) => {
   } = useDataHandler(setLoader);
 
 
+  const handleAfterCart = () => {
+    dispatch({ type: "REMOVEAFTERCART" });
+  }
+
 
   const getProfessionalDeatils = async () => {
     setLoader(true)
@@ -77,7 +81,7 @@ const Booking2 = ({ loader, setLoader }) => {
       handleLocalData({
         type: "updateCart",
         data: myCart,
-        duration: item.duration,
+        duration: item.duration
       });
     }
     else {
@@ -220,7 +224,10 @@ const Booking2 = ({ loader, setLoader }) => {
                         <img
                           src="/imgs/addcircle.svg"
                           className="w-8"
-                          onClick={() => handleProfessionalCart(item)}
+                          onClick={() => {
+                            handleAfterCart()
+                            handleProfessionalCart(item)
+                          }}
                         />
                       </button>
                     </div>

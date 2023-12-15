@@ -245,9 +245,7 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        currentCorporateUser: null,
         availibilitiesData: {},
-        user: null,
         categories: [],
         subCategories: [],
         genders: [],
@@ -309,7 +307,6 @@ const appData = (state = initialState, action) => {
       return {
         ...state,
         currentTime: null,
-        user: null,
         subCategories: [],
         genders: [],
         professionals: [],
@@ -319,8 +316,7 @@ const appData = (state = initialState, action) => {
         currentSub: null,
         currentGen: null,
         currentProfessional: null,
-        cart: [],
-        currentDate: null,
+        cart: []
       };
     case "REMOVEAFTERSUBCATEGORY":
       return {
