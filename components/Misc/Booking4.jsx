@@ -5,7 +5,7 @@ import Button from "./Button";
 import Select from "react-select";
 import { useRouter } from "next/router";
 import { useDataHandler } from "../../utils/dataHandler";
-import { SetNewPrimaryAddress, getAllAddresses, intiateBooking, nexiPayByLink } from "../../pages/api/hello";
+import { SetNewPrimaryAddress, getAllAddresses, intiateBooking } from "../../pages/api/hello";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -38,7 +38,6 @@ const Booking4 = ({ loader, setLoader }) => {
   const [currentGiftAmount, setCurrentGiftAmount] = useState()
   const [amountAfterCalculations, setAmountAfterCalculations] = useState(null)
   const [priceTableData, setPriceTableData] = useState()
-  const [paymentLink, setPaymentLink] = useState(null)
 
 
   const [priceTableLoader, setPriceTableLoader] = useState(false)
@@ -299,11 +298,7 @@ const Booking4 = ({ loader, setLoader }) => {
   }
 
   const handleBooking = () => {
-
-
-    let nexiLink = paymentLink
     let res
-
     if (reduxData?.appData?.type == 'Corporate') {
       let totalDuration = 0;
       let services = []
@@ -327,7 +322,6 @@ const Booking4 = ({ loader, setLoader }) => {
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
           hasMassageBed,
-          nexiLink
         )
       } else {
         res = intiateBooking(
@@ -344,16 +338,8 @@ const Booking4 = ({ loader, setLoader }) => {
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
           hasMassageBed,
-          nexiLink
         )
       }
-      // const data = {
-      //   "email": email
-      // }
-      // const data = {
-      //   "email": 'yahyaammar4807@gmail.com'
-      // }
-      // const paybylink = nexiPayByLink(data)
       setOpen(true)
     } else {
       const data = {
@@ -380,9 +366,7 @@ const Booking4 = ({ loader, setLoader }) => {
           giftId,
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
-          hasMassageBed,
-          nexiLink
-        )
+          hasMassageBed        )
       } else {
         res = intiateBooking(
           reduxData?.appData?.currentDate,
@@ -397,11 +381,9 @@ const Booking4 = ({ loader, setLoader }) => {
           giftId,
           reduxData?.appData?.currentAddress?.id,
           reduxData?.appData?.appointmentId,
-          hasMassageBed,
-          nexiLink
+          hasMassageBed
         )
       }
-      const paybylink = nexiPayByLink(data)
     }
 
     setCustomLoader(true)
@@ -820,20 +802,7 @@ const Booking4 = ({ loader, setLoader }) => {
           </div>
 
 
-          {
-            reduxData?.appData?.currentCity?.id != 5 ? <div className="w-full">
-              <div className="iconBox flex">
-                <p className="w-full">
-                  <div className="flex w-full mb-2">
-                    <label className="w-2/3">Enter the Payment Link for nexi italy</label>
-                    <input className="border w-full address rounded" onChange={(e) => setPaymentLink(e.target.value)} />
-                  </div>
-                </p>
-              </div>
-            </div>
-              :
-              ''
-          }
+        
 
           <div>
             <p className="mt-5">

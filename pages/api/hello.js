@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 
-const base_url = 'https://takemihome.it'
-// const base_url = 'http://localhost:8000'
+// const base_url = 'https://takemihome.it'
+const base_url = 'http://localhost:8000'
 
 
 const loginUser = async (values) => {
@@ -220,9 +220,9 @@ const SetNewPrimaryAddress = async (address1, address2, city, userId, postalCode
 };
 
 
-const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0, appointment_id = 0,  bed_at_home = false, paymentLink) => {
+const intiateBooking = async (day, time, duration, city, service, pro, customer,extras=0, type=0, giftId=0, addressId = 0, appointment_id = 0,  bed_at_home = false) => {
   try {
-    const res = await axios.get(`${base_url}/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}&bed_at_home=${bed_at_home}&paymentLink=${paymentLink}`);
+    const res = await axios.get(`${base_url}/it/front/booking/set_new_appointment?day=${day}&time=${time}&duration=${duration}&city=${city}&service=[${service}]&pro=${pro}&customer=${customer}&extras=${extras}&type=${type}&giftId=${giftId}&addressId=${addressId}&appointment_id=${appointment_id}&bed_at_home=${bed_at_home}`);
     console.log('appointment have been set', res.data)
     return res.data;
   } catch (err) {addressId
@@ -230,18 +230,7 @@ const intiateBooking = async (day, time, duration, city, service, pro, customer,
   }
 };
 
-const nexiPayByLink = async (data) => {
-  // try {
-  //   const res = await axios.post(
-  //     `${base_url}/it/front/booking/send-payment-link`,
-  //     data
-  //   );
-  //   return res.data;
-  // } catch (err) {
-  //   alert('Nexi pay by link failed- Unable to send Email, Expiration time from request is in the past'); // Throw a custom error message
-  // }
-  return true
-};
+
 
 const getAddress = async (id) => {
   try {
@@ -350,7 +339,6 @@ export {
   getcorporateprofessionalServices,
   SetNewPrimaryAddress,
   intiateBooking,
-  nexiPayByLink,
   getAddress,
   getAllAddresses,
   getCorporateCategories,
