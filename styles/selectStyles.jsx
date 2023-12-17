@@ -3,6 +3,7 @@ const selectStyles = {
   container: (provided) => ({
     ...provided,
     width: "300px", // Adjust the width of the select container as needed
+    zIndex: 0,
   }),
   control: (provided, state) => ({
     ...provided,
@@ -20,7 +21,7 @@ const selectStyles = {
     ...provided,
     backgroundColor: state.isSelected ? "black" : "white", // Change the background color of selected and non-selected options
     color: state.isSelected ? "white" : "black", // Change the text color of selected and non-selected options
-    fontSize: "12px"
+    fontSize: "12px",
   }),
   singleValue: (provided) => ({
     ...provided,
