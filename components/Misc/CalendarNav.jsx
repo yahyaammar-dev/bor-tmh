@@ -19,7 +19,7 @@ const CalendarNav = ({ month, setMonthCounter, monthCounter }) => {
     <div className="flex justify-between p-2 w-[90%] m-auto items-center my-2">
       <div className="next">
         <img
-          className="cursor-pointer w-[30%] sm:w-[20%] md:w-[10%] "
+          className="cursor-pointer w-[20%] sm:w-[10%] "
           src="/imgs/back.svg"
           onClick={handlePerviousCalendar}
         />
@@ -29,7 +29,7 @@ const CalendarNav = ({ month, setMonthCounter, monthCounter }) => {
       </div>
       <div className="perv flex justify-end">
         <img
-          className="cursor-pointer w-[30%] sm:w-[20%] md:w-[10%]"
+          className="cursor-pointer w-[20%] sm:w-[10%]"
           src="/imgs/next.svg"
           onClick={handleNextCalendar}
         />

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Loader from "../../components/Misc/Loader";
 import Navbar from "../../components/Misc/Navbar";
 import Footer from "../../components/Misc/Footer";
 import Booking3 from "../../components/Misc/Booking3";
 import { Profiler } from "react";
+import { useRouter } from "next/router";
 
 const index = () => {
+  const router = useRouter()
   const callback = (
     id, // the "id" prop of the Profiler tree that has just committed
     phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
@@ -17,6 +19,16 @@ const index = () => {
   ) => {
     // console.log(id, phase, actualDuration, baseDuration, startTime, commitTime, interactions)
   }
+
+
+  useEffect(() => {
+    if (!window.localStorage.getItem('user_profile')) {
+      router.push("/login");
+    }
+  }, [])
+
+
+
   return (
     <>
       <Navbar />

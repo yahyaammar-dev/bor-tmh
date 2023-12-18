@@ -12,21 +12,21 @@ const Calendar = ({
   monthCounter,
 }) => {
   return (
-    <div class="flex flex-col mt-3 place-items-center md:flex-row ">
+    <div class="flex flex-col place-items-center md:flex-row bg-gray-200 shadow-md">
       <CalendarLeft />
-      <div class="w-4/4   bg-[#f5f5f5]">
+      <div class="w-9/12 bg-[#f5f5f5] sm:w-12/12 w-[100%]">
         <CalendarNav
           month={datesAndTimes?.month}
           setMonthCounter={setMonthCounter}
           monthCounter={monthCounter}
         />
-        <div className="calendar__container   p-2">
-          <div className="grid grid-cols-7  gap-1/2 ">
+        <div className="calendar__container p-2">
+          <div className="grid grid-cols-7 gap-1/2 ">
             {weekDays?.map((dayName) => (
               <CalendarHeading text={dayName} key={dayName} />
             ))}
           </div>
-          <div className="py-1 ">
+          <div className="py-1">
             <hr class="h-px bg-gray-100 border-0 dark:bg-gray-900" />
           </div>
           <div className="grid grid-cols-7  gap-1/2">

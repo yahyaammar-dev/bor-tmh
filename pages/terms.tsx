@@ -25,9 +25,10 @@ function CreateUser() {
         <div>
             <Navbar />
 
-            <div className="w-1/2 mx-auto mt-[10rem] flex flex-col gap-[1rem]">
+            <div className="w-2/3 mx-auto mt-[6rem] flex flex-col gap-[1rem]">
 
-                <div className="text-left">
+                <h1 className="text-2xl font-bold">Terms and Conditions</h1>
+                <div className="text-left h-[65vh] overflow-auto custom-scrollbar ">
 
 
                     <p style={{ display: 'block' }}><strong>General conditions of service and use of the site</strong></p>
@@ -413,7 +414,7 @@ function CreateUser() {
                 </div>
                 <div className="w-100 flex justify-center">
                     <button className="mb-[5rem] yellow-button button-filled px-5 py-2 rounded min-w-[20rem]" onClick={() => { navigate() }}>
-                        Pay
+                        Accept Terms & Conditions and Complete Payment
                     </button>
                 </div>
 

@@ -58,17 +58,17 @@ const handleTimeClick = (e, datesAndTimes, setDatesAndTimes) => {
 
 
 const handleCalenderSubmission = (datesAndTimes, handleLocalData, router) => {
-  const date = datesAndTimes?.datesAndTimes?.filter((item) => item.active == true)
-  const time = datesAndTimes.selectedTimes[datesAndTimes.selectedTimeIndex]
-  handleLocalData({
-    type: "currenttime",
-    data: time
-  })
-  handleLocalData({
-    type: "currentDate",
-    data: date[0].date
-  })
-  router.push('/booking/booking4')
+    const date = datesAndTimes?.datesAndTimes?.filter((item) => item.active == true)
+    const time = datesAndTimes.selectedTimes[datesAndTimes.selectedTimeIndex]
+    handleLocalData({
+      type: "currenttime",
+      data: time
+    })
+    handleLocalData({
+      type: "currentDate",
+      data: date[0].date
+    })
+    router.push('/booking/booking4')
 }
 
 

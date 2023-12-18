@@ -885,15 +885,15 @@ const Booking4 = ({ loader, setLoader }) => {
       {/* --------------------------------------------------------------------------- */}
       {/* Gift card */}
 
-      <div className="custom__conatiner mx-auto p-5 border ">
+      <div className="custom__conatiner mx-auto p-5 border w-full">
         <h1 className="mb-5">
           <b>Price Table</b>
         </h1>
 
         {/* Outside State */}
 
-        <div className="md:w-full w-[24rem] ">
-          <div className="w-6/12">
+        <div className="md:w-full flex flex-wrap">
+          <div className="w-full sm:w-6/12 ">
             <div className="w-12/12 border p-5">
               <>
                 <div>
@@ -961,8 +961,7 @@ const Booking4 = ({ loader, setLoader }) => {
               </>
             </div>
           </div>
-
-          <div className="w-6/12">
+          <div className="w-full sm:w-6/12">
             <div className="w-12/12 border p-5">
               <div className="w-12/12 ">
                 <div className="flex items-left flex-col">

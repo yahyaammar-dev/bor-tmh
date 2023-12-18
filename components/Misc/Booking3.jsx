@@ -55,7 +55,7 @@ const Booking2 = () => {
 
   return (
     <div>
-      <div className="booking2 custom__conatiner mx-auto flex justify-center items-center flex-col">
+      <div className="booking2 custom__conatiner mx-auto flex justify-center items-center flex-col eigthy__container">
         <Calendar
           datesAndTimes={datesAndTimes}
           setMonthCounter={setMonthCounter}

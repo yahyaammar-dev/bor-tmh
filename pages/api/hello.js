@@ -1,20 +1,20 @@
 import axios from 'axios';
 
 
-const base_url = 'https://takemihome.it'
-// const base_url = 'http://localhost:8000'
+// const base_url = 'https://takemihome.it'
+const base_url = 'http://localhost:8000'
 
 
 const loginUser = async (values) => {
   try {
     const res = await axios.post(
-      `${base_url}/it/api/public_api/subcategories/loginAdminfpa`,
+      `${base_url}/front/user/react_admin_login`,
       {
         email: values.email,
         password: values.password,
       }
     );
-
+    console.log(res)
     return res.data;
   } catch (err) {
     alert('Login failed'); // Throw a custom error message

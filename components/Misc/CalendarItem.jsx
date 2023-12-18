@@ -6,18 +6,18 @@ const CalendarItem = ({ handleTimeClick, text, active, available }) => {
         onClick={handleTimeClick}
       >
         {active ? (
-          <p className="h-7 w-7 flex justify-center items-center bg-yellow-500 font-semibold text-lg rounded-full">
+          <p className="sm:h-3 sm:w-3 h-7 w-7 flex justify-center items-center bg-yellow-500 font-semibold rounded-full text-[10px] md:text-sm md:p-[1rem]">
             {text}
           </p>
         ) : available ? (
           <>
-            <p>
+            <p className="text-[10px] md:text-sm">
               {text}
             </p>
-            <span className="h-2 w-2 bg-green-500 rounded-full text-transparent">{text}</span>
+            <span className="h-1 w-1 sm:h-2 sm:w-2 bg-green-500 rounded-full text-transparent">{text}</span>
           </>
         ) : (
-          <p>{text}</p>
+          <p className="text-[10px] md:text-sm">{text}</p> 
         )}
       </div>
     </div>

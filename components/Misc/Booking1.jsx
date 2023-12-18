@@ -8,8 +8,10 @@ import { useDataHandler } from "../../utils/dataHandler"; // Import the useDataH
 import CorporateBooking from "./CorporateBooking";
 import Link from "next/link";
 import { getCorporateCategories } from "../../pages/api/hello";
+import { useRouter } from "next/router";
 
 const Booking1 = ({ loader, setLoader }) => {
+  const router  = useRouter()
   const [dowloaded, setDowloaded] = useState(false);
   const {
     localData,
@@ -22,78 +24,87 @@ const Booking1 = ({ loader, setLoader }) => {
     corporateCustomerList,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
 
+
   const postal = [
     { value: "123123", label: "123123" },
     { value: "123123", label: "12312" },
   ];
+
+  
   useEffect(() => {
+    if(!window.localStorage.getItem('user_profile')){
+      router.push("/login"); 
+    }
     setDowloaded(true);
-  }, []);
+  }, [])
+
+
 
   const handleAfterCity = () => {
     handleLocalData({
       type1: "remove",
       type: "resetDataAfterCity",
     });
-  };
+  }
   const handleAfterCategory = () => {
     handleLocalData({
       type1: "remove",
       type: "resetDataAfterCategory",
     });
-  };
+  }
   const handleAfterSubCategory = () => {
     handleLocalData({
       type1: "remove",
       type: "resetDataAfterSubCategory",
     });
-  };
+  }
   const handleAfterCorporate = () => {
     handleLocalData({
       type1: "remove",
       type: "resetDataAfterCorporate",
     });
-  };
+  }
   const handleAfterCorporateUser = () => {
     handleLocalData({
       type1: "remove",
       type: "resetDataAfterCorporateUser",
     });
-  };
+  }
   const handleAfterGender = () => {
     handleLocalData({
       type1: "remove",
       type: "resetDataAfterGender",
     });
-  };
+  }
   const handleAfterProfessional = (item) => {
     if (item?.id == reduxData?.appData?.currentProfessional?.id) {
-      return;
+      return
     } else {
       handleLocalData({
         type1: "remove",
         type: "resetDataAfterProfessional",
       });
     }
-  };
+  }
 
-  console.log("Data in redux is", reduxData);
+
+
 
   return (
     <div>
       {dowloaded && (
         <>
           {/* Booking 1 */}
-          <div className="booking1 custom__conatiner mx-auto custom__margin__top">
+          <div className="booking1 custom__conatiner mx-auto custom__margin__top eigthy__container">
             {/* City */}
             <div className="city mb-10">
               <h1 className="mt-24 mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                 Select Type
               </h1>
-              <div className="flex justify-center items-center gap-2 sm:gap-5">
-                <div className="item">
+              <div className="flex justify-center items-center gap-2 sm:gap-5 flex-col sm:flex-row">
+                <div className="item w-full lg:w-[fit-content]">
                   <Button
-                    wfull={null}
+                    wfull
                     text="Corporate Booking"
                     variant={
                       reduxData?.appData?.type === "Corporate"
@@ -111,8 +122,9 @@ const Booking1 = ({ loader, setLoader }) => {
                     }}
                   />
                 </div>
-                <div className="item">
+                <div className="item w-full lg:w-[fit-content]">
                   <Button
+                    wfull
                     text="Concierge Booking"
                     variant={
                       reduxData?.appData?.type === "Normal"
@@ -141,16 +153,16 @@ const Booking1 = ({ loader, setLoader }) => {
                       <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select a city
                       </h1>
-                      <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5  items-center">
-                        <div className="item">
+                      <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5  items-center w-full">
+                        <div className="item w-full lg:w-[35%]" style={{ zIndex: 3 }}>
                           <Select
                             value={reduxData?.appData?.currentCity}
                             options={
                               reduxData?.appData?.cities?.length > 0
                                 ? reduxData?.appData?.cities
                                 : reduxData?.appData?.currentCity
-                                ? reduxData?.appData?.currentCity
-                                : []
+                                  ? reduxData?.appData?.currentCity
+                                  : []
                             }
                             onChange={(item) => {
                               handleAfterCity();
@@ -163,12 +175,9 @@ const Booking1 = ({ loader, setLoader }) => {
                             styles={selectStyles}
                           />
                         </div>
-                        <div className="item">
+                        <div className="item w-full lg:w-[35%]" style={{ zIndex: 0 }}>
                           <Select
                             options={postal}
-                            // onChange={(item) => {
-                            //   setLocale(item.value);
-                            // }}
                             placeholder="Postal Code"
                             styles={selectStyles}
                           />
@@ -185,7 +194,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         Select a Corporate
                       </h1>
                       <div className="sm:flex  flex justify-center  ">
-                        <div className="item">
+                      <div className="item w-full lg:w-[35%]"> 
                           <Select
                             value={
                               reduxData?.appData?.currCorporate != null
@@ -196,8 +205,8 @@ const Booking1 = ({ loader, setLoader }) => {
                               reduxData?.appData?.corporates?.length > 0
                                 ? reduxData?.appData?.corporates
                                 : reduxData?.appData?.currCorporate
-                                ? reduxData?.appData?.currCorporate
-                                : []
+                                  ? reduxData?.appData?.currCorporate
+                                  : []
                             }
                             onChange={(item) => {
                               handleAfterCorporate(),
@@ -222,7 +231,7 @@ const Booking1 = ({ loader, setLoader }) => {
                         Select Corporate Users
                       </h1>
                       <div className="sm:flex  flex justify-center  gap-5">
-                        <div className="item">
+                        <div className="item w-full lg:w-[35%]">
                           <Select
                             value={
                               reduxData?.appData?.currentCorporateUser != null
@@ -233,8 +242,8 @@ const Booking1 = ({ loader, setLoader }) => {
                               reduxData?.appData?.corporateUsers?.length > 0
                                 ? reduxData?.appData?.corporateUsers
                                 : reduxData?.appData?.currentCorporateUser
-                                ? reduxData?.appData?.currentCorporateUser
-                                : []
+                                  ? reduxData?.appData?.currentCorporateUser
+                                  : []
                             }
                             onChange={(item) => {
                               handleAfterCorporateUser(),
@@ -294,7 +303,7 @@ const Booking1 = ({ loader, setLoader }) => {
                               text={item?.name}
                               variant={
                                 reduxData?.appData?.currentSub?.name ==
-                                item?.name
+                                  item?.name
                                   ? "active"
                                   : "outlined"
                               }
@@ -359,8 +368,8 @@ const Booking1 = ({ loader, setLoader }) => {
                               item?.full_name
                                 ? item?.full_name
                                 : item?.name
-                                ? item?.name
-                                : ""
+                                  ? item?.name
+                                  : ""
                             }
                             position={item?.position}
                             onClick={() => {
@@ -381,12 +390,12 @@ const Booking1 = ({ loader, setLoader }) => {
               <div className="normal_container">
                 {reduxData?.appData?.users?.length > 0 && (
                   <Fade>
-                    <div className="city mb-10">
+                    <div className="city mb-10 z-10 relative">
                       <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
                         Select a User
                       </h1>
                       <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5 items-center">
-                        <div className="item">
+                        <div className="item w-full lg:w-[30%]">
                           <Select
                             // options={listUsers}
                             options={reduxData?.appData?.users.map((user) => ({
@@ -404,9 +413,9 @@ const Booking1 = ({ loader, setLoader }) => {
                             value={reduxData?.appData?.user}
                           />
                         </div>
-                        <div>
+                        <div className="w-full lg:w-[fit-content]">
                           <Link href="create-user">
-                            <button className="px-5 py-2 rounded button-filled">
+                            <button className="w-full px-5 py-2 rounded button-filled">
                               Create User
                             </button>
                           </Link>
@@ -420,13 +429,14 @@ const Booking1 = ({ loader, setLoader }) => {
                   <Fade>
                     <div className="city mb-10">
                       <h1 className="mb-4 text-center text-[18px] sm:text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
-                        Select a city
+                        Select a city 
                       </h1>
-                      <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5 items-center">
-                        <div className="item">
+                      <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-5 items-center w-full">
+                        <div className="item w-full lg:w-[35%]" style={{ zIndex: 3 }}>
                           <Select
                             options={reduxData?.appData?.cities}
                             onChange={(item) => {
+                              handleAfterCity()
                               handleLocalData({
                                 type: "city",
                                 data: item,
@@ -437,12 +447,9 @@ const Booking1 = ({ loader, setLoader }) => {
                             value={reduxData?.appData?.currentCity}
                           />
                         </div>
-                        <div className="item">
+                        <div className="item w-full lg:w-[35%]" style={{zIndex:1}}>
                           <Select
                             options={postal}
-                            // onChange={(item) => {
-                            //   setLocale(item.value);
-                            // }}
                             placeholder="Postal Code"
                             styles={selectStyles}
                           />
@@ -468,6 +475,7 @@ const Booking1 = ({ loader, setLoader }) => {
                                 : "outlined"
                             }
                             onClick={() => {
+                              handleAfterCategory()
                               handleLocalData({
                                 type: "category",
                                 data: item,
@@ -493,11 +501,12 @@ const Booking1 = ({ loader, setLoader }) => {
                               text={item?.name}
                               variant={
                                 reduxData?.appData?.currentSub?.name ==
-                                item?.name
+                                  item?.name
                                   ? "active"
                                   : "outlined"
                               }
                               onClick={() => {
+                                handleAfterSubCategory()
                                 handleLocalData({
                                   type: "subcategory",
                                   data: item,
@@ -527,6 +536,7 @@ const Booking1 = ({ loader, setLoader }) => {
                                 : "outlined"
                             }
                             onClick={() => {
+                              handleAfterGender()
                               handleLocalData({
                                 type: "gender",
                                 data: item,

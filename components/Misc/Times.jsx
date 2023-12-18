@@ -1,5 +1,8 @@
+import { useSelector } from "react-redux";
 import { handleCalenderSubmission } from "../../utils/calendarHelpers.jsx";
 import Button from "./Button.jsx";
+import { useEffect } from "react";
+
 const Times = ({
   datesAndTimes,
   setDatesAndTimes,
@@ -9,11 +12,13 @@ const Times = ({
   const handleTimeClick = (e, index) => {
     setDatesAndTimes({ ...datesAndTimes, selectedTimeIndex: index });
   };
+  const reduxData = useSelector((state) => state)
+
+  console.log(datesAndTimes)
 
   return (
-    <div class="flex  w-4/4 mt-2">
-      <div class="w-1/4  flex justify-center items-center flex-col"></div>
-      <div class="w-4/4 bg-[#f5f5f5] p-2">
+    <div class="flex w-4/4 mt-5 w-full bg-gray-200 p-3 shadow-md">
+      <div class="w-4/4 w-full">
         <div className="all_times flex gap-1 flex-wrap justify-around">
           {datesAndTimes?.selectedTimes?.map((time, index) => {
             return (
@@ -26,15 +31,15 @@ const Times = ({
             );
           })}
         </div>
-        <div className="finalize__times mt-2  flex justify-end">
-          <div>
+        <div className="w-full finalize__times mt-2  flex justify-end">
+          <div className="w-full">
             <button
               type="button"
               onClick={() =>
                 handleCalenderSubmission(datesAndTimes, handleLocalData, router)
               }
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
+              className={ `flex justify-center w-full font-medium rounded text-sm px-5 py-2.5 text-center inline-flex items-center ${datesAndTimes?.selectedTimeIndex != null  ? ' bg-[#daa520] hover:bg-yellow-500' : "cursor-not-allowed bg-yellow-100 ugh-black"}` }
+              > 
               Move to Checkout
               <svg
                 class="w-3.5 h-3.5 ml-2"

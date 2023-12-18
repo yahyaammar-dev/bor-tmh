@@ -177,6 +177,10 @@ body {
   color: white;
 }
 
+.ugh-white {
+  color: black;
+}
+
 header {
   background-color: white;
   position: fixed;
@@ -186,4 +190,17 @@ header {
 
 .bg-black {
   color: white;
+}
+
+
+
+
+@media screen and (max-width: 700px) {
+  .custom__conatiner {
+    max-width: 100%;
+  }
+
+  .eigthy__container{
+    max-width: 90%;
+  }
 }
